@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package>
+	<metadata>
+		<id>bsn.CashCtrl</id>
+		<version>1.0.0</version>
+		<authors>avonwyss</authors>
+		<owners>avonwyss</owners>
+		<license type="expression">MIT</license>
+		<projectUrl>https://github.com/avonwyss/bsn.CashCtrl</projectUrl>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>.NET Library implementing the CashCtrl API</description>
+		<copyright>Copyright 2022 Arsène von Wyss</copyright>
+		<tags>bsn CashCtrl</tags>
+		<dependencies>
+			<dependency id="Newtonsoft.Json" version="10.0.3" />
+			<dependency id="NLog" version="4.0.0" />
+			<dependency id="OneOf" version="3.0.0" />
+		</dependencies>
+	</metadata>
+	<files>
+		<file src="bin\$Configuration$\bsn.CashCtrl.*" target="lib" />
+	</files>
+</package>
