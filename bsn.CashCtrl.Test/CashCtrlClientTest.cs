@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -14,8 +14,8 @@ namespace bsn.CashCtrl {
 
 		private void WriteAsJson<T>(T data) {
 			using (var writer = new StringWriter()) {
-				client.JsonSerializer.Serialize(writer, data);
-				output.WriteLine(writer.ToString());
+				Client.JsonSerializer.Serialize(writer, data);
+				Output.WriteLine(writer.ToString());
 			}
 		}
 		
@@ -26,14 +26,14 @@ namespace bsn.CashCtrl {
 
 		[Fact]
 		public void List() {
-			var response = client.AccountList();
+			var response = Client.AccountList();
 			WriteAsJson(response);
 		}
 
 		[Fact]
 		public async Task ListAsync() {
-			var response = await client.GetAsync<ListResponse<OrderCategory>>("order/category/list.json", null).ConfigureAwait(false);
-			output.WriteLine(response.Data[0].Status[0].Name.ToString("EN"));
+			var response = await Client.GetAsync<ListResponse<OrderCategory>>("order/category/list.json", null).ConfigureAwait(false);
+			Output.WriteLine(response.Data[0].Status[0].Name.ToString("EN"));
 			WriteAsJson(response);
 		}
 	}

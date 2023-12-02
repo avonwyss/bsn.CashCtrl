@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Net.Http;
 
-using bsn.CashCtrl.Http;
+using bsn.HttpClientSync;
 
 namespace bsn.CashCtrl {
 	public static partial class CashCtrlClientExtensions {

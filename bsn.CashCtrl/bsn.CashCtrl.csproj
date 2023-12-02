@@ -34,6 +34,9 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="bsn.HttpClientSync, Version=1.23.12.0, Culture=neutral, PublicKeyToken=efd7d300630fec10, processorArchitecture=MSIL">
+      <HintPath>..\packages\bsn.HttpClientSync.1.23.12\lib\bsn.HttpClientSync.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -201,9 +204,6 @@
     <Compile Include="Entities\TaxType.cs" />
     <Compile Include="Entities\Text.cs" />
     <Compile Include="Entities\TextType.cs" />
-    <Compile Include="Http\HttpClientSyncExtensions.cs" />
-    <Compile Include="Http\HttpClientSyncHandler.cs" />
-    <Compile Include="Http\RetryHandler.cs" />
     <Compile Include="IApiSerializable.cs" />
     <Compile Include="JsonStringConverter.cs" />
     <Compile Include="LocalizedString.cs" />

@@ -1,18 +1,29 @@
-﻿using NLog;
+using NLog;
+using NLog.Config;
 using NLog.Targets;
 
 using Xunit.Abstractions;
 
 namespace bsn.CashCtrl {
 	internal class TestOutputTarget: TargetWithLayout {
-		private readonly ITestOutputHelper output;
+		public static TestOutputTarget Configure(ITestOutputHelper output) {
+			var target = new TestOutputTarget(output) { Layout = "${message}" };
+			var config = new LoggingConfiguration();
+			config.AddRuleForAllLevels(target);
+			LogManager.Configuration = config;
+			return target;
+		}
+
+		public ITestOutputHelper Output {
+			get;
+		}
 
 		public TestOutputTarget(ITestOutputHelper output) {
-			this.output = output;
+			this.Output = output;
 		}
 
 		protected override void Write(LogEventInfo logEvent) {
-			output.WriteLine(RenderLogEvent(Layout, logEvent));
+			this.Output.WriteLine(this.RenderLogEvent(this.Layout, logEvent));
 		}
 	}
 }

@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
 using bsn.CashCtrl.Entities;
-using bsn.CashCtrl.Http;
 using bsn.CashCtrl.Response;
+using bsn.HttpClientSync;
 
 using Newtonsoft.Json.Linq;
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
@@ -12,8 +12,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-using bsn.CashCtrl.Http;
 using bsn.CashCtrl.Response;
+using bsn.HttpClientSync;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;

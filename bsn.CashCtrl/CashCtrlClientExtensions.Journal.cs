@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
 using bsn.CashCtrl.Entities;
-using bsn.CashCtrl.Http;
 using bsn.CashCtrl.Query;
 using bsn.CashCtrl.Response;
+using bsn.HttpClientSync;
 
 namespace bsn.CashCtrl {
 	public static partial class CashCtrlClientExtensions {
