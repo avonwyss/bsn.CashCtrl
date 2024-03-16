@@ -79,12 +79,21 @@ namespace bsn.CashCtrl {
 
 		public HttpContent Invoke(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters) {
 			var request = PrepareRequest(method, endpoint, parameters);
+			HttpResponseMessage response = null;
 			try {
-				var response = httpClient.Send(request);
+				response = this.httpClient.Send(request);
 				response.EnsureSuccessStatusCode();
 				return response.Content;
 			} catch (Exception ex) {
-				throw new CashCtrlApiException(ex.Message, ex);
+				string content = null;
+				if (response?.Content != null) {
+					try {
+						content = response.Content.ReadAsString();
+					} catch (Exception ex2) {
+						content = $"Response content could not be loaded: {ex2.Message}";
+					}
+				}
+				throw new CashCtrlApiException(ex.Message, ex, content);
 			}
 		}
 
@@ -108,12 +117,21 @@ namespace bsn.CashCtrl {
 
 		public async ValueTask<HttpContent> InvokeAsync(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken = default) {
 			var request = PrepareRequest(method, endpoint, parameters);
+			HttpResponseMessage response = null;
 			try {
-				var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+				response = await this.httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
 				response.EnsureSuccessStatusCode();
 				return response.Content;
 			} catch (Exception ex) {
-				throw new CashCtrlApiException(ex.Message, ex);
+				string content = null;
+				if (response?.Content != null) {
+					try {
+						content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+					} catch (Exception ex2) {
+						content = $"Response content could not be loaded: {ex2.Message}";
+					}
+				}
+				throw new CashCtrlApiException(ex.Message, ex, content);
 			}
 		}
 

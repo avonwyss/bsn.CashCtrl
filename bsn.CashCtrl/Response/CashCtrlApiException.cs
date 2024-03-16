@@ -18,9 +18,15 @@ namespace bsn.CashCtrl.Response {
 			this.Errors = errors ?? Array.Empty<UpdateResponse.Error>();
 		}
 
-		public CashCtrlApiException(string message, Exception innerException): base(message, innerException) { }
+		public CashCtrlApiException(string message, Exception innerException, string content): base(message, innerException) {
+			this.ResponseContent = content;
+		}
 
 		protected CashCtrlApiException(SerializationInfo info, StreamingContext context): base(info, context) { }
+
+		public string ResponseContent {
+			get;
+		}
 
 		public UpdateResponse.Error[] Errors {
 			get;
