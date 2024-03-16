@@ -18,11 +18,16 @@ namespace bsn.CashCtrl.Response {
 			this.Errors = errors ?? Array.Empty<UpdateResponse.Error>();
 		}
 
-		public CashCtrlApiException(string message, Exception innerException, string content): base(message, innerException) {
-			this.ResponseContent = content;
+		public CashCtrlApiException(string message, Exception innerException, string requestContent, string responseContent): base(message, innerException) {
+			this.RequestContent = requestContent;
+			this.ResponseContent = responseContent;
 		}
 
 		protected CashCtrlApiException(SerializationInfo info, StreamingContext context): base(info, context) { }
+
+		public string RequestContent {
+			get;
+		}
 
 		public string ResponseContent {
 			get;
