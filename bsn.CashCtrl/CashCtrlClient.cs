@@ -79,30 +79,20 @@ namespace bsn.CashCtrl {
 
 		public HttpContent Invoke(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters) {
 			var request = PrepareRequest(method, endpoint, parameters);
-			string requestContent = null;
-			string responseContent = null;
+			string content = null;
 			try {
 				var response = this.httpClient.Send(request);
-				if (!response.IsSuccessStatusCode) {
-					if (request.Content != null) {
-						try {
-							requestContent = request.Content.ReadAsString();
-						} catch (Exception ex) {
-							requestContent = $"Request content could not be loaded: {ex.Message}";
-						}
-					}
-					if (response.Content != null) {
-						try {
-							responseContent = response.Content.ReadAsString();
-						} catch (Exception ex) {
-							responseContent = $"Response content could not be loaded: {ex.Message}";
-						}
+				if (!response.IsSuccessStatusCode && response.Content != null) {
+					try {
+						content = response.Content.ReadAsString();
+					} catch (Exception ex) {
+						content = $"Response content could not be loaded: {ex.Message}";
 					}
 				}
 				response.EnsureSuccessStatusCode();
 				return response.Content;
 			} catch (Exception ex) {
-				throw new CashCtrlApiException(ex.Message, ex, requestContent, responseContent);
+				throw new CashCtrlApiException(ex.Message, ex, content);
 			}
 		}
 
@@ -126,30 +116,20 @@ namespace bsn.CashCtrl {
 
 		public async ValueTask<HttpContent> InvokeAsync(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken = default) {
 			var request = PrepareRequest(method, endpoint, parameters);
-			string requestContent = null;
-			string responseContent = null;
+			string content = null;
 			try {
 				var response = await this.httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-				if (!response.IsSuccessStatusCode) {
-					if (request.Content != null) {
-						try {
-							requestContent = await request.Content.ReadAsStringAsync().ConfigureAwait(false);
-						} catch (Exception ex) {
-							requestContent = $"Request content could not be loaded: {ex.Message}";
-						}
-					}
-					if (response.Content != null) {
-						try {
-							responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-						} catch (Exception ex) {
-							responseContent = $"Response content could not be loaded: {ex.Message}";
-						}
+				if (!response.IsSuccessStatusCode && response.Content != null) {
+					try {
+						content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+					} catch (Exception ex) {
+						content = $"Response content could not be loaded: {ex.Message}";
 					}
 				}
 				response.EnsureSuccessStatusCode();
 				return response.Content;
 			} catch (Exception ex) {
-				throw new CashCtrlApiException(ex.Message, ex, requestContent, responseContent);
+				throw new CashCtrlApiException(ex.Message, ex, content);
 			}
 		}
 
