@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -33,7 +33,7 @@ namespace bsn.CashCtrl.Entities {
 			set;
 		} = new List<PersonAddress>(0);
 
-		public string Title {
+		public LocalizedString TitleName {
 			get;
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
 			set;
