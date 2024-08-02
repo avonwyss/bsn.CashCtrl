@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 using Newtonsoft.Json;
@@ -41,8 +41,8 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		public IEnumerable<KeyValuePair<string, object>> ToParameters() {
-			yield return new KeyValuePair<string, object>("share", Share);
-			yield return new KeyValuePair<string, object>("toCostCenterId", ToCostCenterId);
+			yield return new KeyValuePair<string, object>("share", this.Share);
+			yield return new KeyValuePair<string, object>("toCostCenterId", this.ToCostCenterId);
 		}
 	}
 }

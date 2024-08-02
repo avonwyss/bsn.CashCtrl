@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace bsn.CashCtrl.Query {
 	public class AccountQuery: QueryBase {
@@ -18,9 +18,9 @@ namespace bsn.CashCtrl.Query {
 		}
 
 		protected override IEnumerable<KeyValuePair<string, object>> ToParametersInternal() {
-			yield return new("fiscalPeriodId", FiscalPeriodId);
-			yield return new("onlyCostCenters", OnlyCostCenters);
-			yield return new("onlyActive", OnlyActive);
+			yield return new("fiscalPeriodId", this.FiscalPeriodId);
+			yield return new("onlyCostCenters", this.OnlyCostCenters);
+			yield return new("onlyActive", this.OnlyActive);
 		}
 	}
 }

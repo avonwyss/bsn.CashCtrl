@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace bsn.CashCtrl.Entities {
@@ -159,18 +159,18 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		public IEnumerable<KeyValuePair<string, object>> ToParameters() {
-			yield return new("id", OrderId);
-			yield return new("fileId", FileId);
-			yield return new("footer", Footer);
-			yield return new("header", Header);
-			yield return new("isDisplayItemGross", IsDisplayItemGross);
-			yield return new("isFileReplacement", IsFileReplacement);
-			yield return new("language", Language);
-			yield return new("orgAddress", OrgAddress);
-			yield return new("orgLocationId", OrgLocationId);
-			yield return new("recipientAddress", RecipientAddress);
-			yield return new("recipientAddressId", RecipientAddressId);
-			yield return new("templateId", TemplateId);
+			yield return new("id", this.OrderId);
+			yield return new("fileId", this.FileId);
+			yield return new("footer", this.Footer);
+			yield return new("header", this.Header);
+			yield return new("isDisplayItemGross", this.IsDisplayItemGross);
+			yield return new("isFileReplacement", this.IsFileReplacement);
+			yield return new("language", this.Language);
+			yield return new("orgAddress", this.OrgAddress);
+			yield return new("orgLocationId", this.OrgLocationId);
+			yield return new("recipientAddress", this.RecipientAddress);
+			yield return new("recipientAddressId", this.RecipientAddressId);
+			yield return new("templateId", this.TemplateId);
 		}
 	}
 }

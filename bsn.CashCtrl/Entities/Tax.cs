@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace bsn.CashCtrl.Entities {
@@ -81,16 +81,16 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		public IEnumerable<KeyValuePair<string, object>> ToParameters() {
-			if (Id > 0) {
-				yield return new KeyValuePair<string, object>("id", Id);
+			if (this.Id > 0) {
+				yield return new KeyValuePair<string, object>("id", this.Id);
 			}
-			yield return new KeyValuePair<string, object>("accountId", AccountId);
-			yield return new KeyValuePair<string, object>("name", Name);
-			yield return new KeyValuePair<string, object>("percentage", Percentage);
-			yield return new KeyValuePair<string, object>("calcType", CalcType);
-			yield return new KeyValuePair<string, object>("documentName", DocumentName);
-			yield return new KeyValuePair<string, object>("isInactive", IsInactive);
-			yield return new KeyValuePair<string, object>("percentageFlat", PercentageFlat);
+			yield return new KeyValuePair<string, object>("accountId", this.AccountId);
+			yield return new KeyValuePair<string, object>("name", this.Name);
+			yield return new KeyValuePair<string, object>("percentage", this.Percentage);
+			yield return new KeyValuePair<string, object>("calcType", this.CalcType);
+			yield return new KeyValuePair<string, object>("documentName", this.DocumentName);
+			yield return new KeyValuePair<string, object>("isInactive", this.IsInactive);
+			yield return new KeyValuePair<string, object>("percentageFlat", this.PercentageFlat);
 		}
 	}
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 using Newtonsoft.Json;
@@ -72,17 +72,17 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		public IEnumerable<KeyValuePair<string, object>> ToParameters() {
-			if (Id > 0) {
-				yield return new KeyValuePair<string, object>("id", Id);
+			if (this.Id > 0) {
+				yield return new KeyValuePair<string, object>("id", this.Id);
 			}
-			yield return new KeyValuePair<string, object>("type", Type);
-			yield return new KeyValuePair<string, object>("config", Config);
-			yield return new KeyValuePair<string, object>("fileId", FileId);
-			yield return new KeyValuePair<string, object>("isHideTitle", IsHideTitle);
-			yield return new KeyValuePair<string, object>("isPageBreak", IsPageBreak);
-			yield return new KeyValuePair<string, object>("name", Name);
-			yield return new KeyValuePair<string, object>("setId", SetId);
-			yield return new KeyValuePair<string, object>("text", Text);
+			yield return new KeyValuePair<string, object>("type", this.Type);
+			yield return new KeyValuePair<string, object>("config", this.Config);
+			yield return new KeyValuePair<string, object>("fileId", this.FileId);
+			yield return new KeyValuePair<string, object>("isHideTitle", this.IsHideTitle);
+			yield return new KeyValuePair<string, object>("isPageBreak", this.IsPageBreak);
+			yield return new KeyValuePair<string, object>("name", this.Name);
+			yield return new KeyValuePair<string, object>("setId", this.SetId);
+			yield return new KeyValuePair<string, object>("text", this.Text);
 		}
 	}
 }

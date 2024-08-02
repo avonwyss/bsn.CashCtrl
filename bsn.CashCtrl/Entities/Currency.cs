@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace bsn.CashCtrl.Entities {
@@ -41,9 +41,9 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		public bool IsDefault {
-			get => makeDefault || isDefault;
+			get => this.makeDefault || this.isDefault;
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
-			set => isDefault = value;
+			set => this.isDefault = value;
 		}
 
 		public bool IsAuto {
@@ -53,26 +53,26 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		public IEnumerable<KeyValuePair<string, object>> ToParameters() {
-			if (Id > 0) {
-				yield return new KeyValuePair<string, object>("id", Id);
+			if (this.Id > 0) {
+				yield return new KeyValuePair<string, object>("id", this.Id);
 			}
-			yield return new KeyValuePair<string, object>("code", Code);
-			yield return new KeyValuePair<string, object>("description", Description);
-			if (makeDefault) {
+			yield return new KeyValuePair<string, object>("code", this.Code);
+			yield return new KeyValuePair<string, object>("description", this.Description);
+			if (this.makeDefault) {
 				yield return new KeyValuePair<string, object>("isDefault", true);
 			}
-			if (saveRate) {
-				yield return new KeyValuePair<string, object>("rate", Rate);
+			if (this.saveRate) {
+				yield return new KeyValuePair<string, object>("rate", this.Rate);
 			}
 		}
 
 		public void MakeDefault() {
-			makeDefault = true;
+			this.makeDefault = true;
 		}
 
 		public void OverrideRate(double rate) {
-			Rate = rate;
-			saveRate = !double.IsNaN(rate);
+			this.Rate = rate;
+			this.saveRate = !double.IsNaN(rate);
 		}
 	}
 }

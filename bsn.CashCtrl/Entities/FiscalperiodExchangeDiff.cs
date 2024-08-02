@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace bsn.CashCtrl.Entities {
 	public class FiscalperiodExchangeDiff: IApiSerializable {
@@ -13,8 +13,8 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		public IEnumerable<KeyValuePair<string, object>> ToParameters() {
-			yield return new("accountId", AccountId);
-			yield return new("currencyRate", CurrencyRate);
+			yield return new("accountId", this.AccountId);
+			yield return new("currencyRate", this.CurrencyRate);
 		}
 	}
 }

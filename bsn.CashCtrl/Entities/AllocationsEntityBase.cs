@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,11 +7,11 @@ namespace bsn.CashCtrl.Entities {
 		private int allocationCount;
 
 		public int AllocationCount {
-			get => Allocations?.Count ?? allocationCount;
+			get => this.Allocations?.Count ?? this.allocationCount;
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
 			set {
-				Allocations = null;
-				allocationCount = value;
+				this.Allocations = null;
+				this.allocationCount = value;
 			}
 		}
 
@@ -21,11 +21,11 @@ namespace bsn.CashCtrl.Entities {
 		} = new(0);
 
 		public override IEnumerable<KeyValuePair<string, object>> ToParameters() {
-			if (Allocations == null && allocationCount > 0) {
+			if (this.Allocations == null && this.allocationCount > 0) {
 				throw new InvalidOperationException("The entity should have allocations, but these are not included in the entity.");
 			}
 			return base.ToParameters()
-					.Append(new("allocations", Allocations));
+					.Append(new("allocations", this.Allocations));
 		}
 	}
 }

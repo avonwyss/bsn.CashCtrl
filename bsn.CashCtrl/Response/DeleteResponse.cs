@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace bsn.CashCtrl.Response {
 	public class DeleteResponse: ActionResponse {
@@ -8,8 +8,8 @@ namespace bsn.CashCtrl.Response {
 		}
 
 		public override void EnsureSuccess() {
-			if (!Success) {
-				throw new CashCtrlApiException(Message ?? ErrorMessage);
+			if (!this.Success) {
+				throw new CashCtrlApiException(this.Message ?? this.ErrorMessage);
 			}
 		}
 	}

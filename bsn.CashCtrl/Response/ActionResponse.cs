@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 using Newtonsoft.Json;
 
@@ -17,8 +17,8 @@ namespace bsn.CashCtrl.Response {
 		}
 
 		public virtual void EnsureSuccess() {
-			if (!Success) {
-				throw new InvalidOperationException(ErrorMessage);
+			if (!this.Success) {
+				throw new InvalidOperationException(this.ErrorMessage);
 			}
 		}
 	}

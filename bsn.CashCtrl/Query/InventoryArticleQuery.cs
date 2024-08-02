@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace bsn.CashCtrl.Query {
@@ -29,11 +29,11 @@ namespace bsn.CashCtrl.Query {
 		}
 
 		protected override IEnumerable<KeyValuePair<string, object>> ToParametersInternal() {
-			yield return new("onlyActive", OnlyActive);
-			yield return new("onlyCostCenters", OnlyCostCenters);
-			yield return new("onlyRestock", OnlyRestock);
-			yield return new("onlyWithImages", OnlyWithImages);
-			yield return new("onlyWithoutCategory", OnlyWithoutCategory);
+			yield return new("onlyActive", this.OnlyActive);
+			yield return new("onlyCostCenters", this.OnlyCostCenters);
+			yield return new("onlyRestock", this.OnlyRestock);
+			yield return new("onlyWithImages", this.OnlyWithImages);
+			yield return new("onlyWithoutCategory", this.OnlyWithoutCategory);
 		}
 	}
 }

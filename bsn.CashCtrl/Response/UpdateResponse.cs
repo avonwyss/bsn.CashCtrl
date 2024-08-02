@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace bsn.CashCtrl.Response {
 	public class UpdateResponse: ActionResponse {
@@ -20,8 +20,8 @@ namespace bsn.CashCtrl.Response {
 		}
 
 		public override void EnsureSuccess() {
-			if (!Success) {
-				throw new CashCtrlApiException(ErrorMessage, Errors);
+			if (!this.Success) {
+				throw new CashCtrlApiException(this.ErrorMessage, this.Errors);
 			}
 		}
 	}

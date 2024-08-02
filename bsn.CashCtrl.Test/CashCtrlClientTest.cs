@@ -14,8 +14,8 @@ namespace bsn.CashCtrl {
 
 		private void WriteAsJson<T>(T data) {
 			using (var writer = new StringWriter()) {
-				Client.JsonSerializer.Serialize(writer, data);
-				Output.WriteLine(writer.ToString());
+				this.Client.JsonSerializer.Serialize(writer, data);
+				this.Output.WriteLine(writer.ToString());
 			}
 		}
 		
@@ -26,15 +26,15 @@ namespace bsn.CashCtrl {
 
 		[Fact]
 		public void List() {
-			var response = Client.AccountList();
-			WriteAsJson(response);
+			var response = this.Client.AccountList();
+			this.WriteAsJson(response);
 		}
 
 		[Fact]
 		public async Task ListAsync() {
-			var response = await Client.GetAsync<ListResponse<OrderCategory>>("order/category/list.json", null).ConfigureAwait(false);
-			Output.WriteLine(response.Data[0].Status[0].Name.ToString("EN"));
-			WriteAsJson(response);
+			var response = await this.Client.GetAsync<ListResponse<OrderCategory>>("order/category/list.json", null).ConfigureAwait(false);
+			this.Output.WriteLine(response.Data[0].Status[0].Name.ToString("EN"));
+			this.WriteAsJson(response);
 		}
 	}
 }

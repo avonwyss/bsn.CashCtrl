@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 using Newtonsoft.Json.Linq;
@@ -123,24 +123,24 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		public IEnumerable<KeyValuePair<string, object>> ToParameters() {
-			if (Id > 0) {
-				yield return new KeyValuePair<string, object>("id", Id);
+			if (this.Id > 0) {
+				yield return new KeyValuePair<string, object>("id", this.Id);
 			}
-			yield return new KeyValuePair<string, object>("name", Name);
-			yield return new KeyValuePair<string, object>("address", Address);
-			yield return new KeyValuePair<string, object>("bic", Bic);
-			yield return new KeyValuePair<string, object>("city", City);
-			yield return new KeyValuePair<string, object>("country", Country);
-			yield return new KeyValuePair<string, object>("footer", Footer);
-			yield return new KeyValuePair<string, object>("iban", Iban);
-			yield return new KeyValuePair<string, object>("isInactive", IsInactive);
-			yield return new KeyValuePair<string, object>("logoFileId", LogoFileId);
-			yield return new KeyValuePair<string, object>("orgName", OrgName);
-			yield return new KeyValuePair<string, object>("qrFirstDigits", QrFirstDigits);
-			yield return new KeyValuePair<string, object>("qrIban", QrIban);
-			yield return new KeyValuePair<string, object>("type", Type);
-			yield return new KeyValuePair<string, object>("vatUid", VatUid);
-			yield return new KeyValuePair<string, object>("zip", Zip);
+			yield return new KeyValuePair<string, object>("name", this.Name);
+			yield return new KeyValuePair<string, object>("address", this.Address);
+			yield return new KeyValuePair<string, object>("bic", this.Bic);
+			yield return new KeyValuePair<string, object>("city", this.City);
+			yield return new KeyValuePair<string, object>("country", this.Country);
+			yield return new KeyValuePair<string, object>("footer", this.Footer);
+			yield return new KeyValuePair<string, object>("iban", this.Iban);
+			yield return new KeyValuePair<string, object>("isInactive", this.IsInactive);
+			yield return new KeyValuePair<string, object>("logoFileId", this.LogoFileId);
+			yield return new KeyValuePair<string, object>("orgName", this.OrgName);
+			yield return new KeyValuePair<string, object>("qrFirstDigits", this.QrFirstDigits);
+			yield return new KeyValuePair<string, object>("qrIban", this.QrIban);
+			yield return new KeyValuePair<string, object>("type", this.Type);
+			yield return new KeyValuePair<string, object>("vatUid", this.VatUid);
+			yield return new KeyValuePair<string, object>("zip", this.Zip);
 		}
 	}
 }

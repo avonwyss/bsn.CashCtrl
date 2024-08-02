@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace bsn.CashCtrl.Entities {
@@ -408,40 +408,40 @@ namespace bsn.CashCtrl.Entities {
 		// ReSharper disable once ConvertToAutoPropertyWhenPossible
 		public int? SequenceNumberId {
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
-			get => sequenceNumberId;
-			set => sequenceNumberId = value;
+			get => this.sequenceNumberId;
+			set => this.sequenceNumberId = value;
 		}
 
 		protected override IEnumerable<KeyValuePair<string, object>> ToParametersInternal() {
-			yield return new KeyValuePair<string, object>("associateId", AssociateId);
-			yield return new KeyValuePair<string, object>("categoryId", CategoryId);
-			yield return new KeyValuePair<string, object>("date", Date);
-			yield return new KeyValuePair<string, object>("accountId", AccountId);
-			yield return new KeyValuePair<string, object>("currencyId", CurrencyId);
-			yield return new KeyValuePair<string, object>("currencyRate", CurrencyRate);
-			yield return new KeyValuePair<string, object>("daysBefore", DaysBefore);
-			yield return new KeyValuePair<string, object>("description", Description);
-			yield return new KeyValuePair<string, object>("discountPercentage", DiscountPercentage);
-			yield return new KeyValuePair<string, object>("dueDays", DueDays);
-			yield return new KeyValuePair<string, object>("endDate", EndDate);
-			yield return new KeyValuePair<string, object>("groupId", GroupId);
-			yield return new KeyValuePair<string, object>("isDisplayItemGross", IsDisplayItemGross);
-			yield return new KeyValuePair<string, object>("items", Items);
-			yield return new KeyValuePair<string, object>("language", Language);
-			yield return new KeyValuePair<string, object>("notifyEmail", NotifyEmail);
-			yield return new KeyValuePair<string, object>("notifyPersonId", NotifyPersonId);
-			yield return new KeyValuePair<string, object>("notifyType", NotifyType);
-			yield return new KeyValuePair<string, object>("notifyUserId", NotifyUserId);
-			if (!string.IsNullOrEmpty(Nr)) {
-				yield return new KeyValuePair<string, object>("nr", Nr);
+			yield return new KeyValuePair<string, object>("associateId", this.AssociateId);
+			yield return new KeyValuePair<string, object>("categoryId", this.CategoryId);
+			yield return new KeyValuePair<string, object>("date", this.Date);
+			yield return new KeyValuePair<string, object>("accountId", this.AccountId);
+			yield return new KeyValuePair<string, object>("currencyId", this.CurrencyId);
+			yield return new KeyValuePair<string, object>("currencyRate", this.CurrencyRate);
+			yield return new KeyValuePair<string, object>("daysBefore", this.DaysBefore);
+			yield return new KeyValuePair<string, object>("description", this.Description);
+			yield return new KeyValuePair<string, object>("discountPercentage", this.DiscountPercentage);
+			yield return new KeyValuePair<string, object>("dueDays", this.DueDays);
+			yield return new KeyValuePair<string, object>("endDate", this.EndDate);
+			yield return new KeyValuePair<string, object>("groupId", this.GroupId);
+			yield return new KeyValuePair<string, object>("isDisplayItemGross", this.IsDisplayItemGross);
+			yield return new KeyValuePair<string, object>("items", this.Items);
+			yield return new KeyValuePair<string, object>("language", this.Language);
+			yield return new KeyValuePair<string, object>("notifyEmail", this.NotifyEmail);
+			yield return new KeyValuePair<string, object>("notifyPersonId", this.NotifyPersonId);
+			yield return new KeyValuePair<string, object>("notifyType", this.NotifyType);
+			yield return new KeyValuePair<string, object>("notifyUserId", this.NotifyUserId);
+			if (!string.IsNullOrEmpty(this.Nr)) {
+				yield return new KeyValuePair<string, object>("nr", this.Nr);
 			}
-			yield return new KeyValuePair<string, object>("previousId", PreviousId);
-			yield return new KeyValuePair<string, object>("recurrence", Recurrence);
-			yield return new KeyValuePair<string, object>("responsiblePersonId", ResponsiblePersonId);
-			yield return new KeyValuePair<string, object>("roundingId", RoundingId);
-			yield return new KeyValuePair<string, object>("sequenceNumberId", sequenceNumberId);
-			yield return new KeyValuePair<string, object>("startDate", StartDate);
-			yield return new KeyValuePair<string, object>("statusId", StatusId);
+			yield return new KeyValuePair<string, object>("previousId", this.PreviousId);
+			yield return new KeyValuePair<string, object>("recurrence", this.Recurrence);
+			yield return new KeyValuePair<string, object>("responsiblePersonId", this.ResponsiblePersonId);
+			yield return new KeyValuePair<string, object>("roundingId", this.RoundingId);
+			yield return new KeyValuePair<string, object>("sequenceNumberId", this.sequenceNumberId);
+			yield return new KeyValuePair<string, object>("startDate", this.StartDate);
+			yield return new KeyValuePair<string, object>("statusId", this.StatusId);
 		}
 	}
 }

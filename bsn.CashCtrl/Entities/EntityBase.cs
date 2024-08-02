@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace bsn.CashCtrl.Entities {
 	public abstract class EntityBase {
@@ -36,7 +36,7 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		public virtual bool OwnedByApi {
-			get => CreatedBy.StartsWith("API:", StringComparison.Ordinal) || LastUpdatedBy.StartsWith("API:", StringComparison.Ordinal);
+			get => this.CreatedBy.StartsWith("API:", StringComparison.Ordinal) || this.LastUpdatedBy.StartsWith("API:", StringComparison.Ordinal);
 		}
 	}
 }

@@ -58,27 +58,27 @@ namespace bsn.CashCtrl {
 		internal CashCtrlClient(Uri baseUri, string apiKey, HttpClient httpClient) {
 			this.baseUri = baseUri;
 			this.httpClient = httpClient;
-			authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.UTF8.GetBytes(apiKey+':')));
+			this.authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.UTF8.GetBytes(apiKey+':')));
 		}
 
 		public void Dispose() {
-			httpClient.Dispose();
+			this.httpClient.Dispose();
 		}
 
-		internal HttpClient HttpClient => httpClient;
+		internal HttpClient HttpClient => this.httpClient;
 
-		public JsonSerializer JsonSerializer => jsonSerializer;
+		public JsonSerializer JsonSerializer => this.jsonSerializer;
 
 		private T ConvertResult<T>(JObject result) {
 			if (typeof(T).IsAssignableFrom(typeof(JObject))) {
 				return (T)(object)result;
 			}
 			using var reader = new JTokenReader(result);
-			return jsonSerializer.Deserialize<T>(reader);
+			return this.jsonSerializer.Deserialize<T>(reader);
 		}
 
 		public HttpContent Invoke(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters) {
-			var request = PrepareRequest(method, endpoint, parameters);
+			var request = this.PrepareRequest(method, endpoint, parameters);
 			string content = null;
 			try {
 				var response = this.httpClient.Send(request);
@@ -97,25 +97,25 @@ namespace bsn.CashCtrl {
 		}
 
 		public JObject InvokeJson(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters) {
-			using var textReader = InvokeTextReader(method, endpoint, parameters);
+			using var textReader = this.InvokeTextReader(method, endpoint, parameters);
 			using var jsonReader = new JsonTextReader(textReader);
 			var jsonContent = JObject.Load(jsonReader);
 			return jsonContent;
 		}
 
 		public StreamReader InvokeTextReader(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters) {
-			var content = Invoke(method, endpoint, parameters);
+			var content = this.Invoke(method, endpoint, parameters);
 			var charSet = content.Headers.ContentType?.CharSet;
 			var stream = content.ReadAsStream();
 			return new StreamReader(stream, string.IsNullOrEmpty(charSet) ? Encoding.UTF8 : Encoding.GetEncoding(charSet));
 		}
 
 		public T InvokeJson<T>(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters) {
-			return ConvertResult<T>(InvokeJson(method, endpoint, parameters));
+			return this.ConvertResult<T>(this.InvokeJson(method, endpoint, parameters));
 		}
 
 		public async ValueTask<HttpContent> InvokeAsync(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken = default) {
-			var request = PrepareRequest(method, endpoint, parameters);
+			var request = this.PrepareRequest(method, endpoint, parameters);
 			string content = null;
 			try {
 				var response = await this.httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
@@ -134,34 +134,34 @@ namespace bsn.CashCtrl {
 		}
 
 		public async ValueTask<JObject> InvokeJsonAsync(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken = default) {
-			using var textReader = await InvokeTextReaderAsync(method, endpoint, parameters, cancellationToken).ConfigureAwait(false);
+			using var textReader = await this.InvokeTextReaderAsync(method, endpoint, parameters, cancellationToken).ConfigureAwait(false);
 			using var jsonReader = new JsonTextReader(textReader);
 			var jsonContent = await JObject.LoadAsync(jsonReader, cancellationToken).ConfigureAwait(false);
 			return jsonContent;
 		}
 
 		public async ValueTask<StreamReader> InvokeTextReaderAsync(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken = default) {
-			var content = await InvokeAsync(method, endpoint, parameters, cancellationToken).ConfigureAwait(false);
+			var content = await this.InvokeAsync(method, endpoint, parameters, cancellationToken).ConfigureAwait(false);
 			var charSet = content.Headers.ContentType?.CharSet;
 			var stream = await content.ReadAsStreamAsync().ConfigureAwait(false);
 			return new StreamReader(stream, string.IsNullOrEmpty(charSet) ? Encoding.UTF8 : Encoding.GetEncoding(charSet));
 		}
 
 		public async ValueTask<T> InvokeJsonAsync<T>(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken = default) {
-			return ConvertResult<T>(await InvokeJsonAsync(method, endpoint, parameters).ConfigureAwait(false));
+			return this.ConvertResult<T>(await this.InvokeJsonAsync(method, endpoint, parameters).ConfigureAwait(false));
 		}
 
 		private HttpRequestMessage PrepareRequest(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters) {
 			var payloadStrings = parameters?
 					.Where(p => p.Value != null)
-					.Select(p => new KeyValuePair<string, string>(p.Key, SerializeToString(p.Value)));
+					.Select(p => new KeyValuePair<string, string>(p.Key, this.SerializeToString(p.Value)));
 			var payloadAsQuery = rxMethodWithoutBody.IsMatch(method.Method);
 			if (payloadStrings != null && payloadAsQuery) {
 				// ReSharper disable once PossibleMultipleEnumeration
 				endpoint = endpoint+(endpoint.IndexOf('?') < 0 ? '?' : '&')+string.Join("&", payloadStrings.Select(p => Encode(p.Key)+"="+Encode(p.Value)));
 			}
-			var request = new HttpRequestMessage(method, new Uri(baseUri, endpoint));
-			request.Headers.Authorization = authorization;
+			var request = new HttpRequestMessage(method, new Uri(this.baseUri, endpoint));
+			request.Headers.Authorization = this.authorization;
 			if (payloadStrings != null && !payloadAsQuery) {
 				// ReSharper disable once PossibleMultipleEnumeration
 				request.Content = new FormUrlEncodedContent(payloadStrings);
@@ -171,7 +171,7 @@ namespace bsn.CashCtrl {
 
 		private string JsonToString(object value) {
 			using var writer = new StringWriter();
-			jsonSerializer.Serialize(writer, value);
+			this.jsonSerializer.Serialize(writer, value);
 			return writer.ToString();
 		}
 
@@ -180,18 +180,18 @@ namespace bsn.CashCtrl {
 					null => string.Empty,
 					var o when o.GetType().IsEnum => UppercaseStringEnumConverter.EnumValueToString(o),
 					LocalizedString str => (string)str,
-					IApiSerializable serializable => SerializeToString(new JObject(serializable.ToParameters().Select(p => new JProperty(p.Key, p.Value)))),
-					JValue jValue => SerializeToString(jValue.Value),
-					JContainer jContainer => JsonToString(jContainer),
+					IApiSerializable serializable => this.SerializeToString(new JObject(serializable.ToParameters().Select(p => new JProperty(p.Key, p.Value)))),
+					JValue jValue => this.SerializeToString(jValue.Value),
+					JContainer jContainer => this.JsonToString(jContainer),
 					XNode xNode => xNode.ToString(SaveOptions.DisableFormatting|SaveOptions.OmitDuplicateNamespaces),
 					string str => str,
 					bool b => b ? "1" : "0",
 					DateTime dt => dt.ToCashCtrlString(),
 					IFormattable formattable => formattable.ToString(null, CultureInfo.InvariantCulture),
-					IEnumerable<IApiSerializable> enumerable => '['+string.Join(",", enumerable.Select(SerializeToString))+']',
-					IEnumerable<JToken> enumerable => '['+string.Join(",", enumerable.Select(SerializeToString))+']',
-					IEnumerable<object> enumerable => string.Join(",", enumerable.Select(SerializeToString)),
-					IEnumerable enumerable => string.Join(",", enumerable.Cast<object>().Select(SerializeToString)),
+					IEnumerable<IApiSerializable> enumerable => '['+string.Join(",", enumerable.Select(this.SerializeToString))+']',
+					IEnumerable<JToken> enumerable => '['+string.Join(",", enumerable.Select(this.SerializeToString))+']',
+					IEnumerable<object> enumerable => string.Join(",", enumerable.Select(this.SerializeToString)),
+					IEnumerable enumerable => string.Join(",", enumerable.Cast<object>().Select(this.SerializeToString)),
 					_ => throw new NotSupportedException("Data type "+value.GetType().Name+" is not supported for parameter serialization")
 			};
 		}

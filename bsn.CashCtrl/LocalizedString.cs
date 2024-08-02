@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Globalization;
 using System.Linq;
 using System.Xml.Linq;
@@ -30,23 +30,23 @@ namespace bsn.CashCtrl {
 					throw new ArgumentException("The XML contents must be a <values> element.");
 				}
 			}
-			UnderlyingValue = underlyingValue;
+			this.UnderlyingValue = underlyingValue;
 		}
 
-		public OneOf.OneOf<string, XElement> UnderlyingValue {
+		public OneOf<string, XElement> UnderlyingValue {
 			get;
 		}
 
-		public bool Empty => UnderlyingValue.Match(string.IsNullOrEmpty, x => !x.Elements().Any());
+		public bool Empty => this.UnderlyingValue.Match(string.IsNullOrEmpty, x => !x.Elements().Any());
 
 		public LocalizedString Set(string language, string value) {
 			if (string.IsNullOrWhiteSpace(language)) {
 				throw new ArgumentNullException(nameof(language));
 			}
-			var x = Empty
+			var x = this.Empty
 					? new XElement(ValuesName)
-					: UnderlyingValue.IsT1
-							? UnderlyingValue.AsT1
+					: this.UnderlyingValue.IsT1
+							? this.UnderlyingValue.AsT1
 							: throw new InvalidOperationException("Cannot set a value on an invariant LocalizedString");
 			x.SetElementValue(language.ToLowerInvariant(), string.IsNullOrEmpty(value) ? null : value);
 			return new LocalizedString(x);
@@ -56,9 +56,9 @@ namespace bsn.CashCtrl {
 			if (string.IsNullOrWhiteSpace(defaultLanguage)) {
 				throw new ArgumentNullException(nameof(defaultLanguage));
 			}
-			return IsMultilanguage 
+			return this.IsMultilanguage 
 					? this 
-					: new LocalizedString(new XElement(ValuesName, new XElement(defaultLanguage.ToLowerInvariant(), UnderlyingValue.AsT0)));
+					: new LocalizedString(new XElement(ValuesName, new XElement(defaultLanguage.ToLowerInvariant(), this.UnderlyingValue.AsT0)));
 		}
 
 		public override bool Equals(object obj) {
@@ -70,34 +70,34 @@ namespace bsn.CashCtrl {
 		}
 
 		string IFormattable.ToString(string format, IFormatProvider formatProvider) {
-			return ToString((formatProvider as CultureInfo)?.TwoLetterISOLanguageName);
+			return this.ToString((formatProvider as CultureInfo)?.TwoLetterISOLanguageName);
 		}
 
 		public override string ToString() {
-			return ToString(null);
+			return this.ToString(null);
 		}
 
 		public string ToString(string language) {
 			if (string.IsNullOrEmpty(language)) {
 				language = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
 			}
-			return UnderlyingValue.Match(
+			return this.UnderlyingValue.Match(
 					s => s,
 					x => (x.Element(language.ToLowerInvariant()) ?? x.Elements().FirstOrDefault())?.Value);
 		}
 
-		public bool IsMultilanguage => UnderlyingValue.IsT1;
+		public bool IsMultilanguage => this.UnderlyingValue.IsT1;
 
 		public bool HasLanguage(string language) {
-			return TryGetLanguage(language, out _);
+			return this.TryGetLanguage(language, out _);
 		}
 
 		public bool TryGetLanguage(string language, out string value) {
 			if (string.IsNullOrEmpty(language)) {
 				throw new ArgumentNullException(nameof(language));
 			}
-			if (UnderlyingValue.IsT1) {
-				value = UnderlyingValue.AsT1.Element(language.ToLowerInvariant())?.Value;
+			if (this.UnderlyingValue.IsT1) {
+				value = this.UnderlyingValue.AsT1.Element(language.ToLowerInvariant())?.Value;
 				return !string.IsNullOrEmpty(value);
 			}
 			value = null;

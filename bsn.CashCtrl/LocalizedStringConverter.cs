@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
@@ -21,7 +21,7 @@ namespace bsn.CashCtrl {
 			}
 			if (reader.TokenType == JsonToken.String) {
 				var str = (string)reader.Value;
-				if (rxValues.IsMatch(str)) {
+				if (this.rxValues.IsMatch(str)) {
 					try {
 						return new LocalizedString(XElement.Parse(str, LoadOptions.None));
 					} catch {

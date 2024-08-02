@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace bsn.CashCtrl.Entities {
@@ -219,31 +219,31 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		protected override IEnumerable<KeyValuePair<string, object>> ToParametersInternal() {
-			yield return new KeyValuePair<string, object>("name", Name);
-			yield return new KeyValuePair<string, object>("accountId", AccountId);
-			yield return new KeyValuePair<string, object>("dateAdded", DateAdded.ToCashCtrlString(true));
-			yield return new KeyValuePair<string, object>("purchasePrice", PurchasePrice);
-			yield return new KeyValuePair<string, object>("categoryId", CategoryId);
-			yield return new KeyValuePair<string, object>("dateDisposed", DateDisposed?.ToCashCtrlString(true));
-			yield return new KeyValuePair<string, object>("deprAccountId", DeprAccountId);
-			yield return new KeyValuePair<string, object>("deprDuration", DeprDuration);
-			yield return new KeyValuePair<string, object>("deprSalvageValue", DeprSalvageValue);
-			yield return new KeyValuePair<string, object>("deprType", DeprType);
-			yield return new KeyValuePair<string, object>("description", Description);
-			yield return new KeyValuePair<string, object>("disposalDebitId", DisposalDebitId);
-			yield return new KeyValuePair<string, object>("disposalType", DisposalType);
-			if (PurchaseType == Entities.PurchaseType.Historical) {
-				yield return new KeyValuePair<string, object>("initialValue", InitialValue);
+			yield return new KeyValuePair<string, object>("name", this.Name);
+			yield return new KeyValuePair<string, object>("accountId", this.AccountId);
+			yield return new KeyValuePair<string, object>("dateAdded", this.DateAdded.ToCashCtrlString(true));
+			yield return new KeyValuePair<string, object>("purchasePrice", this.PurchasePrice);
+			yield return new KeyValuePair<string, object>("categoryId", this.CategoryId);
+			yield return new KeyValuePair<string, object>("dateDisposed", this.DateDisposed?.ToCashCtrlString(true));
+			yield return new KeyValuePair<string, object>("deprAccountId", this.DeprAccountId);
+			yield return new KeyValuePair<string, object>("deprDuration", this.DeprDuration);
+			yield return new KeyValuePair<string, object>("deprSalvageValue", this.DeprSalvageValue);
+			yield return new KeyValuePair<string, object>("deprType", this.DeprType);
+			yield return new KeyValuePair<string, object>("description", this.Description);
+			yield return new KeyValuePair<string, object>("disposalDebitId", this.DisposalDebitId);
+			yield return new KeyValuePair<string, object>("disposalType", this.DisposalType);
+			if (this.PurchaseType == Entities.PurchaseType.Historical) {
+				yield return new KeyValuePair<string, object>("initialValue", this.InitialValue);
 			}
-			yield return new KeyValuePair<string, object>("locationId", LocationId);
-			if (!string.IsNullOrEmpty(Nr)) {
-				yield return new KeyValuePair<string, object>("nr", Nr);
+			yield return new KeyValuePair<string, object>("locationId", this.LocationId);
+			if (!string.IsNullOrEmpty(this.Nr)) {
+				yield return new KeyValuePair<string, object>("nr", this.Nr);
 			}
-			yield return new KeyValuePair<string, object>("saleAmount", SaleAmount);
-			yield return new KeyValuePair<string, object>("saleCreditId", SaleCreditId);
-			yield return new KeyValuePair<string, object>("saleDebitId", SaleDebitId);
-			yield return new KeyValuePair<string, object>("saleTaxId", SaleTaxId);
-			yield return new KeyValuePair<string, object>("sequenceNumberId", SequenceNumberId);
+			yield return new KeyValuePair<string, object>("saleAmount", this.SaleAmount);
+			yield return new KeyValuePair<string, object>("saleCreditId", this.SaleCreditId);
+			yield return new KeyValuePair<string, object>("saleDebitId", this.SaleDebitId);
+			yield return new KeyValuePair<string, object>("saleTaxId", this.SaleTaxId);
+			yield return new KeyValuePair<string, object>("sequenceNumberId", this.SequenceNumberId);
 		}
 	}
 }

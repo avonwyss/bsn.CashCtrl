@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 using Newtonsoft.Json;
@@ -22,11 +22,11 @@ namespace bsn.CashCtrl.Query {
 		}
 
 		public IEnumerable<KeyValuePair<string, object>> ToParameters() {
-			yield return new("field", Field);
-			if (Comparison.HasValue) {
-				yield return new("comparison", Comparison.Value);
+			yield return new("field", this.Field);
+			if (this.Comparison.HasValue) {
+				yield return new("comparison", this.Comparison.Value);
 			}
-			yield return new("value", Value);
+			yield return new("value", this.Value);
 		}
 	}
 }

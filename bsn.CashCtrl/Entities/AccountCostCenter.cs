@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace bsn.CashCtrl.Entities {
@@ -65,12 +65,12 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		protected override IEnumerable<KeyValuePair<string, object>> ToParametersInternal() {
-			yield return new KeyValuePair<string, object>("name", Name);
-			yield return new KeyValuePair<string, object>("number", Number);
-			yield return new KeyValuePair<string, object>("categoryId", CategoryId);
-			yield return new KeyValuePair<string, object>("isInactive", IsInactive);
-			yield return new KeyValuePair<string, object>("targetMin", TargetMin);
-			yield return new KeyValuePair<string, object>("targetMax", TargetMax);
+			yield return new KeyValuePair<string, object>("name", this.Name);
+			yield return new KeyValuePair<string, object>("number", this.Number);
+			yield return new KeyValuePair<string, object>("categoryId", this.CategoryId);
+			yield return new KeyValuePair<string, object>("isInactive", this.IsInactive);
+			yield return new KeyValuePair<string, object>("targetMin", this.TargetMin);
+			yield return new KeyValuePair<string, object>("targetMax", this.TargetMax);
 		}
 	}
 }

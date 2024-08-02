@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 using Newtonsoft.Json;
 
@@ -12,8 +12,8 @@ namespace bsn.CashCtrl.Response {
 		}
 
 		public T GetDataOrThrow() {
-			EnsureSuccess();
-			return Data;
+			this.EnsureSuccess();
+			return this.Data;
 		}
 	}
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -200,33 +200,33 @@ namespace bsn.CashCtrl {
 					{ 9100, "Bilan d'ouverture" },
 					{ 9200, "Bénéfice ou perte de l'exercice" }
 			};
-			var categories = Client.AccountCategoryList();
+			var categories = this.Client.AccountCategoryList();
 			foreach (var category in categories.Where(c => !c.IsSystem).OrderBy(c => c.Number.PadLeft(4, '0'))) {
 				if (!accountLabels.TryGetValue(int.Parse(category.Number), out var label)) {
-					Output.WriteLine($"{{ {category.Number}, \"{category.Name}\" }}");
+					this.Output.WriteLine($"{{ {category.Number}, \"{category.Name}\" }}");
 				} else {
 					if (category.Name.TryGetLanguage("FR", out var existingLabel)) {
-						Output.WriteLine($"Label exists for {category.Number}: {category.Name.ToString("FR")} (new label: {label})");
+						this.Output.WriteLine($"Label exists for {category.Number}: {category.Name.ToString("FR")} (new label: {label})");
 					} else {
-						Output.WriteLine($"{category.Number}: {category.Name.ToString("DE")} => {label}");
+						this.Output.WriteLine($"{category.Number}: {category.Name.ToString("DE")} => {label}");
 					}
 					category.Name = category.Name.Multilanguage().Set("FR", label);
-					Client.AccountCategoryUpdate(category);
+					this.Client.AccountCategoryUpdate(category);
 				}
 			}
-			var accounts = Client.AccountList();
+			var accounts = this.Client.AccountList();
 			foreach (var account in accounts.OrderBy(a => a.Number)) {
 				if (!accountLabels.TryGetValue(int.Parse(account.Number), out var label)) {
-					Output.WriteLine($"{{ {account.Number}, \"{account.Name}\" }}");
+					this.Output.WriteLine($"{{ {account.Number}, \"{account.Name}\" }}");
 				} else {
 					if (account.Name.TryGetLanguage("FR", out var existingLabel)) {
-						Output.WriteLine($"Label exists for {account.Number}: {account.Name.ToString("FR")} (new label: {label})");
+						this.Output.WriteLine($"Label exists for {account.Number}: {account.Name.ToString("FR")} (new label: {label})");
 					} else {
-						Output.WriteLine($"{account.Number}: {account.Name.ToString("DE")} => {label}");
+						this.Output.WriteLine($"{account.Number}: {account.Name.ToString("DE")} => {label}");
 					}
-					var updatedAccount = Client.AccountRead(account);
+					var updatedAccount = this.Client.AccountRead(account);
 					updatedAccount.Name = account.Name.Multilanguage().Set("FR", label);
-					Client.AccountUpdate(updatedAccount);
+					this.Client.AccountUpdate(updatedAccount);
 				}
 			}
 		}

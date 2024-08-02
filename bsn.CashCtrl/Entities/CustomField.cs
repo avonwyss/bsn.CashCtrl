@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 using Newtonsoft.Json;
@@ -86,21 +86,21 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		public IEnumerable<KeyValuePair<string, object>> ToParameters() {
-			if (Id > 0) {
-				yield return new KeyValuePair<string, object>("id", Id);
+			if (this.Id > 0) {
+				yield return new KeyValuePair<string, object>("id", this.Id);
 			}
-			yield return new KeyValuePair<string, object>("dataType", DataType);
-			if (DataType == CustomFieldDataType.Combobox) {
-				yield return new KeyValuePair<string, object>("values", Values);
+			yield return new KeyValuePair<string, object>("dataType", this.DataType);
+			if (this.DataType == CustomFieldDataType.Combobox) {
+				yield return new KeyValuePair<string, object>("values", this.Values);
 			}
-			yield return new KeyValuePair<string, object>("name", Name);
-			yield return new KeyValuePair<string, object>("type", Type);
-			yield return new KeyValuePair<string, object>("description", Description);
-			if (GroupId.HasValue) {
-				yield return new KeyValuePair<string, object>("groupId", GroupId);
+			yield return new KeyValuePair<string, object>("name", this.Name);
+			yield return new KeyValuePair<string, object>("type", this.Type);
+			yield return new KeyValuePair<string, object>("description", this.Description);
+			if (this.GroupId.HasValue) {
+				yield return new KeyValuePair<string, object>("groupId", this.GroupId);
 			}
-			yield return new KeyValuePair<string, object>("isInactive", IsInactive);
-			yield return new KeyValuePair<string, object>("isMulti", IsMulti);
+			yield return new KeyValuePair<string, object>("isInactive", this.IsInactive);
+			yield return new KeyValuePair<string, object>("isMulti", this.IsMulti);
 		}
 	}
 }

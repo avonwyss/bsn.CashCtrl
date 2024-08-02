@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 using Newtonsoft.Json;
@@ -48,15 +48,15 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		public void ReplaceWith(int preparedFileId) {
-			replaceWith = preparedFileId;
+			this.replaceWith = preparedFileId;
 		}
 
 		protected override IEnumerable<KeyValuePair<string, object>> ToParametersInternal() {
-			yield return new KeyValuePair<string, object>("name", Name);
-			yield return new KeyValuePair<string, object>("categoryId", CategoryId);
-			yield return new KeyValuePair<string, object>("description", Description);
-			if (replaceWith.HasValue) {
-				yield return new KeyValuePair<string, object>("replaceWith", replaceWith);
+			yield return new KeyValuePair<string, object>("name", this.Name);
+			yield return new KeyValuePair<string, object>("categoryId", this.CategoryId);
+			yield return new KeyValuePair<string, object>("description", this.Description);
+			if (this.replaceWith.HasValue) {
+				yield return new KeyValuePair<string, object>("replaceWith", this.replaceWith);
 			}
 		}
 

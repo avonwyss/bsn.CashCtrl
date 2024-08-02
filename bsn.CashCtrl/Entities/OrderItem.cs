@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 using Microsoft.SqlServer.Server;
@@ -80,8 +80,8 @@ namespace bsn.CashCtrl.Entities {
 		} = 1;
 
 		public string Name {
-			get => WithoutApiMarker(name);
-			set => name = value;
+			get => WithoutApiMarker(this.name);
+			set => this.name = value;
 		}
 
 		public string Description {
@@ -195,21 +195,21 @@ namespace bsn.CashCtrl.Entities {
 			set;
 		}
 
-		public override bool OwnedByApi => base.OwnedByApi || HasApiMarker(name);
+		public override bool OwnedByApi => base.OwnedByApi || HasApiMarker(this.name);
 
 		public IEnumerable<KeyValuePair<string, object>> ToParameters() {
-			yield return new("type", Type);
-			yield return new("name", WithApiMarker(name));
-			yield return new("description", Description);
-			if (Type == OrderItemType.Article) {
-				yield return new("accountId", AccountId);
-				yield return new("unitPrice", UnitPrice);
-				yield return new("articleNr", ArticleNr);
-				yield return new("discountPercentage", DiscountPercentage);
-				yield return new("inventoryId", InventoryId);
-				yield return new("quantity", Quantity);
-				yield return new("taxId", TaxId);
-				yield return new("unitId", UnitId);
+			yield return new("type", this.Type);
+			yield return new("name", WithApiMarker(this.name));
+			yield return new("description", this.Description);
+			if (this.Type == OrderItemType.Article) {
+				yield return new("accountId", this.AccountId);
+				yield return new("unitPrice", this.UnitPrice);
+				yield return new("articleNr", this.ArticleNr);
+				yield return new("discountPercentage", this.DiscountPercentage);
+				yield return new("inventoryId", this.InventoryId);
+				yield return new("quantity", this.Quantity);
+				yield return new("taxId", this.TaxId);
+				yield return new("unitId", this.UnitId);
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 using bsn.CashCtrl.Entities;
 
@@ -40,13 +40,13 @@ namespace bsn.CashCtrl.Query {
 		}
 
 		protected override IEnumerable<KeyValuePair<string, object>> ToParametersInternal() {
-			yield return new("fiscalPeriodId", FiscalPeriodId);
-			yield return new("groupId", GroupId);
-			yield return new("statusId", StatusId);
-			yield return new("type", Type);
-			yield return new("onlyCostCenters", OnlyCostCenters);
-			yield return new("onlyOpen", OnlyOpen);
-			yield return new("onlyOverdue", OnlyOverdue);
+			yield return new("fiscalPeriodId", this.FiscalPeriodId);
+			yield return new("groupId", this.GroupId);
+			yield return new("statusId", this.StatusId);
+			yield return new("type", this.Type);
+			yield return new("onlyCostCenters", this.OnlyCostCenters);
+			yield return new("onlyOpen", this.OnlyOpen);
+			yield return new("onlyOverdue", this.OnlyOverdue);
 		}
 	}
 }

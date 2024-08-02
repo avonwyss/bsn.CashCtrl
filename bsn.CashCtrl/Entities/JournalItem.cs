@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace bsn.CashCtrl.Entities {
@@ -69,12 +69,12 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		public IEnumerable<KeyValuePair<string, object>> ToParameters() {
-			yield return new("accountId", AccountId);
-			yield return new("associateId", AssociateId);
-			yield return new("credit", Credit);
-			yield return new("debit", Debit);
-			yield return new("description", Description);
-			yield return new("taxId", TaxId);
+			yield return new("accountId", this.AccountId);
+			yield return new("associateId", this.AssociateId);
+			yield return new("credit", this.Credit);
+			yield return new("debit", this.Debit);
+			yield return new("description", this.Description);
+			yield return new("taxId", this.TaxId);
 		}
 	}
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace bsn.CashCtrl.Entities {
@@ -38,8 +38,8 @@ namespace bsn.CashCtrl.Entities {
 
 		public int? SequenceNrId {
 			[Obsolete(CashCtrlClient.EntityFieldMissing, false)]
-			get => sequenceNrId;
-			set => sequenceNrId = value;
+			get => this.sequenceNrId;
+			set => this.sequenceNrId = value;
 		}
 
 		public int? SequenceNrIdInherited {
@@ -49,15 +49,15 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		public IEnumerable<KeyValuePair<string, object>> ToParameters() {
-			if (Id > 0) {
-				yield return new KeyValuePair<string, object>("id", Id);
+			if (this.Id > 0) {
+				yield return new KeyValuePair<string, object>("id", this.Id);
 			}
-			yield return new KeyValuePair<string, object>("name", Name);
-			yield return new KeyValuePair<string, object>("parentId", ParentId);
-			yield return new KeyValuePair<string, object>("allocations", (IEnumerable<AccountCostCenterAllocation>)Allocations ?? Array.Empty<AccountCostCenterAllocation>());
-			yield return new KeyValuePair<string, object>("purchaseAccountId", PurchaseAccountId);
-			yield return new KeyValuePair<string, object>("salesAccountId", SalesAccountId);
-			yield return new KeyValuePair<string, object>("sequenceNrId", sequenceNrId);
+			yield return new KeyValuePair<string, object>("name", this.Name);
+			yield return new KeyValuePair<string, object>("parentId", this.ParentId);
+			yield return new KeyValuePair<string, object>("allocations", (IEnumerable<AccountCostCenterAllocation>)this.Allocations ?? Array.Empty<AccountCostCenterAllocation>());
+			yield return new KeyValuePair<string, object>("purchaseAccountId", this.PurchaseAccountId);
+			yield return new KeyValuePair<string, object>("salesAccountId", this.SalesAccountId);
+			yield return new KeyValuePair<string, object>("sequenceNrId", this.sequenceNrId);
 		}
 	}
 }

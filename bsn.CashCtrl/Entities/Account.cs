@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 using Newtonsoft.Json;
@@ -142,14 +142,14 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		protected override IEnumerable<KeyValuePair<string, object>> ToParametersInternal() {
-			yield return new KeyValuePair<string, object>("categoryId", CategoryId);
-			yield return new KeyValuePair<string, object>("name", Name);
-			yield return new KeyValuePair<string, object>("number", Number);
-			yield return new KeyValuePair<string, object>("currencyId", CurrencyId);
-			yield return new KeyValuePair<string, object>("isInactive", IsInactive);
-			yield return new KeyValuePair<string, object>("targetMin", TargetMin);
-			yield return new KeyValuePair<string, object>("targetMax", TargetMax);
-			yield return new KeyValuePair<string, object>("taxId", TaxId);
+			yield return new KeyValuePair<string, object>("categoryId", this.CategoryId);
+			yield return new KeyValuePair<string, object>("name", this.Name);
+			yield return new KeyValuePair<string, object>("number", this.Number);
+			yield return new KeyValuePair<string, object>("currencyId", this.CurrencyId);
+			yield return new KeyValuePair<string, object>("isInactive", this.IsInactive);
+			yield return new KeyValuePair<string, object>("targetMin", this.TargetMin);
+			yield return new KeyValuePair<string, object>("targetMax", this.TargetMax);
+			yield return new KeyValuePair<string, object>("taxId", this.TaxId);
 		}
 	}
 }

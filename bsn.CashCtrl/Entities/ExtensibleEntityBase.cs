@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 using Newtonsoft.Json;
@@ -8,9 +8,9 @@ namespace bsn.CashCtrl.Entities {
 		private int attachmentCount;
 
 		public virtual int AttachmentCount {
-			get => Attachments?.Length ?? attachmentCount;
+			get => this.Attachments?.Length ?? this.attachmentCount;
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, false)]
-			set => attachmentCount = value;
+			set => this.attachmentCount = value;
 		}
 
 		public virtual Attachment[] Attachments {
@@ -31,12 +31,12 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		public virtual IEnumerable<KeyValuePair<string, object>> ToParameters() {
-			if (Id > 0) {
-				yield return new KeyValuePair<string, object>("id", Id);
+			if (this.Id > 0) {
+				yield return new KeyValuePair<string, object>("id", this.Id);
 			}
-			yield return new KeyValuePair<string, object>("custom", CustomFieldValuesConverter.ToXml(Custom));
-			yield return new KeyValuePair<string, object>("notes", Notes);
-			foreach (var pair in ToParametersInternal()) {
+			yield return new KeyValuePair<string, object>("custom", CustomFieldValuesConverter.ToXml(this.Custom));
+			yield return new KeyValuePair<string, object>("notes", this.Notes);
+			foreach (var pair in this.ToParametersInternal()) {
 				yield return pair;
 			}
 		}

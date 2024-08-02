@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace bsn.CashCtrl.Entities {
@@ -50,8 +50,8 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		public IEnumerable<KeyValuePair<string, object>> ToParameters() {
-			yield return new KeyValuePair<string, object>("fileId", FileId);
-			yield return new KeyValuePair<string, object>("targetAccountId", TargetAccountId);
+			yield return new KeyValuePair<string, object>("fileId", this.FileId);
+			yield return new KeyValuePair<string, object>("targetAccountId", this.TargetAccountId);
 		}
 	}
 }

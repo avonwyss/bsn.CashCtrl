@@ -146,21 +146,21 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		public string GetContactAddress(PersonContactType type) {
-			return Contacts.FirstOrDefault(t => t.Type == type)?.Address;
+			return this.Contacts.FirstOrDefault(t => t.Type == type)?.Address;
 		}
 
 		public void SetContactAddress(PersonContactType type, string address, bool replaceOfSameType = true) {
 			var i = 0;
-			while (i < Contacts.Count) {
-				if (Contacts[i].Type == type) {
+			while (i < this.Contacts.Count) {
+				if (this.Contacts[i].Type == type) {
 					if (!string.IsNullOrEmpty(address)) {
-						Contacts[i].Address = address;
+						this.Contacts[i].Address = address;
 						i++;
 					}
 					if (replaceOfSameType) {
-						for (var j = Contacts.Count-1; j >= i; j--) {
-							if (Contacts[j].Type == type) {
-								Contacts.RemoveAt(j);
+						for (var j = this.Contacts.Count-1; j >= i; j--) {
+							if (this.Contacts[j].Type == type) {
+								this.Contacts.RemoveAt(j);
 							}
 						}
 					}
@@ -168,76 +168,76 @@ namespace bsn.CashCtrl.Entities {
 				}
 				i++;
 			}
-			Contacts.Add(new PersonContact() {
+			this.Contacts.Add(new PersonContact() {
 					Type = type,
 					Address = address
 			});
 		}
 
 		public string EmailWork {
-			get => GetContactAddress(PersonContactType.EmailWork);
-			set => SetContactAddress(PersonContactType.EmailWork, value);
+			get => this.GetContactAddress(PersonContactType.EmailWork);
+			set => this.SetContactAddress(PersonContactType.EmailWork, value);
 		}
 
 		public string EmailPrivate {
-			get => GetContactAddress(PersonContactType.EmailPrivate);
-			set => SetContactAddress(PersonContactType.EmailPrivate, value);
+			get => this.GetContactAddress(PersonContactType.EmailPrivate);
+			set => this.SetContactAddress(PersonContactType.EmailPrivate, value);
 		}
 
 		public string PhoneWork {
-			get => GetContactAddress(PersonContactType.PhoneWork);
-			set => SetContactAddress(PersonContactType.PhoneWork, value);
+			get => this.GetContactAddress(PersonContactType.PhoneWork);
+			set => this.SetContactAddress(PersonContactType.PhoneWork, value);
 		}
 
 		public string PhonePrivate {
-			get => GetContactAddress(PersonContactType.PhonePrivate);
-			set => SetContactAddress(PersonContactType.PhonePrivate, value);
+			get => this.GetContactAddress(PersonContactType.PhonePrivate);
+			set => this.SetContactAddress(PersonContactType.PhonePrivate, value);
 		}
 
 		public string MobileWork {
-			get => GetContactAddress(PersonContactType.MobileWork);
-			set => SetContactAddress(PersonContactType.MobileWork, value);
+			get => this.GetContactAddress(PersonContactType.MobileWork);
+			set => this.SetContactAddress(PersonContactType.MobileWork, value);
 		}
 
 		public string MobilePrivate {
-			get => GetContactAddress(PersonContactType.MobilePrivate);
-			set => SetContactAddress(PersonContactType.MobilePrivate, value);
+			get => this.GetContactAddress(PersonContactType.MobilePrivate);
+			set => this.SetContactAddress(PersonContactType.MobilePrivate, value);
 		}
 
 		public string Url {
-			get => GetContactAddress(PersonContactType.Website);
-			set => SetContactAddress(PersonContactType.Website, value);
+			get => this.GetContactAddress(PersonContactType.Website);
+			set => this.SetContactAddress(PersonContactType.Website, value);
 		}
 
 		public PersonAddress GetAddress(PersonAddressType type = PersonAddressType.Main) {
-			var result = Addresses.FirstOrDefault(a => a.Type == type);
+			var result = this.Addresses.FirstOrDefault(a => a.Type == type);
 			if (result == null) {
 				result = new PersonAddress() {
 						Type = type
 				};
-				Addresses.Add(result);
+				this.Addresses.Add(result);
 			}
 			return result;
 		}
 
 		public string Address {
-			get => GetAddress().Address;
-			set => GetAddress().Address = value;
+			get => this.GetAddress().Address;
+			set => this.GetAddress().Address = value;
 		}
 
 		public string Zip {
-			get => GetAddress().Zip;
-			set => GetAddress().Zip = value;
+			get => this.GetAddress().Zip;
+			set => this.GetAddress().Zip = value;
 		}
 
 		public string City {
-			get => GetAddress().City;
-			set => GetAddress().City = value;
+			get => this.GetAddress().City;
+			set => this.GetAddress().City = value;
 		}
 
 		public string Country {
-			get => GetAddress().Country;
-			set => GetAddress().Country = value;
+			get => this.GetAddress().Country;
+			set => this.GetAddress().Country = value;
 		}
 
 		public int? SuperiorId {
@@ -268,35 +268,35 @@ namespace bsn.CashCtrl.Entities {
 
 		public int? SequenceNumberId {
 			[Obsolete(CashCtrlClient.EntityFieldMissing, true)]
-			get => sequenceNumberId;
-			set => sequenceNumberId = value;
+			get => this.sequenceNumberId;
+			set => this.sequenceNumberId = value;
 		}
 
 		protected override IEnumerable<KeyValuePair<string, object>> ToParametersInternal() {
-			yield return new("company", Company);
-			yield return new("firstName", FirstName);
-			yield return new("lastName", LastName);
-			yield return new("addresses", Addresses.Where(PersonAddress.IsNotEmpty));
-			yield return new("altName", AltName);
-			yield return new("bic", Bic);
-			yield return new("categoryId", CategoryId);
-			yield return new("color", Color);
-			yield return new("contacts", Contacts.Where(PersonContact.IsNotEmpty));
-			yield return new("dateBirth", DateBirth);
-			yield return new("department", Department);
-			yield return new("discountPercentage", DiscountPercentage);
-			yield return new("iban", Iban);
-			yield return new("industry", Industry);
-			yield return new("isInactive", IsInactive);
-			yield return new("language", Language);
-			if (!string.IsNullOrEmpty(Nr)) {
-				yield return new("nr", Nr);
+			yield return new("company", this.Company);
+			yield return new("firstName", this.FirstName);
+			yield return new("lastName", this.LastName);
+			yield return new("addresses", this.Addresses.Where(PersonAddress.IsNotEmpty));
+			yield return new("altName", this.AltName);
+			yield return new("bic", this.Bic);
+			yield return new("categoryId", this.CategoryId);
+			yield return new("color", this.Color);
+			yield return new("contacts", this.Contacts.Where(PersonContact.IsNotEmpty));
+			yield return new("dateBirth", this.DateBirth);
+			yield return new("department", this.Department);
+			yield return new("discountPercentage", this.DiscountPercentage);
+			yield return new("iban", this.Iban);
+			yield return new("industry", this.Industry);
+			yield return new("isInactive", this.IsInactive);
+			yield return new("language", this.Language);
+			if (!string.IsNullOrEmpty(this.Nr)) {
+				yield return new("nr", this.Nr);
 			}
-			yield return new("position", Position);
-			yield return new("sequenceNumberId", sequenceNumberId);
-			yield return new("superiorId", SuperiorId);
-			yield return new("titleId", TitleId);
-			yield return new("vatUid", VatUid);
+			yield return new("position", this.Position);
+			yield return new("sequenceNumberId", this.sequenceNumberId);
+			yield return new("superiorId", this.SuperiorId);
+			yield return new("titleId", this.TitleId);
+			yield return new("vatUid", this.VatUid);
 		}
 	}
 }

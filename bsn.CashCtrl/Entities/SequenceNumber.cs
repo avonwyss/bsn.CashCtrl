@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace bsn.CashCtrl.Entities {
@@ -99,22 +99,22 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		public IEnumerable<KeyValuePair<string, object>> ToParameters() {
-			if (Id > 0) {
-				yield return new("id", Id);
+			if (this.Id > 0) {
+				yield return new("id", this.Id);
 			}
-			yield return new("name", Name);
-			yield return new("pattern", Pattern);
-			yield return new("currentDailyNumber", CurrentDailyNumber);
-			yield return new("currentMonthlyNumber", CurrentMonthlyNumber);
-			yield return new("currentYearlyNumber", CurrentYearlyNumber);
-			yield return new("currentInfiniteNumber", CurrentInfiniteNumber);
-			yield return new("dailyNumberDigits", DailyNumberDigits);
-			yield return new("dayDigits", DayDigits);
-			yield return new("monthlyNumberDigits", MonthlyNumberDigits);
-			yield return new("monthDigits", MonthDigits);
-			yield return new("yearNumberDigits", YearlyNumberDigits);
-			yield return new("yearDigits", YearDigits);
-			yield return new("infiniteNumberDigits", InfiniteNumberDigits);
+			yield return new("name", this.Name);
+			yield return new("pattern", this.Pattern);
+			yield return new("currentDailyNumber", this.CurrentDailyNumber);
+			yield return new("currentMonthlyNumber", this.CurrentMonthlyNumber);
+			yield return new("currentYearlyNumber", this.CurrentYearlyNumber);
+			yield return new("currentInfiniteNumber", this.CurrentInfiniteNumber);
+			yield return new("dailyNumberDigits", this.DailyNumberDigits);
+			yield return new("dayDigits", this.DayDigits);
+			yield return new("monthlyNumberDigits", this.MonthlyNumberDigits);
+			yield return new("monthDigits", this.MonthDigits);
+			yield return new("yearNumberDigits", this.YearlyNumberDigits);
+			yield return new("yearDigits", this.YearDigits);
+			yield return new("infiniteNumberDigits", this.InfiniteNumberDigits);
 		}
 	}
 }

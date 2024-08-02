@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace bsn.CashCtrl.Entities {
@@ -66,8 +66,8 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		public double Amount {
-			get => amount.GetValueOrDefault();
-			set => amount = double.IsNaN(value) ? default : value;
+			get => this.amount.GetValueOrDefault();
+			set => this.amount = double.IsNaN(value) ? default : value;
 		}
 
 		public double? CurrencyRate {
@@ -129,21 +129,21 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		public IEnumerable<KeyValuePair<string, object>> ToParameters() {
-			if (Id > 0) {
-				yield return new("id", Id);
-				yield return new("orderId", OrderId);
+			if (this.Id > 0) {
+				yield return new("id", this.Id);
+				yield return new("orderId", this.OrderId);
 			}
-			yield return new("accountId", AccountId);
-			yield return new("amount", amount);
-			if (CurrencyId.HasValue) {
-				yield return new("currencyId", CurrencyId);
-				yield return new("currencyRate", CurrencyRate);
+			yield return new("accountId", this.AccountId);
+			yield return new("amount", this.amount);
+			if (this.CurrencyId.HasValue) {
+				yield return new("currencyId", this.CurrencyId);
+				yield return new("currencyRate", this.CurrencyRate);
 			}
-			yield return new("date", Date);
-			yield return new("description", Description);
-			yield return new("reference", Reference);
-			yield return new("taxId", TaxId);
-			yield return new("templateId", TemplateId);
+			yield return new("date", this.Date);
+			yield return new("description", this.Description);
+			yield return new("reference", this.Reference);
+			yield return new("taxId", this.TaxId);
+			yield return new("templateId", this.TemplateId);
 		}
 	}
 }

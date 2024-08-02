@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 using Newtonsoft.Json;
@@ -23,15 +23,15 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		public int AccountId {
-			get => Account?.Id ?? accountId;
+			get => this.Account?.Id ?? this.accountId;
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
-			set => accountId = value;
+			set => this.accountId = value;
 		}
 
 		public AccountClass AccountClass {
-			get => Account?.AccountClass ?? accountClass;
+			get => this.Account?.AccountClass ?? this.accountClass;
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
-			set => accountClass = value;
+			set => this.accountClass = value;
 		}
 
 		public int? DebitId {
@@ -297,16 +297,16 @@ namespace bsn.CashCtrl.Entities {
 
 		// ReSharper disable once ConvertToAutoPropertyWhenPossible
 		public Account ContraAccount {
-			get => contraAccount;
+			get => this.contraAccount;
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
-			set => contraAccount = value;
+			set => this.contraAccount = value;
 		}
 
 		public int? ContraAccountId {
-			get => ContraAccount?.Id ?? contraAccountId;
+			get => this.ContraAccount?.Id ?? this.contraAccountId;
 			set {
-				contraAccountId = value;
-				contraAccount = null;
+				this.contraAccountId = value;
+				this.contraAccount = null;
 			}
 		}
 
@@ -317,18 +317,18 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		protected override IEnumerable<KeyValuePair<string, object>> ToParametersInternal() {
-			yield return new ("id", Id);
-			yield return new("amount", Amount);
-			yield return new ("contraAccountId", ContraAccountId);
-			yield return new("dateAdded", DateAdded);
-			yield return new("associateId", AssociateId);
-			yield return new("currencyId", CurrencyId);
-			yield return new("currencyRate", CurrencyRate);
-			yield return new("orderId", OrderId);
-			yield return new("orderStatusId", OrderStatusId);
-			yield return new("reference", Reference);
-			yield return new("taxId", TaxId);
-			yield return new("title", Title);
+			yield return new ("id", this.Id);
+			yield return new("amount", this.Amount);
+			yield return new ("contraAccountId", this.ContraAccountId);
+			yield return new("dateAdded", this.DateAdded);
+			yield return new("associateId", this.AssociateId);
+			yield return new("currencyId", this.CurrencyId);
+			yield return new("currencyRate", this.CurrencyRate);
+			yield return new("orderId", this.OrderId);
+			yield return new("orderStatusId", this.OrderStatusId);
+			yield return new("reference", this.Reference);
+			yield return new("taxId", this.TaxId);
+			yield return new("title", this.Title);
 		}
 	}
 }

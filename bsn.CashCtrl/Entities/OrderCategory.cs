@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -185,7 +185,7 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		public void ApplyBookTemplate(OrderBookEntry bookEntry, int templateId, string language = default) {
-			var template = BookTemplates.Single(bt => bt.Id == templateId);
+			var template = this.BookTemplates.Single(bt => bt.Id == templateId);
 			bookEntry.TemplateId = template.Id;
 			if (template.AccountId.HasValue) {
 				bookEntry.AccountId = template.AccountId.Value;
@@ -194,33 +194,33 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		public IEnumerable<KeyValuePair<string, object>> ToParameters() {
-			if (base.Id > 0) {
-				yield return new("id", base.Id);
+			if (this.Id > 0) {
+				yield return new("id", this.Id);
 			}
-			yield return new("accountId", AccountId);
-			yield return new("namePlural", NamePlural);
-			yield return new("nameSingular", NameSingular);
-			yield return new("status", Status);
-			yield return new("addressType", AddressType);
-			yield return new("bookTemplates", BookTemplates);
-			yield return new("bookType", BookType);
-			yield return new("currencyId", CurrencyId);
-			yield return new("dueDays", DueDays);
-			yield return new("fileId", FileId);
-			yield return new("footer", Footer);
-			yield return new("hasDueDays", HasDueDays);
-			yield return new("header", Header);
-			yield return new("isDisplayItemGross", IsDisplayItemGross);
-			yield return new("isDisplayPrices", IsDisplayPrices);
-			yield return new("isInactive", IsInactive);
-			yield return new("isSwitchRecipient", IsSwitchRecipient);
-			yield return new("mail", Mail);
-			yield return new("responsiblePersonId", ResponsiblePersonId);
-			yield return new("roundingId", RoundingId);
-			yield return new("sentStatusId", SentStatusId);
-			yield return new("sequenceNrId", SequenceNrId);
-			yield return new("templateId", TemplateId);
-			yield return new("type", Type);
+			yield return new("accountId", this.AccountId);
+			yield return new("namePlural", this.NamePlural);
+			yield return new("nameSingular", this.NameSingular);
+			yield return new("status", this.Status);
+			yield return new("addressType", this.AddressType);
+			yield return new("bookTemplates", this.BookTemplates);
+			yield return new("bookType", this.BookType);
+			yield return new("currencyId", this.CurrencyId);
+			yield return new("dueDays", this.DueDays);
+			yield return new("fileId", this.FileId);
+			yield return new("footer", this.Footer);
+			yield return new("hasDueDays", this.HasDueDays);
+			yield return new("header", this.Header);
+			yield return new("isDisplayItemGross", this.IsDisplayItemGross);
+			yield return new("isDisplayPrices", this.IsDisplayPrices);
+			yield return new("isInactive", this.IsInactive);
+			yield return new("isSwitchRecipient", this.IsSwitchRecipient);
+			yield return new("mail", this.Mail);
+			yield return new("responsiblePersonId", this.ResponsiblePersonId);
+			yield return new("roundingId", this.RoundingId);
+			yield return new("sentStatusId", this.SentStatusId);
+			yield return new("sequenceNrId", this.SequenceNrId);
+			yield return new("templateId", this.TemplateId);
+			yield return new("type", this.Type);
 		}
 	}
 }

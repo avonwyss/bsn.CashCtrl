@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -79,8 +79,8 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		public bool IsDisplayLogo {
-			get => isDisplayLogo.GetValueOrDefault(true);
-			set => isDisplayLogo = value;
+			get => this.isDisplayLogo.GetValueOrDefault(true);
+			set => this.isDisplayLogo = value;
 		}
 
 		public bool IsDisplayOrgAddress {
@@ -90,114 +90,114 @@ namespace bsn.CashCtrl.Entities {
 		} = true;
 
 		public bool IsDisplayRecipientNr {
-			get => isDisplayRecipientNr.GetValueOrDefault(true);
-			set => isDisplayRecipientNr = value;
+			get => this.isDisplayRecipientNr.GetValueOrDefault(true);
+			set => this.isDisplayRecipientNr = value;
 		}
 
 		public bool IsDisplayOrgAddressInWindow {
-			get => isDisplayOrgAddressInWindow.GetValueOrDefault(true);
-			set => isDisplayOrgAddressInWindow = value;
+			get => this.isDisplayOrgAddressInWindow.GetValueOrDefault(true);
+			set => this.isDisplayOrgAddressInWindow = value;
 		}
 
 		public bool IsDisplayItemUnit {
-			get => isDisplayItemUnit.GetValueOrDefault(true);
-			set => isDisplayItemUnit = value;
+			get => this.isDisplayItemUnit.GetValueOrDefault(true);
+			set => this.isDisplayItemUnit = value;
 		}
 
 		public bool IsDisplayItemPriceRounded {
-			get => isDisplayItemPriceRounded.GetValueOrDefault(true);
-			set => isDisplayItemPriceRounded = value;
+			get => this.isDisplayItemPriceRounded.GetValueOrDefault(true);
+			set => this.isDisplayItemPriceRounded = value;
 		}
 
 		public bool IsDisplayResponsiblePerson {
-			get => isDisplayResponsiblePerson.GetValueOrDefault(true);
-			set => isDisplayResponsiblePerson = value;
+			get => this.isDisplayResponsiblePerson.GetValueOrDefault(true);
+			set => this.isDisplayResponsiblePerson = value;
 		}
 
 		public bool IsDisplayPosNr {
-			get => isDisplayPosNr.GetValueOrDefault(true);
-			set => isDisplayPosNr = value;
+			get => this.isDisplayPosNr.GetValueOrDefault(true);
+			set => this.isDisplayPosNr = value;
 		}
 
 		public bool IsDisplayItemArticleNr {
-			get => isDisplayItemArticleNr.GetValueOrDefault(true);
-			set => isDisplayItemArticleNr = value;
+			get => this.isDisplayItemArticleNr.GetValueOrDefault(true);
+			set => this.isDisplayItemArticleNr = value;
 		}
 
 		public bool IsDisplayDocumentName {
-			get => isDisplayDocumentName.GetValueOrDefault(true);
-			set => isDisplayDocumentName = value;
+			get => this.isDisplayDocumentName.GetValueOrDefault(true);
+			set => this.isDisplayDocumentName = value;
 		}
 
 		public bool IsDisplayPageNr {
-			get => isDisplayPageNr.GetValueOrDefault(true);
-			set => isDisplayPageNr = value;
+			get => this.isDisplayPageNr.GetValueOrDefault(true);
+			set => this.isDisplayPageNr = value;
 		}
 
 		public bool IsDisplayZeroTax {
-			get => isDisplayZeroTax.GetValueOrDefault(false);
-			set => isDisplayZeroTax = value;
+			get => this.isDisplayZeroTax.GetValueOrDefault(false);
+			set => this.isDisplayZeroTax = value;
 		}
 
 		public bool IsDisplayPayments {
-			get => isDisplayPayments.GetValueOrDefault(true);
-			set => isDisplayPayments = value;
+			get => this.isDisplayPayments.GetValueOrDefault(true);
+			set => this.isDisplayPayments = value;
 		}
 
 		public bool IsDisplayItemTax {
-			get => isDisplayItemTax.GetValueOrDefault(false);
-			set => isDisplayItemTax = value;
+			get => this.isDisplayItemTax.GetValueOrDefault(false);
+			set => this.isDisplayItemTax = value;
 		}
 
 		public bool IsOverwriteHtml {
-			get => isOverwriteHtml.GetValueOrDefault(false);
-			set => isOverwriteHtml = value;
+			get => this.isOverwriteHtml.GetValueOrDefault(false);
+			set => this.isOverwriteHtml = value;
 		}
 
 		public bool IsOverwriteCss {
-			get => isOverwriteCss.GetValueOrDefault(false);
-			set => isOverwriteCss = value;
+			get => this.isOverwriteCss.GetValueOrDefault(false);
+			set => this.isOverwriteCss = value;
 		}
 
 		public bool IsQrEmptyAmount {
-			get => isQrEmptyAmount.GetValueOrDefault(false);
-			set => isQrEmptyAmount = value;
+			get => this.isQrEmptyAmount.GetValueOrDefault(false);
+			set => this.isQrEmptyAmount = value;
 		}
 
 		public void MakeDefault() {
-			makeDefault = true;
+			this.makeDefault = true;
 		}
 
 		public IEnumerable<KeyValuePair<string, object>> ToParameters() {
-			if (Id > 0) {
-				yield return new("id", Id);
+			if (this.Id > 0) {
+				yield return new("id", this.Id);
 			}
-			yield return new("name", Name);
-			yield return new("css", Css);
-			yield return new("footer", Footer);
-			yield return new("html", Html);
-			if (makeDefault) {
+			yield return new("name", this.Name);
+			yield return new("css", this.Css);
+			yield return new("footer", this.Footer);
+			yield return new("html", this.Html);
+			if (this.makeDefault) {
 				yield return new("isDefault", true);
 			}
-			yield return new("isDisplayDocumentName", IsDisplayDocumentName);
-			yield return new("isDisplayItemArticleNr", IsDisplayItemArticleNr);
-			yield return new("isDisplayItemPriceRounded", IsDisplayItemPriceRounded);
-			yield return new("isDisplayItemTax", IsDisplayItemTax);
-			yield return new("isDisplayItemUnit", IsDisplayItemUnit);
-			yield return new("isDisplayLogo", IsDisplayLogo);
-			yield return new("isDisplayOrgAddressInWindow", IsDisplayOrgAddressInWindow);
-			yield return new("isDisplayPageNr", IsDisplayPageNr);
-			yield return new("isDisplayPayments", IsDisplayPayments);
-			yield return new("isDisplayPosNr", IsDisplayPosNr);
-			yield return new("isDisplayRecipientNr", IsDisplayRecipientNr);
-			yield return new("isDisplayResponsiblePerson", IsDisplayResponsiblePerson);
-			yield return new("isDisplayZeroTax", IsDisplayZeroTax);
-			yield return new("isOverwriteCss", IsOverwriteCss);
-			yield return new("isOverwriteHtml", IsOverwriteHtml);
-			yield return new("isQrEmptyAmount", IsQrEmptyAmount);
-			yield return new("letterPaperFileId", LetterPaperFileId);
-			yield return new("logoHeight", LogoHeight);
-			yield return new("pageSize", PageSize);
+			yield return new("isDisplayDocumentName", this.IsDisplayDocumentName);
+			yield return new("isDisplayItemArticleNr", this.IsDisplayItemArticleNr);
+			yield return new("isDisplayItemPriceRounded", this.IsDisplayItemPriceRounded);
+			yield return new("isDisplayItemTax", this.IsDisplayItemTax);
+			yield return new("isDisplayItemUnit", this.IsDisplayItemUnit);
+			yield return new("isDisplayLogo", this.IsDisplayLogo);
+			yield return new("isDisplayOrgAddressInWindow", this.IsDisplayOrgAddressInWindow);
+			yield return new("isDisplayPageNr", this.IsDisplayPageNr);
+			yield return new("isDisplayPayments", this.IsDisplayPayments);
+			yield return new("isDisplayPosNr", this.IsDisplayPosNr);
+			yield return new("isDisplayRecipientNr", this.IsDisplayRecipientNr);
+			yield return new("isDisplayResponsiblePerson", this.IsDisplayResponsiblePerson);
+			yield return new("isDisplayZeroTax", this.IsDisplayZeroTax);
+			yield return new("isOverwriteCss", this.IsOverwriteCss);
+			yield return new("isOverwriteHtml", this.IsOverwriteHtml);
+			yield return new("isQrEmptyAmount", this.IsQrEmptyAmount);
+			yield return new("letterPaperFileId", this.LetterPaperFileId);
+			yield return new("logoHeight", this.LogoHeight);
+			yield return new("pageSize", this.PageSize);
 		}
 	}
 }

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace bsn.CashCtrl.Entities {
 	public class FilePreparation: IApiSerializable {
@@ -23,13 +23,13 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		public IEnumerable<KeyValuePair<string, object>> ToParameters() {
-			yield return new("mimeType", MimeType);
-			yield return new("name", Name);
-			if (CategoryId.HasValue) {
-				yield return new("categoryId", CategoryId);
+			yield return new("mimeType", this.MimeType);
+			yield return new("name", this.Name);
+			if (this.CategoryId.HasValue) {
+				yield return new("categoryId", this.CategoryId);
 			}
-			if (Size.HasValue) {
-				yield return new("size", Size);
+			if (this.Size.HasValue) {
+				yield return new("size", this.Size);
 			}
 		}
 	}

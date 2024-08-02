@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace bsn.CashCtrl.Response {
 	public class CreateResponse: UpdateResponse {
@@ -8,8 +8,8 @@ namespace bsn.CashCtrl.Response {
 		}
 
 		public int GetInsertIdOrThrow() {
-			EnsureSuccess();
-			return InsertId;
+			this.EnsureSuccess();
+			return this.InsertId;
 		}
 	}
 }

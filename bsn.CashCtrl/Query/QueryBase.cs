@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace bsn.CashCtrl.Query {
@@ -44,34 +44,34 @@ namespace bsn.CashCtrl.Query {
 		}
 
 		public object this[string field] {
-			get => Filter?.Find(f => string.Equals(f.Field, field, StringComparison.OrdinalIgnoreCase))?.Value;
+			get => this.Filter?.Find(f => string.Equals(f.Field, field, StringComparison.OrdinalIgnoreCase))?.Value;
 			set {
-				Filter ??= new List<CashCtrlFilter>();
-				var index = Filter.FindIndex(f => string.Equals(f.Field, field, StringComparison.OrdinalIgnoreCase));
+				this.Filter ??= new List<CashCtrlFilter>();
+				var index = this.Filter.FindIndex(f => string.Equals(f.Field, field, StringComparison.OrdinalIgnoreCase));
 				if (index >= 0) {
 					if (value == null) {
-						Filter.RemoveAt(index);
+						this.Filter.RemoveAt(index);
 					} else {
-						Filter[index] = new CashCtrlFilter() { Field = field, Value = value };
+						this.Filter[index] = new CashCtrlFilter() { Field = field, Value = value };
 					}
 				} else if (value != null) {
-					Filter.Add(new CashCtrlFilter() { Field = field, Value = value });
+					this.Filter.Add(new CashCtrlFilter() { Field = field, Value = value });
 				}
 			}
 		}
 
 		public IEnumerable<KeyValuePair<string, object>> ToParameters() {
-			yield return new("categoryId", CategoryId);
-			yield return new("dir", Dir);
-			if (Filter?.Count > 0) {
-				yield return new("filter", Filter);
+			yield return new("categoryId", this.CategoryId);
+			yield return new("dir", this.Dir);
+			if (this.Filter?.Count > 0) {
+				yield return new("filter", this.Filter);
 			}
-			yield return new("start", Start);
-			yield return new("limit", Limit);
-			yield return new("query", Query);
-			yield return new("sort", Sort);
-			yield return new("onlyNotes", OnlyNotes);
-			foreach (var pair in ToParametersInternal()) {
+			yield return new("start", this.Start);
+			yield return new("limit", this.Limit);
+			yield return new("query", this.Query);
+			yield return new("sort", this.Sort);
+			yield return new("onlyNotes", this.OnlyNotes);
+			foreach (var pair in this.ToParametersInternal()) {
 				yield return pair;
 			}
 		}

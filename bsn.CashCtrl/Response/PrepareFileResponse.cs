@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 using bsn.CashCtrl.Entities;
 
@@ -11,8 +11,8 @@ namespace bsn.CashCtrl.Response {
 		}
 
 		public PreparedFile[] GetDataOrThrow() {
-			EnsureSuccess();
-			return Data;
+			this.EnsureSuccess();
+			return this.Data;
 		}
 	}
 }

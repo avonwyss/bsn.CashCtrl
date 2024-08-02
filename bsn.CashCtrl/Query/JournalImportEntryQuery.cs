@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace bsn.CashCtrl.Query {
 	public class JournalImportEntryQuery: QueryBase {
@@ -8,7 +8,7 @@ namespace bsn.CashCtrl.Query {
 		}
 
 		protected override IEnumerable<KeyValuePair<string, object>> ToParametersInternal() {
-			yield return new("onlyCostCenters", OnlyCostCenters);
+			yield return new("onlyCostCenters", this.OnlyCostCenters);
 		}
 	}
 }

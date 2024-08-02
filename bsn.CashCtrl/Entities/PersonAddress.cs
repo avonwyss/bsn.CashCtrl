@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace bsn.CashCtrl.Entities {
@@ -25,23 +25,23 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		public string Address {
-			get => address;
-			set => address = value;
+			get => this.address;
+			set => this.address = value;
 		}
 
 		public string Zip {
-			get => zip;
-			set => zip = value;
+			get => this.zip;
+			set => this.zip = value;
 		}
 
 		public string City {
-			get => city;
-			set => city = value;
+			get => this.city;
+			set => this.city = value;
 		}
 
 		public string Country {
-			get => country;
-			set => country = CashCtrlClientExtensions.MapCountryToAlpha3(value);
+			get => this.country;
+			set => this.country = CashCtrlClientExtensions.MapCountryToAlpha3(value);
 		}
 
 		public int Pos {
@@ -51,17 +51,17 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		public bool Empty {
-			get => empty.GetValueOrDefault(!IsNotEmpty(this));
+			get => this.empty.GetValueOrDefault(!IsNotEmpty(this));
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
-			set => empty = value;
+			set => this.empty = value;
 		}
 
 		public IEnumerable<KeyValuePair<string, object>> ToParameters() {
-			yield return new("type", Type);
-			yield return new("address", Address);
-			yield return new("city", City);
-			yield return new("country", Country);
-			yield return new("zip", Zip);
+			yield return new("type", this.Type);
+			yield return new("address", this.Address);
+			yield return new("city", this.City);
+			yield return new("country", this.Country);
+			yield return new("zip", this.Zip);
 		}
 	}
 }

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace bsn.CashCtrl.Query {
@@ -9,11 +9,11 @@ namespace bsn.CashCtrl.Query {
 		}
 
 		public string MimeType {
-			get => MimeTypes.SingleOrDefault();
+			get => this.MimeTypes.SingleOrDefault();
 			set {
-				MimeTypes.Clear();
+				this.MimeTypes.Clear();
 				if (!string.IsNullOrEmpty(value)) {
-					MimeTypes.Add(value);
+					this.MimeTypes.Add(value);
 				}
 			}
 		}
@@ -33,12 +33,12 @@ namespace bsn.CashCtrl.Query {
 		}
 
 		protected override IEnumerable<KeyValuePair<string, object>> ToParametersInternal() {
-			yield return new("archived", Archived);
-			if (MimeTypes.Count > 0) {
-				yield return new("mimeTypes", MimeTypes);
+			yield return new("archived", this.Archived);
+			if (this.MimeTypes.Count > 0) {
+				yield return new("mimeTypes", this.MimeTypes);
 			}
-			yield return new("onlyWithoutCategory", OnlyWithoutCategory);
-			yield return new("withoutSub", WithoutSub);
+			yield return new("onlyWithoutCategory", this.OnlyWithoutCategory);
+			yield return new("withoutSub", this.WithoutSub);
 		}
 	}
 }
