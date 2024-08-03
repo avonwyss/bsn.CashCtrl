@@ -221,23 +221,23 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		public string Address {
-			get => this.GetAddress().Address;
-			set => this.GetAddress().Address = value;
+			get => this.GetAddress(PersonAddressType.Main, false)?.Address;
+			set => this.GetAddress(PersonAddressType.Main, true).Address = value;
 		}
 
 		public string Zip {
-			get => this.GetAddress().Zip;
-			set => this.GetAddress().Zip = value;
+			get => this.GetAddress(PersonAddressType.Main, false)?.Zip;
+			set => this.GetAddress(PersonAddressType.Main, true).Zip = value;
 		}
 
 		public string City {
-			get => this.GetAddress().City;
-			set => this.GetAddress().City = value;
+			get => this.GetAddress(PersonAddressType.Main, false)?.City;
+			set => this.GetAddress(PersonAddressType.Main, true).City = value;
 		}
 
 		public string Country {
-			get => this.GetAddress().Country;
-			set => this.GetAddress().Country = value;
+			get => this.GetAddress(PersonAddressType.Main, false)?.Country;
+			set => this.GetAddress(PersonAddressType.Main, true).Country = value;
 		}
 
 		public int? SuperiorId {
