@@ -209,9 +209,9 @@ namespace bsn.CashCtrl.Entities {
 			set => this.SetContactAddress(PersonContactType.Website, value);
 		}
 
-		public PersonAddress GetAddress(PersonAddressType type = PersonAddressType.Main) {
+		public PersonAddress GetAddress(PersonAddressType type = PersonAddressType.Main, bool createIfNotPresent = false) {
 			var result = this.Addresses.FirstOrDefault(a => a.Type == type);
-			if (result == null) {
+			if (result == null && createIfNotPresent) {
 				result = new PersonAddress() {
 						Type = type
 				};
