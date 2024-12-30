@@ -323,36 +323,29 @@ namespace bsn.CashCtrl.Entities {
 
 		protected override IEnumerable<KeyValuePair<string, object>> ToParametersInternal() {
 			if (this.Items?.Count > 0) {
-				yield return new KeyValuePair<string, object>("items", this.Items);
+				yield return new("items", this.Items);
 			} else {
-				yield return new KeyValuePair<string, object>("amount", this.Amount);
-				yield return new KeyValuePair<string, object>("creditId", this.CreditId);
-				yield return new KeyValuePair<string, object>("debitId", this.DebitId);
+				yield return new("amount", this.Amount);
+				yield return new("creditId", this.CreditId);
+				yield return new("debitId", this.DebitId);
 			}
-			yield return new KeyValuePair<string, object>("associateId", this.AssociateId);
-			yield return new KeyValuePair<string, object>("currencyId", this.CurrencyId);
-			yield return new KeyValuePair<string, object>("currencyRate", this.CurrencyRate);
-			yield return new KeyValuePair<string, object>("dateAdded", this.DateAdded.ToCashCtrlString(true));
-			yield return new KeyValuePair<string, object>("accountId", this.AccountId);
-			yield return new KeyValuePair<string, object>("reference", this.Reference);
-			yield return new KeyValuePair<string, object>("sequenceNumberId", this.sequenceNumberId);
-			yield return new KeyValuePair<string, object>("taxId", this.TaxId);
-			yield return new KeyValuePair<string, object>("title", this.Title);
-			foreach (var recurrenceParameter in this.ToRecurrenceParameters()) {
-				yield return recurrenceParameter;
-			}
-		}
-
-		public IEnumerable<KeyValuePair<string, object>> ToRecurrenceParameters() {
-			yield return new KeyValuePair<string, object>("id", this.Id);
-			yield return new KeyValuePair<string, object>("daysBefore", this.DaysBefore);
-			yield return new KeyValuePair<string, object>("endDate", this.EndDate);
-			yield return new KeyValuePair<string, object>("notifyEmail", this.NotifyEmail);
-			yield return new KeyValuePair<string, object>("notifyPersonId", this.NotifyPersonId);
-			yield return new KeyValuePair<string, object>("notifyType", this.NotifyType);
-			yield return new KeyValuePair<string, object>("notifyUserId", this.NotifyUserId);
-			yield return new KeyValuePair<string, object>("recurrence", this.Recurrence);
-			yield return new KeyValuePair<string, object>("startDate", this.StartDate.ToCashCtrlString(true));
+			yield return new("associateId", this.AssociateId);
+			yield return new("currencyId", this.CurrencyId);
+			yield return new("currencyRate", this.CurrencyRate);
+			yield return new("dateAdded", this.DateAdded);
+			yield return new("accountId", this.AccountId);
+			yield return new("reference", this.Reference);
+			yield return new("sequenceNumberId", this.sequenceNumberId);
+			yield return new("taxId", this.TaxId);
+			yield return new("title", this.Title);
+			yield return new("daysBefore", this.DaysBefore);
+			yield return new("endDate", this.EndDate.ToCashCtrlString(true));
+			yield return new("notifyEmail", this.NotifyEmail);
+			yield return new("notifyPersonId", this.NotifyPersonId);
+			yield return new("notifyType", this.NotifyType);
+			yield return new("notifyUserId", this.NotifyUserId);
+			yield return new("recurrence", this.Recurrence);
+			yield return new("startDate", this.StartDate.ToCashCtrlString(true));
 		}
 	}
 }

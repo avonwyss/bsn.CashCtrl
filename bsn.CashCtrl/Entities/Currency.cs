@@ -54,15 +54,15 @@ namespace bsn.CashCtrl.Entities {
 
 		public IEnumerable<KeyValuePair<string, object>> ToParameters() {
 			if (this.Id > 0) {
-				yield return new KeyValuePair<string, object>("id", this.Id);
+				yield return new("id", this.Id);
 			}
-			yield return new KeyValuePair<string, object>("code", this.Code);
-			yield return new KeyValuePair<string, object>("description", this.Description);
+			yield return new("code", this.Code);
+			yield return new("description", this.Description);
 			if (this.makeDefault) {
-				yield return new KeyValuePair<string, object>("isDefault", true);
+				yield return new("isDefault", true);
 			}
 			if (this.saveRate) {
-				yield return new KeyValuePair<string, object>("rate", this.Rate);
+				yield return new("rate", this.Rate);
 			}
 		}
 

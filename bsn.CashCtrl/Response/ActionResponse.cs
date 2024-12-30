@@ -6,7 +6,8 @@ namespace bsn.CashCtrl.Response {
 	public class ActionResponse {
 		public bool Success {
 			get;
-			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)] set;
+			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
+			set;
 		}
 
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]

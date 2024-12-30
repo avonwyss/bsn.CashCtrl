@@ -50,8 +50,8 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		public IEnumerable<KeyValuePair<string, object>> ToParameters() {
-			yield return new KeyValuePair<string, object>("fileId", this.FileId);
-			yield return new KeyValuePair<string, object>("targetAccountId", this.TargetAccountId);
+			yield return new("fileId", this.FileId);
+			yield return new("targetAccountId", this.TargetAccountId);
 		}
 	}
 }

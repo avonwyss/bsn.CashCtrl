@@ -209,6 +209,7 @@
     <Compile Include="LocalizedString.cs" />
     <Compile Include="LocalizedStringConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Query\AccountCostCenterQuery.cs" />
     <Compile Include="Query\AccountQuery.cs" />
     <Compile Include="Query\CashCtrlComparison.cs" />
     <Compile Include="Query\CashCtrlDirection.cs" />

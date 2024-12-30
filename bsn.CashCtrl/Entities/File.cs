@@ -52,11 +52,11 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		protected override IEnumerable<KeyValuePair<string, object>> ToParametersInternal() {
-			yield return new KeyValuePair<string, object>("name", this.Name);
-			yield return new KeyValuePair<string, object>("categoryId", this.CategoryId);
-			yield return new KeyValuePair<string, object>("description", this.Description);
+			yield return new("name", this.Name);
+			yield return new("categoryId", this.CategoryId);
+			yield return new("description", this.Description);
 			if (this.replaceWith.HasValue) {
-				yield return new KeyValuePair<string, object>("replaceWith", this.replaceWith);
+				yield return new("replaceWith", this.replaceWith);
 			}
 		}
 

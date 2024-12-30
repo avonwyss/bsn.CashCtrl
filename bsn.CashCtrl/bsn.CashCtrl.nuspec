@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <package>
 	<metadata>
 		<id>bsn.CashCtrl</id>
@@ -12,11 +12,11 @@
 		<copyright>Copyright 2022 Arsène von Wyss</copyright>
 		<tags>bsn CashCtrl</tags>
 		<dependencies>
-			<dependency id="bsn.HttpClientSync" version="1.23.12" />
-			<dependency id="Newtonsoft.Json" version="10.0.3" />
-			<dependency id="NLog" version="4.0.0" />
-			<dependency id="OneOf" version="3.0.0" />
-			<dependency id="System.Threading.Tasks.Extensions" version="4.0.0" />
+			<dependency id="bsn.HttpClientSync" version="[1.23.12,]" />
+			<dependency id="Newtonsoft.Json" version="[10.0.3,]" />
+			<dependency id="NLog" version="*" />
+			<dependency id="OneOf" version="*" />
+			<dependency id="System.Threading.Tasks.Extensions" version="*" />
 		</dependencies>
 	</metadata>
 	<files>

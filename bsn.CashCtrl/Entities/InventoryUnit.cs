@@ -22,9 +22,9 @@ namespace bsn.CashCtrl.Entities {
 
 		public IEnumerable<KeyValuePair<string, object>> ToParameters() {
 			if (this.Id > 0) {
-				yield return new KeyValuePair<string, object>("id", this.Id);
+				yield return new("id", this.Id);
 			}
-			yield return new KeyValuePair<string, object>("name", this.Name);
+			yield return new("name", this.Name);
 		}
 	}
 }

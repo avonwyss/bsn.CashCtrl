@@ -16,11 +16,11 @@ namespace bsn.CashCtrl {
 			}).GetDataOrThrow();
 		}
 
-		public static AccountCostCenter[] AccountCostCenterList(this CashCtrlClient that, AccountQuery query = default) {
+		public static AccountCostCenter[] AccountCostCenterList(this CashCtrlClient that, AccountCostCenterQuery query = default) {
 			return that.Get<ListResponse<AccountCostCenter>>("account/costcenter/list.json", query?.ToParameters()).Data;
 		}
 
-		public static Stream AccountCostCenterList(this CashCtrlClient that, CashCtrlDownloadFormat format, AccountQuery query = default) {
+		public static Stream AccountCostCenterList(this CashCtrlClient that, CashCtrlDownloadFormat format, AccountCostCenterQuery query = default) {
 			return that.Get($"account/costcenter/list.{format.ToString().ToLowerInvariant()}", query?.ToParameters()).ReadAsStream();
 		}
 

@@ -13,7 +13,7 @@ namespace bsn.CashCtrl.Entities {
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
 			set;
 		}
-		
+
 		public LocalizedString Name {
 			get;
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]

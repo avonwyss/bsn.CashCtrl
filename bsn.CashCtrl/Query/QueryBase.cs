@@ -16,7 +16,7 @@ namespace bsn.CashCtrl.Query {
 		public List<CashCtrlFilter> Filter {
 			get;
 			set;
-		} = new ();
+		} = new();
 
 		public bool? OnlyNotes {
 			get;
@@ -46,16 +46,16 @@ namespace bsn.CashCtrl.Query {
 		public object this[string field] {
 			get => this.Filter?.Find(f => string.Equals(f.Field, field, StringComparison.OrdinalIgnoreCase))?.Value;
 			set {
-				this.Filter ??= new List<CashCtrlFilter>();
+				this.Filter ??= new();
 				var index = this.Filter.FindIndex(f => string.Equals(f.Field, field, StringComparison.OrdinalIgnoreCase));
 				if (index >= 0) {
 					if (value == null) {
 						this.Filter.RemoveAt(index);
 					} else {
-						this.Filter[index] = new CashCtrlFilter() { Field = field, Value = value };
+						this.Filter[index] = new() { Field = field, Value = value };
 					}
 				} else if (value != null) {
-					this.Filter.Add(new CashCtrlFilter() { Field = field, Value = value });
+					this.Filter.Add(new() { Field = field, Value = value });
 				}
 			}
 		}

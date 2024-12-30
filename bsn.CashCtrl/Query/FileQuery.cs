@@ -20,7 +20,7 @@ namespace bsn.CashCtrl.Query {
 
 		public List<string> MimeTypes {
 			get;
-		} = new List<string>(0);
+		} = new(0);
 
 		private bool? OnlyWithoutCategory {
 			get;

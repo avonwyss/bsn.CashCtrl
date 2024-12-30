@@ -124,23 +124,23 @@ namespace bsn.CashCtrl.Entities {
 
 		public IEnumerable<KeyValuePair<string, object>> ToParameters() {
 			if (this.Id > 0) {
-				yield return new KeyValuePair<string, object>("id", this.Id);
+				yield return new("id", this.Id);
 			}
-			yield return new KeyValuePair<string, object>("name", this.Name);
-			yield return new KeyValuePair<string, object>("address", this.Address);
-			yield return new KeyValuePair<string, object>("bic", this.Bic);
-			yield return new KeyValuePair<string, object>("city", this.City);
-			yield return new KeyValuePair<string, object>("country", this.Country);
-			yield return new KeyValuePair<string, object>("footer", this.Footer);
-			yield return new KeyValuePair<string, object>("iban", this.Iban);
-			yield return new KeyValuePair<string, object>("isInactive", this.IsInactive);
-			yield return new KeyValuePair<string, object>("logoFileId", this.LogoFileId);
-			yield return new KeyValuePair<string, object>("orgName", this.OrgName);
-			yield return new KeyValuePair<string, object>("qrFirstDigits", this.QrFirstDigits);
-			yield return new KeyValuePair<string, object>("qrIban", this.QrIban);
-			yield return new KeyValuePair<string, object>("type", this.Type);
-			yield return new KeyValuePair<string, object>("vatUid", this.VatUid);
-			yield return new KeyValuePair<string, object>("zip", this.Zip);
+			yield return new("name", this.Name);
+			yield return new("address", this.Address);
+			yield return new("bic", this.Bic);
+			yield return new("city", this.City);
+			yield return new("country", this.Country);
+			yield return new("footer", this.Footer);
+			yield return new("iban", this.Iban);
+			yield return new("isInactive", this.IsInactive);
+			yield return new("logoFileId", this.LogoFileId);
+			yield return new("orgName", this.OrgName);
+			yield return new("qrFirstDigits", this.QrFirstDigits);
+			yield return new("qrIban", this.QrIban);
+			yield return new("type", this.Type);
+			yield return new("vatUid", this.VatUid);
+			yield return new("zip", this.Zip);
 		}
 	}
 }

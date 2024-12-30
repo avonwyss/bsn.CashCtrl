@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace bsn.CashCtrl {
 	public class LocalizedStringConverter: JsonConverter {
-		private readonly Regex rxValues = new(@$"^\s*(\<{LocalizedString.ValuesName}\s*\>.*\</{LocalizedString.ValuesName}\s*\>|\<{LocalizedString.ValuesName}\s*\/\>)\s*$", RegexOptions.Compiled|RegexOptions.CultureInvariant|RegexOptions.ExplicitCapture);
+		private readonly Regex rxValues = new(@$"^\s*(\<{LocalizedString.ValuesName}\s*\>.*\</{LocalizedString.ValuesName}\s*\>|\<{LocalizedString.ValuesName}\s*\/\>)\s*$", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.ExplicitCapture);
 
 		public override bool CanConvert(Type objectType) {
 			return objectType == typeof(LocalizedString) || objectType == typeof(LocalizedString?);
@@ -40,7 +40,7 @@ namespace bsn.CashCtrl {
 				var localizedString = (LocalizedString)value;
 				localizedString.UnderlyingValue.Switch(
 						s => writer.WriteValue(s),
-						x => writer.WriteValue(x.ToString(SaveOptions.DisableFormatting|SaveOptions.OmitDuplicateNamespaces)));
+						x => writer.WriteValue(x.ToString(SaveOptions.DisableFormatting | SaveOptions.OmitDuplicateNamespaces)));
 			}
 		}
 	}

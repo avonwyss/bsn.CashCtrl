@@ -26,12 +26,12 @@ namespace bsn.CashCtrl.Entities {
 		public List<PersonContact> Contacts {
 			get;
 			set;
-		} = new List<PersonContact>(0);
+		} = new(0);
 
 		public List<PersonAddress> Addresses {
 			get;
 			set;
-		} = new List<PersonAddress>(0);
+		} = new(0);
 
 		public LocalizedString TitleName {
 			get;
@@ -158,7 +158,7 @@ namespace bsn.CashCtrl.Entities {
 						i++;
 					}
 					if (replaceOfSameType) {
-						for (var j = this.Contacts.Count-1; j >= i; j--) {
+						for (var j = this.Contacts.Count - 1; j >= i; j--) {
 							if (this.Contacts[j].Type == type) {
 								this.Contacts.RemoveAt(j);
 							}
@@ -168,10 +168,7 @@ namespace bsn.CashCtrl.Entities {
 				}
 				i++;
 			}
-			this.Contacts.Add(new PersonContact() {
-					Type = type,
-					Address = address
-			});
+			this.Contacts.Add(new() { Type = type, Address = address });
 		}
 
 		public string EmailWork {
@@ -212,9 +209,7 @@ namespace bsn.CashCtrl.Entities {
 		public PersonAddress GetAddress(PersonAddressType type = PersonAddressType.Main, bool createIfNotPresent = false) {
 			var result = this.Addresses.FirstOrDefault(a => a.Type == type);
 			if (result == null && createIfNotPresent) {
-				result = new PersonAddress() {
-						Type = type
-				};
+				result = new() { Type = type };
 				this.Addresses.Add(result);
 			}
 			return result;
@@ -300,4 +295,3 @@ namespace bsn.CashCtrl.Entities {
 		}
 	}
 }
-

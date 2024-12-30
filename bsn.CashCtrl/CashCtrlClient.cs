@@ -24,41 +24,36 @@ namespace bsn.CashCtrl {
 		internal const string EntityFieldIsReadonly = "The field of the entity is read-only on the client.";
 		internal const string EntityFieldMissing = "The field of the entity is not returned by the server.";
 
-		private static readonly Regex rxMethodWithoutBody = new("^(HEAD|GET|DELETE|OPTIONS|TRACE)$", RegexOptions.Compiled|RegexOptions.CultureInvariant|RegexOptions.IgnoreCase);
+		private static readonly Regex rxMethodWithoutBody = new("^(HEAD|GET|DELETE|OPTIONS|TRACE)$", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
 
 		private static string Encode(string data) {
 			return string.IsNullOrEmpty(data) ? string.Empty : Uri.EscapeDataString(data).Replace("%20", "+");
 		}
 
 		private static HttpClient CreateHttpClient() {
-			return new HttpClient(new RetryHandler(10, new HttpClientSyncHandler() {
-					AllowAutoRedirect = true
-			}));
+			return new(new RetryHandler(10, new HttpClientSyncHandler() { AllowAutoRedirect = true }));
 		}
 
 		private readonly Uri baseUri;
 		private readonly HttpClient httpClient;
 
-		private readonly JsonSerializer jsonSerializer = JsonSerializer.Create(new JsonSerializerSettings {
+		private readonly JsonSerializer jsonSerializer = JsonSerializer.Create(new() {
 				DateFormatString = CashCtrlClientExtensions.CashCtrlDateTimeFormat,
 				NullValueHandling = NullValueHandling.Ignore,
 				CheckAdditionalContent = false,
 				Formatting = Formatting.None,
 				ContractResolver = new CamelCasePropertyNamesContractResolver(),
-				Converters = new List<JsonConverter> {
-						new UppercaseStringEnumConverter(),
-						new LocalizedStringConverter()
-				}
+				Converters = new List<JsonConverter> { new UppercaseStringEnumConverter(), new LocalizedStringConverter() }
 		});
 
 		private readonly AuthenticationHeaderValue authorization;
 
-		public CashCtrlClient(string domain, string apiKey): this(new Uri(FormattableString.Invariant($"https://{Uri.EscapeDataString(domain.ToLowerInvariant())}.cashctrl.com/api/v1/")), apiKey, CreateHttpClient()) { }
+		public CashCtrlClient(string domain, string apiKey): this(new(FormattableString.Invariant($"https://{Uri.EscapeDataString(domain.ToLowerInvariant())}.cashctrl.com/api/v1/")), apiKey, CreateHttpClient()) { }
 
 		internal CashCtrlClient(Uri baseUri, string apiKey, HttpClient httpClient) {
 			this.baseUri = baseUri;
 			this.httpClient = httpClient;
-			this.authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.UTF8.GetBytes(apiKey+':')));
+			this.authorization = new("Basic", Convert.ToBase64String(Encoding.UTF8.GetBytes(apiKey + ':')));
 		}
 
 		public void Dispose() {
@@ -107,7 +102,7 @@ namespace bsn.CashCtrl {
 			var content = this.Invoke(method, endpoint, parameters);
 			var charSet = content.Headers.ContentType?.CharSet;
 			var stream = content.ReadAsStream();
-			return new StreamReader(stream, string.IsNullOrEmpty(charSet) ? Encoding.UTF8 : Encoding.GetEncoding(charSet));
+			return new(stream, string.IsNullOrEmpty(charSet) ? Encoding.UTF8 : Encoding.GetEncoding(charSet));
 		}
 
 		public T InvokeJson<T>(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters) {
@@ -144,7 +139,7 @@ namespace bsn.CashCtrl {
 			var content = await this.InvokeAsync(method, endpoint, parameters, cancellationToken).ConfigureAwait(false);
 			var charSet = content.Headers.ContentType?.CharSet;
 			var stream = await content.ReadAsStreamAsync().ConfigureAwait(false);
-			return new StreamReader(stream, string.IsNullOrEmpty(charSet) ? Encoding.UTF8 : Encoding.GetEncoding(charSet));
+			return new(stream, string.IsNullOrEmpty(charSet) ? Encoding.UTF8 : Encoding.GetEncoding(charSet));
 		}
 
 		public async ValueTask<T> InvokeJsonAsync<T>(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken = default) {
@@ -158,7 +153,7 @@ namespace bsn.CashCtrl {
 			var payloadAsQuery = rxMethodWithoutBody.IsMatch(method.Method);
 			if (payloadStrings != null && payloadAsQuery) {
 				// ReSharper disable once PossibleMultipleEnumeration
-				endpoint = endpoint+(endpoint.IndexOf('?') < 0 ? '?' : '&')+string.Join("&", payloadStrings.Select(p => Encode(p.Key)+"="+Encode(p.Value)));
+				endpoint = endpoint + (endpoint.IndexOf('?') < 0 ? '?' : '&') + string.Join("&", payloadStrings.Select(p => Encode(p.Key) + "=" + Encode(p.Value)));
 			}
 			var request = new HttpRequestMessage(method, new Uri(this.baseUri, endpoint));
 			request.Headers.Authorization = this.authorization;
@@ -183,16 +178,16 @@ namespace bsn.CashCtrl {
 					IApiSerializable serializable => this.SerializeToString(new JObject(serializable.ToParameters().Select(p => new JProperty(p.Key, p.Value)))),
 					JValue jValue => this.SerializeToString(jValue.Value),
 					JContainer jContainer => this.JsonToString(jContainer),
-					XNode xNode => xNode.ToString(SaveOptions.DisableFormatting|SaveOptions.OmitDuplicateNamespaces),
+					XNode xNode => xNode.ToString(SaveOptions.DisableFormatting | SaveOptions.OmitDuplicateNamespaces),
 					string str => str,
 					bool b => b ? "1" : "0",
 					DateTime dt => dt.ToCashCtrlString(),
 					IFormattable formattable => formattable.ToString(null, CultureInfo.InvariantCulture),
-					IEnumerable<IApiSerializable> enumerable => '['+string.Join(",", enumerable.Select(this.SerializeToString))+']',
-					IEnumerable<JToken> enumerable => '['+string.Join(",", enumerable.Select(this.SerializeToString))+']',
+					IEnumerable<IApiSerializable> enumerable => '[' + string.Join(",", enumerable.Select(this.SerializeToString)) + ']',
+					IEnumerable<JToken> enumerable => '[' + string.Join(",", enumerable.Select(this.SerializeToString)) + ']',
 					IEnumerable<object> enumerable => string.Join(",", enumerable.Select(this.SerializeToString)),
 					IEnumerable enumerable => string.Join(",", enumerable.Cast<object>().Select(this.SerializeToString)),
-					_ => throw new NotSupportedException("Data type "+value.GetType().Name+" is not supported for parameter serialization")
+					_ => throw new NotSupportedException("Data type " + value.GetType().Name + " is not supported for parameter serialization")
 			};
 		}
 	}

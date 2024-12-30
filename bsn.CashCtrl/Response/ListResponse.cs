@@ -8,24 +8,28 @@ namespace bsn.CashCtrl.Response {
 	public class ListResponse<T> {
 		public int Total {
 			get;
-			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)] set;
+			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
+			set;
 		}
 
 		public T[] Data {
 			get;
-			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)] set;
+			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
+			set;
 		}
 
 		[JsonProperty(NullValueHandling = NullValueHandling.Include)]
 		public JObject Summary {
 			get;
-			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)] set;
+			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
+			set;
 		}
 
 		[JsonProperty(NullValueHandling = NullValueHandling.Include)]
 		public JObject Properties {
 			get;
-			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)] set;
+			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
+			set;
 		}
 	}
 }

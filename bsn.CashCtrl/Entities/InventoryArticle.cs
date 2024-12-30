@@ -154,26 +154,26 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		protected override IEnumerable<KeyValuePair<string, object>> ToParametersInternal() {
-			yield return new KeyValuePair<string, object>("name", this.Name);
-			yield return new KeyValuePair<string, object>("binLocation", this.BinLocation);
-			yield return new KeyValuePair<string, object>("categoryId", this.CategoryId);
-			yield return new KeyValuePair<string, object>("currencyId", this.CurrencyId);
-			yield return new KeyValuePair<string, object>("description", this.Description);
-			yield return new KeyValuePair<string, object>("isInactive", this.IsInactive);
-			yield return new KeyValuePair<string, object>("isPurchasePriceGross", this.IsPurchasePriceGross);
-			yield return new KeyValuePair<string, object>("isSalesPriceGross", this.IsSalesPriceGross);
-			yield return new KeyValuePair<string, object>("isStockArticle", this.IsStockArticle);
-			yield return new KeyValuePair<string, object>("lastPurchasePrice", this.LastPurchasePrice);
-			yield return new KeyValuePair<string, object>("locationId", this.LocationId);
-			yield return new KeyValuePair<string, object>("maxStock", this.MaxStock);
-			yield return new KeyValuePair<string, object>("minStock", this.MinStock);
+			yield return new("name", this.Name);
+			yield return new("binLocation", this.BinLocation);
+			yield return new("categoryId", this.CategoryId);
+			yield return new("currencyId", this.CurrencyId);
+			yield return new("description", this.Description);
+			yield return new("isInactive", this.IsInactive);
+			yield return new("isPurchasePriceGross", this.IsPurchasePriceGross);
+			yield return new("isSalesPriceGross", this.IsSalesPriceGross);
+			yield return new("isStockArticle", this.IsStockArticle);
+			yield return new("lastPurchasePrice", this.LastPurchasePrice);
+			yield return new("locationId", this.LocationId);
+			yield return new("maxStock", this.MaxStock);
+			yield return new("minStock", this.MinStock);
 			if (!string.IsNullOrEmpty(this.Nr)) {
-				yield return new KeyValuePair<string, object>("nr", this.Nr);
+				yield return new("nr", this.Nr);
 			}
-			yield return new KeyValuePair<string, object>("salesPrice", this.SalesPrice);
-			yield return new KeyValuePair<string, object>("sequenceNumberId", this.SequenceNumberId);
-			yield return new KeyValuePair<string, object>("stock", this.Stock);
-			yield return new KeyValuePair<string, object>("unitId", this.UnitId);
+			yield return new("salesPrice", this.SalesPrice);
+			yield return new("sequenceNumberId", this.SequenceNumberId);
+			yield return new("stock", this.Stock);
+			yield return new("unitId", this.UnitId);
 		}
 	}
 }

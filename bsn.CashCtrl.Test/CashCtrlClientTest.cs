@@ -32,7 +32,7 @@ namespace bsn.CashCtrl {
 
 		[Fact]
 		public async Task ListAsync() {
-			var response = await this.Client.GetAsync<ListResponse<OrderCategory>>("order/category/list.json", null).ConfigureAwait(false);
+			var response = await this.Client.GetAsync<ListResponse<OrderCategory>>("order/category/list.json", null);
 			this.Output.WriteLine(response.Data[0].Status[0].Name.ToString("EN"));
 			this.WriteAsJson(response);
 		}

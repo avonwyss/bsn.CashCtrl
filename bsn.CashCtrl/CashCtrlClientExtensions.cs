@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -297,6 +297,11 @@ namespace bsn.CashCtrl {
 		public static string GetString(this CashCtrlClient that, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters) {
 			using var reader=that.InvokeTextReader(HttpMethod.Get, endpoint, parameters);
 			return reader.ReadToEnd();
+		}
+
+		public static async ValueTask<string> GetStringAsync(this CashCtrlClient that, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters) {
+			using var reader=await that.InvokeTextReaderAsync(HttpMethod.Get, endpoint, parameters).ConfigureAwait(false);
+			return await reader.ReadToEndAsync().ConfigureAwait(false);
 		}
 
 		public static int UpdateOrCreate<T>(this CashCtrlClient that, T entity, Action<CashCtrlClient, T> update, Func<CashCtrlClient, T, int> create) where T: EntityBase {

@@ -47,7 +47,7 @@ namespace bsn.CashCtrl.Entities {
 		public List<string> Values {
 			get;
 			set;
-		} = new List<string>(0);
+		} = new(0);
 
 		public int Pos {
 			get;
@@ -87,20 +87,20 @@ namespace bsn.CashCtrl.Entities {
 
 		public IEnumerable<KeyValuePair<string, object>> ToParameters() {
 			if (this.Id > 0) {
-				yield return new KeyValuePair<string, object>("id", this.Id);
+				yield return new("id", this.Id);
 			}
-			yield return new KeyValuePair<string, object>("dataType", this.DataType);
+			yield return new("dataType", this.DataType);
 			if (this.DataType == CustomFieldDataType.Combobox) {
-				yield return new KeyValuePair<string, object>("values", this.Values);
+				yield return new("values", this.Values);
 			}
-			yield return new KeyValuePair<string, object>("name", this.Name);
-			yield return new KeyValuePair<string, object>("type", this.Type);
-			yield return new KeyValuePair<string, object>("description", this.Description);
+			yield return new("name", this.Name);
+			yield return new("type", this.Type);
+			yield return new("description", this.Description);
 			if (this.GroupId.HasValue) {
-				yield return new KeyValuePair<string, object>("groupId", this.GroupId);
+				yield return new("groupId", this.GroupId);
 			}
-			yield return new KeyValuePair<string, object>("isInactive", this.IsInactive);
-			yield return new KeyValuePair<string, object>("isMulti", this.IsMulti);
+			yield return new("isInactive", this.IsInactive);
+			yield return new("isMulti", this.IsMulti);
 		}
 	}
 }

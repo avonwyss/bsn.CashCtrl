@@ -13,13 +13,13 @@ namespace bsn.CashCtrl {
 		internal static readonly XName ValuesName = "values";
 
 		public static implicit operator LocalizedString(string value) {
-			return new LocalizedString(value);
+			return new(value);
 		}
 
 		public static explicit operator string(LocalizedString value) {
 			return value.UnderlyingValue.Match(
 					s => s,
-					x => x.ToString(SaveOptions.DisableFormatting|SaveOptions.OmitDuplicateNamespaces));
+					x => x.ToString(SaveOptions.DisableFormatting | SaveOptions.OmitDuplicateNamespaces));
 		}
 
 		public LocalizedString(OneOf<string, XElement> underlyingValue) {
@@ -44,21 +44,21 @@ namespace bsn.CashCtrl {
 				throw new ArgumentNullException(nameof(language));
 			}
 			var x = this.Empty
-					? new XElement(ValuesName)
+					? new(ValuesName)
 					: this.UnderlyingValue.IsT1
 							? this.UnderlyingValue.AsT1
 							: throw new InvalidOperationException("Cannot set a value on an invariant LocalizedString");
 			x.SetElementValue(language.ToLowerInvariant(), string.IsNullOrEmpty(value) ? null : value);
-			return new LocalizedString(x);
+			return new(x);
 		}
 
 		public LocalizedString Multilanguage(string defaultLanguage = "DE") {
 			if (string.IsNullOrWhiteSpace(defaultLanguage)) {
 				throw new ArgumentNullException(nameof(defaultLanguage));
 			}
-			return this.IsMultilanguage 
-					? this 
-					: new LocalizedString(new XElement(ValuesName, new XElement(defaultLanguage.ToLowerInvariant(), this.UnderlyingValue.AsT0)));
+			return this.IsMultilanguage
+					? this
+					: new(new XElement(ValuesName, new XElement(defaultLanguage.ToLowerInvariant(), this.UnderlyingValue.AsT0)));
 		}
 
 		public override bool Equals(object obj) {

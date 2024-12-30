@@ -32,10 +32,10 @@ namespace bsn.CashCtrl.Entities {
 
 		public virtual IEnumerable<KeyValuePair<string, object>> ToParameters() {
 			if (this.Id > 0) {
-				yield return new KeyValuePair<string, object>("id", this.Id);
+				yield return new("id", this.Id);
 			}
-			yield return new KeyValuePair<string, object>("custom", CustomFieldValuesConverter.ToXml(this.Custom));
-			yield return new KeyValuePair<string, object>("notes", this.Notes);
+			yield return new("custom", CustomFieldValuesConverter.ToXml(this.Custom));
+			yield return new("notes", this.Notes);
 			foreach (var pair in this.ToParametersInternal()) {
 				yield return pair;
 			}

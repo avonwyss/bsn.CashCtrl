@@ -7,12 +7,14 @@ namespace bsn.CashCtrl.Entities {
 	public class AccountCostCenterAllocation: IApiSerializable {
 		public int Id {
 			get;
-			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)] set;
+			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
+			set;
 		}
 
 		public int FromInventoryCategoryId {
 			get;
-			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)] set;
+			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
+			set;
 		}
 
 		public int ToCostCenterId {
@@ -22,7 +24,8 @@ namespace bsn.CashCtrl.Entities {
 
 		public int Dimension {
 			get;
-			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)] set;
+			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
+			set;
 		}
 
 		public double Share {
@@ -32,17 +35,19 @@ namespace bsn.CashCtrl.Entities {
 
 		public int Pos {
 			get;
-			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)] set;
+			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
+			set;
 		}
 
 		public string Fullname {
 			get;
-			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)] set;
+			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
+			set;
 		}
 
 		public IEnumerable<KeyValuePair<string, object>> ToParameters() {
-			yield return new KeyValuePair<string, object>("share", this.Share);
-			yield return new KeyValuePair<string, object>("toCostCenterId", this.ToCostCenterId);
+			yield return new("share", this.Share);
+			yield return new("toCostCenterId", this.ToCostCenterId);
 		}
 	}
 }

@@ -2,9 +2,13 @@ using System;
 
 namespace bsn.CashCtrl.Entities {
 	public abstract class EntityBase {
-		public static implicit operator int(EntityBase entity) => entity.Id;
+		public static implicit operator int(EntityBase entity) {
+			return entity.Id;
+		}
 
-		public static implicit operator int?(EntityBase entity) => entity?.Id;
+		public static implicit operator int?(EntityBase entity) {
+			return entity?.Id;
+		}
 
 		public int Id {
 			get;
@@ -35,8 +39,6 @@ namespace bsn.CashCtrl.Entities {
 			set;
 		}
 
-		public virtual bool OwnedByApi {
-			get => this.CreatedBy.StartsWith("API:", StringComparison.Ordinal) || this.LastUpdatedBy.StartsWith("API:", StringComparison.Ordinal);
-		}
+		public virtual bool OwnedByApi => this.CreatedBy.StartsWith("API:", StringComparison.Ordinal) || this.LastUpdatedBy.StartsWith("API:", StringComparison.Ordinal);
 	}
 }

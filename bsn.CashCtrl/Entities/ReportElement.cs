@@ -73,16 +73,16 @@ namespace bsn.CashCtrl.Entities {
 
 		public IEnumerable<KeyValuePair<string, object>> ToParameters() {
 			if (this.Id > 0) {
-				yield return new KeyValuePair<string, object>("id", this.Id);
+				yield return new("id", this.Id);
 			}
-			yield return new KeyValuePair<string, object>("type", this.Type);
-			yield return new KeyValuePair<string, object>("config", this.Config);
-			yield return new KeyValuePair<string, object>("fileId", this.FileId);
-			yield return new KeyValuePair<string, object>("isHideTitle", this.IsHideTitle);
-			yield return new KeyValuePair<string, object>("isPageBreak", this.IsPageBreak);
-			yield return new KeyValuePair<string, object>("name", this.Name);
-			yield return new KeyValuePair<string, object>("setId", this.SetId);
-			yield return new KeyValuePair<string, object>("text", this.Text);
+			yield return new("type", this.Type);
+			yield return new("config", this.Config);
+			yield return new("fileId", this.FileId);
+			yield return new("isHideTitle", this.IsHideTitle);
+			yield return new("isPageBreak", this.IsPageBreak);
+			yield return new("name", this.Name);
+			yield return new("setId", this.SetId);
+			yield return new("text", this.Text);
 		}
 	}
 }

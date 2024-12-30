@@ -317,9 +317,9 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		protected override IEnumerable<KeyValuePair<string, object>> ToParametersInternal() {
-			yield return new ("id", this.Id);
+			yield return new("id", this.Id);
 			yield return new("amount", this.Amount);
-			yield return new ("contraAccountId", this.ContraAccountId);
+			yield return new("contraAccountId", this.ContraAccountId);
 			yield return new("dateAdded", this.DateAdded);
 			yield return new("associateId", this.AssociateId);
 			yield return new("currencyId", this.CurrencyId);

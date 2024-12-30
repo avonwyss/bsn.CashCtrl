@@ -1,6 +1,6 @@
 ﻿namespace bsn.CashCtrl.Entities {
 	public enum BookType {
-		Debit, 
+		Debit,
 		Credit
 	}
 }

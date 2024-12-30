@@ -18,9 +18,9 @@ namespace bsn.CashCtrl.Query {
 		}
 
 		protected override IEnumerable<KeyValuePair<string, object>> ToParametersInternal() {
-			yield return new ("onlyActive", this.OnlyActive);
-			yield return new ("onlyWithImages", this.OnlyWithImages);
-			yield return new ("onlyWithoutCategory", this.OnlyWithoutCategory);
+			yield return new("onlyActive", this.OnlyActive);
+			yield return new("onlyWithImages", this.OnlyWithImages);
+			yield return new("onlyWithoutCategory", this.OnlyWithoutCategory);
 		}
 	}
 }

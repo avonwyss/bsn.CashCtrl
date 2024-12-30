@@ -37,6 +37,5 @@ namespace bsn.CashCtrl.Entities {
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
 			set;
 		}
-
 	}
 }

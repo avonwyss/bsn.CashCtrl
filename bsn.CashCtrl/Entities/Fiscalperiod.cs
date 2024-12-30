@@ -77,17 +77,17 @@ namespace bsn.CashCtrl.Entities {
 
 		public IEnumerable<KeyValuePair<string, object>> ToParameters() {
 			if (this.Id > 0) {
-				yield return new KeyValuePair<string, object>("id", this.Id);
+				yield return new("id", this.Id);
 			}
-			yield return new KeyValuePair<string, object>("name", this.Name);
-			yield return new KeyValuePair<string, object>("isCustom", this.isCustom);
+			yield return new("name", this.Name);
+			yield return new("isCustom", this.isCustom);
 			if (this.isCustom) {
 				// ReSharper disable once PossibleInvalidOperationException
-				yield return new KeyValuePair<string, object>("end", this.End.Value.ToCashCtrlString(true));
+				yield return new("end", this.End.Value.ToCashCtrlString(true));
 				// ReSharper disable once PossibleInvalidOperationException
-				yield return new KeyValuePair<string, object>("start", this.Start.Value.ToCashCtrlString(true));
+				yield return new("start", this.Start.Value.ToCashCtrlString(true));
 			} else {
-				yield return new KeyValuePair<string, object>("type", this.isEarliest ? "EARLIEST" : "LATEST");
+				yield return new("type", this.isEarliest ? "EARLIEST" : "LATEST");
 			}
 		}
 

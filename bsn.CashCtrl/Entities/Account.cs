@@ -142,14 +142,14 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		protected override IEnumerable<KeyValuePair<string, object>> ToParametersInternal() {
-			yield return new KeyValuePair<string, object>("categoryId", this.CategoryId);
-			yield return new KeyValuePair<string, object>("name", this.Name);
-			yield return new KeyValuePair<string, object>("number", this.Number);
-			yield return new KeyValuePair<string, object>("currencyId", this.CurrencyId);
-			yield return new KeyValuePair<string, object>("isInactive", this.IsInactive);
-			yield return new KeyValuePair<string, object>("targetMin", this.TargetMin);
-			yield return new KeyValuePair<string, object>("targetMax", this.TargetMax);
-			yield return new KeyValuePair<string, object>("taxId", this.TaxId);
+			yield return new("categoryId", this.CategoryId);
+			yield return new("name", this.Name);
+			yield return new("number", this.Number);
+			yield return new("currencyId", this.CurrencyId);
+			yield return new("isInactive", this.IsInactive);
+			yield return new("targetMin", this.TargetMin);
+			yield return new("targetMax", this.TargetMax);
+			yield return new("taxId", this.TaxId);
 		}
 	}
 }

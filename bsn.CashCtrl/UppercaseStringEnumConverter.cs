@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace bsn.CashCtrl {
 	public class UppercaseStringEnumConverter: JsonConverter {
-		private static readonly Regex rxCaseChange = new(@"(?<=\p{L})(?=\p{Lu})", RegexOptions.CultureInvariant|RegexOptions.Compiled|RegexOptions.ExplicitCapture);
+		private static readonly Regex rxCaseChange = new(@"(?<=\p{L})(?=\p{Lu})", RegexOptions.CultureInvariant | RegexOptions.Compiled | RegexOptions.ExplicitCapture);
 
 		internal static string EnumValueToString(object value) {
 			return rxCaseChange.Replace(value.ToString(), "_").ToUpperInvariant();

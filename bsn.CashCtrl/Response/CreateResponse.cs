@@ -4,7 +4,8 @@ namespace bsn.CashCtrl.Response {
 	public class CreateResponse: UpdateResponse {
 		public int InsertId {
 			get;
-			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)] set;
+			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
+			set;
 		}
 
 		public int GetInsertIdOrThrow() {

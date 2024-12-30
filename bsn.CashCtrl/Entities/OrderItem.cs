@@ -13,7 +13,7 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		private static string WithApiMarker(string value) {
-			return HasApiMarker(value) ? value : value == null ? ApiMarker.ToString() : ApiMarker+value;
+			return HasApiMarker(value) ? value : value == null ? ApiMarker.ToString() : ApiMarker + value;
 		}
 
 		private static string WithoutApiMarker(string value) {
@@ -146,13 +146,13 @@ namespace bsn.CashCtrl.Entities {
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
 			set;
 		}
-		
+
 		public double NetUnitPrice {
 			get;
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
 			set;
 		}
-		
+
 		public double DefaultCurrencyNetUnitPrice {
 			get;
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
@@ -164,7 +164,7 @@ namespace bsn.CashCtrl.Entities {
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
 			set;
 		}
-		
+
 		public TaxCalcType TaxCalcType {
 			get;
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
@@ -188,7 +188,7 @@ namespace bsn.CashCtrl.Entities {
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
 			set;
 		}
-		
+
 		public bool IsInventoryArticle {
 			get;
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]

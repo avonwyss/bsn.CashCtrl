@@ -1,8 +1,8 @@
 ﻿namespace bsn.CashCtrl.Entities {
 	public enum LocationType {
-		Main, 
-		Branch, 
-		Storage, 
+		Main,
+		Branch,
+		Storage,
 		Other
 	}
 }

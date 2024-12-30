@@ -50,14 +50,14 @@ namespace bsn.CashCtrl.Entities {
 
 		public IEnumerable<KeyValuePair<string, object>> ToParameters() {
 			if (this.Id > 0) {
-				yield return new KeyValuePair<string, object>("id", this.Id);
+				yield return new("id", this.Id);
 			}
-			yield return new KeyValuePair<string, object>("name", this.Name);
-			yield return new KeyValuePair<string, object>("parentId", this.ParentId);
-			yield return new KeyValuePair<string, object>("allocations", (IEnumerable<AccountCostCenterAllocation>)this.Allocations ?? Array.Empty<AccountCostCenterAllocation>());
-			yield return new KeyValuePair<string, object>("purchaseAccountId", this.PurchaseAccountId);
-			yield return new KeyValuePair<string, object>("salesAccountId", this.SalesAccountId);
-			yield return new KeyValuePair<string, object>("sequenceNrId", this.sequenceNrId);
+			yield return new("name", this.Name);
+			yield return new("parentId", this.ParentId);
+			yield return new("allocations", (IEnumerable<AccountCostCenterAllocation>)this.Allocations ?? Array.Empty<AccountCostCenterAllocation>());
+			yield return new("purchaseAccountId", this.PurchaseAccountId);
+			yield return new("salesAccountId", this.SalesAccountId);
+			yield return new("sequenceNrId", this.sequenceNrId);
 		}
 	}
 }

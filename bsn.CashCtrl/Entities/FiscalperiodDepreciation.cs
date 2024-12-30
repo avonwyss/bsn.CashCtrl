@@ -26,6 +26,5 @@ namespace bsn.CashCtrl.Entities {
 			get;
 			set;
 		}
-
 	}
 }

@@ -26,12 +26,14 @@ namespace bsn.CashCtrl.Entities {
 
 		public double OpeningAmount {
 			get;
-			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)] set;
+			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
+			set;
 		}
 
 		public double EndAmount {
 			get;
-			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)] set;
+			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
+			set;
 		}
 
 		public double TargetMin {
@@ -46,7 +48,8 @@ namespace bsn.CashCtrl.Entities {
 
 		public string TargetDisplay {
 			get;
-			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)] set;
+			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
+			set;
 		}
 
 		public bool IsInactive {
@@ -56,21 +59,23 @@ namespace bsn.CashCtrl.Entities {
 
 		public bool? HasBalance {
 			get;
-			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)] set;
+			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
+			set;
 		}
 
 		public LocalizedString FullName {
 			get;
-			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)] set;
+			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
+			set;
 		}
 
 		protected override IEnumerable<KeyValuePair<string, object>> ToParametersInternal() {
-			yield return new KeyValuePair<string, object>("name", this.Name);
-			yield return new KeyValuePair<string, object>("number", this.Number);
-			yield return new KeyValuePair<string, object>("categoryId", this.CategoryId);
-			yield return new KeyValuePair<string, object>("isInactive", this.IsInactive);
-			yield return new KeyValuePair<string, object>("targetMin", this.TargetMin);
-			yield return new KeyValuePair<string, object>("targetMax", this.TargetMax);
+			yield return new("name", this.Name);
+			yield return new("number", this.Number);
+			yield return new("categoryId", this.CategoryId);
+			yield return new("isInactive", this.IsInactive);
+			yield return new("targetMin", this.TargetMin);
+			yield return new("targetMax", this.TargetMax);
 		}
 	}
 }
