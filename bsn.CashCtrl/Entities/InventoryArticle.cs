@@ -43,6 +43,12 @@ namespace bsn.CashCtrl.Entities {
 			set;
 		}
 
+		public AccountCostCenterAllocation[] Allocations {
+			get;
+			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
+			set;
+		}
+
 		public int? LocationId {
 			get;
 			set;
