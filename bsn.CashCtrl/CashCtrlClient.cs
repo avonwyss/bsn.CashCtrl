@@ -195,6 +195,7 @@ namespace bsn.CashCtrl {
 			return obj switch {
 					JToken token => token,
 					IApiSerializable serializable => this.SerializeToJObject(serializable),
+					string str => new JValue(str),
 					IEnumerable enumerable => new JArray(enumerable.Cast<object>().Select(this.SerializeToJToken)),
 					_ => this.SerializeToString(obj)
 			};
