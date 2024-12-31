@@ -176,7 +176,7 @@ namespace bsn.CashCtrl {
 					null => string.Empty,
 					var o when o.GetType().IsEnum => UppercaseStringEnumConverter.EnumValueToString(o),
 					LocalizedString str => (string)str,
-					IApiSerializable serializable => this.SerializeToString(new JObject(serializable.ToParameters().Select(p => new JProperty(p.Key, p.Value)))),
+					IApiSerializable serializable => this.SerializeToString(this.SerializeToJObject(serializable)),
 					JValue jValue => this.SerializeToString(jValue.Value),
 					JContainer jContainer => this.JsonToString(jContainer),
 					XNode xNode => xNode.ToString(SaveOptions.DisableFormatting | SaveOptions.OmitDuplicateNamespaces),
@@ -186,10 +186,22 @@ namespace bsn.CashCtrl {
 					IFormattable formattable => formattable.ToString(null, CultureInfo.InvariantCulture),
 					IEnumerable<IApiSerializable> enumerable => '[' + string.Join(",", enumerable.Select(this.SerializeToString)) + ']',
 					IEnumerable<JToken> enumerable => '[' + string.Join(",", enumerable.Select(this.SerializeToString)) + ']',
-					IEnumerable<object> enumerable => string.Join(",", enumerable.Select(this.SerializeToString)),
 					IEnumerable enumerable => string.Join(",", enumerable.Cast<object>().Select(this.SerializeToString)),
 					_ => throw new NotSupportedException("Data type " + value.GetType().Name + " is not supported for parameter serialization")
 			};
+		}
+
+		private JToken SerializeToJToken(object obj) {
+			return obj switch {
+					JToken token => token,
+					IApiSerializable serializable => this.SerializeToJObject(serializable),
+					IEnumerable enumerable => new JArray(enumerable.Cast<object>().Select(this.SerializeToJToken)),
+					_ => this.SerializeToString(obj)
+			};
+		}
+
+		private JObject SerializeToJObject(IApiSerializable serializable) {
+			return new JObject(serializable.ToParameters().Select(p => new JProperty(p.Key, this.SerializeToJToken(p.Value))));
 		}
 	}
 }
