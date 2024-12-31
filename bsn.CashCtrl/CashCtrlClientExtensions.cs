@@ -389,19 +389,27 @@ namespace bsn.CashCtrl {
 		}
 
 		public static T SetCostCenterAllocations<T>(this T that, IEnumerable<AccountCostCenterAllocation> allocations) where T: ICostCenterAllocatable {
-			foreach (var allocation in allocations) {
-				SetCostCenterAllocation(that, allocation.ToCostCenterId, allocation.Share);
+			if (allocations != null) {
+				foreach (var allocation in allocations) {
+					SetCostCenterAllocation(that, allocation);
+				}
 			}
 			return that;
 		}
 
 		public static T SetCostCenterAllocation<T>(this T that, AccountCostCenterAllocation allocation) where T: ICostCenterAllocatable {
+			if (allocation == null) {
+				return that;
+			}
 			return SetCostCenterAllocation(that, allocation.ToCostCenterId, allocation.Share);
 		}
 
-		public static T SetCostCenterAllocation<T>(this T that, int costCenterId, double share) where T: ICostCenterAllocatable {
+		public static T SetCostCenterAllocation<T>(this T that, int? costCenterId, double share = 1.0) where T: ICostCenterAllocatable {
 			if (share < 0) {
 				throw new ArgumentOutOfRangeException(nameof(share));
+			}
+			if (costCenterId is null or 0) {
+				return that;
 			}
 			if (that.Allocations == null) {
 				if (that.AllocationCount > 0) {
@@ -410,10 +418,10 @@ namespace bsn.CashCtrl {
 				that.Allocations = new();
 			} else {
 				if (share == 0) {
-					that.Allocations.RemoveAll(a => a.ToCostCenterId == costCenterId);
+					that.Allocations.RemoveAll(a => a.ToCostCenterId == costCenterId.Value);
 					return that;
 				}
-				var allocation = that.Allocations.SingleOrDefault(a => a.ToCostCenterId == costCenterId);
+				var allocation = that.Allocations.SingleOrDefault(a => a.ToCostCenterId == costCenterId.Value);
 				if (allocation != null) {
 					allocation.Share = share;
 					return that;
@@ -421,7 +429,7 @@ namespace bsn.CashCtrl {
 			}
 			if (share > 0) {
 				that.Allocations.Add(new() {
-						ToCostCenterId = costCenterId,
+						ToCostCenterId = costCenterId.Value,
 						Share = share
 				});
 			}
