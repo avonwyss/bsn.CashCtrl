@@ -21,21 +21,6 @@ namespace bsn.CashCtrl.Entities {
 			set;
 		}
 
-		public List<AccountCostCenterAllocation> Allocations {
-			get;
-			set;
-		} = new(0);
-
-		public int? PurchaseAccountId {
-			get;
-			set;
-		}
-
-		public int? SalesAccountId {
-			get;
-			set;
-		}
-
 		public int? SequenceNrId {
 			[Obsolete(CashCtrlClient.EntityFieldMissing, false)]
 			get => this.sequenceNrId;
@@ -54,9 +39,6 @@ namespace bsn.CashCtrl.Entities {
 			}
 			yield return new("name", this.Name);
 			yield return new("parentId", this.ParentId);
-			yield return new("allocations", (IEnumerable<AccountCostCenterAllocation>)this.Allocations ?? Array.Empty<AccountCostCenterAllocation>());
-			yield return new("purchaseAccountId", this.PurchaseAccountId);
-			yield return new("salesAccountId", this.SalesAccountId);
 			yield return new("sequenceNrId", this.sequenceNrId);
 		}
 	}

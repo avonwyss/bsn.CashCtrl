@@ -23,6 +23,7 @@ namespace bsn.CashCtrl {
 	public class CashCtrlClient: IDisposable {
 		internal const string EntityFieldIsReadonly = "The field of the entity is read-only on the client.";
 		internal const string EntityFieldMissing = "The field of the entity is not returned by the server.";
+		internal const string EntityFieldAlwaysNull = "The field is always null.";
 
 		private static readonly Regex rxMethodWithoutBody = new("^(HEAD|GET|DELETE|OPTIONS|TRACE)$", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
 

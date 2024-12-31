@@ -383,5 +383,58 @@ namespace bsn.CashCtrl {
 			}
 			return that;
 		}
+
+		public static T SetCostCenterAllocations<T>(this T that, params AccountCostCenterAllocation[] allocations) where T: ICostCenterAllocatable {
+			return SetCostCenterAllocations(that, (IEnumerable<AccountCostCenterAllocation>)allocations);
+		}
+
+		public static T SetCostCenterAllocations<T>(this T that, IEnumerable<AccountCostCenterAllocation> allocations) where T: ICostCenterAllocatable {
+			foreach (var allocation in allocations) {
+				SetCostCenterAllocation(that, allocation.ToCostCenterId, allocation.Share);
+			}
+			return that;
+		}
+
+		public static T SetCostCenterAllocation<T>(this T that, AccountCostCenterAllocation allocation) where T: ICostCenterAllocatable {
+			return SetCostCenterAllocation(that, allocation.ToCostCenterId, allocation.Share);
+		}
+
+		public static T SetCostCenterAllocation<T>(this T that, int costCenterId, double share) where T: ICostCenterAllocatable {
+			if (share < 0) {
+				throw new ArgumentOutOfRangeException(nameof(share));
+			}
+			if (that.Allocations == null) {
+				if (that.AllocationCount > 0) {
+					throw new InvalidOperationException("The entity should have allocations, but these are not included in the entity.");
+				}
+				that.Allocations = new();
+			} else {
+				if (share == 0) {
+					that.Allocations.RemoveAll(a => a.ToCostCenterId == costCenterId);
+					return that;
+				}
+				var allocation = that.Allocations.SingleOrDefault(a => a.ToCostCenterId == costCenterId);
+				if (allocation != null) {
+					allocation.Share = share;
+					return that;
+				}
+			}
+			if (share > 0) {
+				that.Allocations.Add(new() {
+						ToCostCenterId = costCenterId,
+						Share = share
+				});
+			}
+			return that;
+		}
+
+		public static T ClearCostCenterAllocations<T>(this T that) where T: ICostCenterAllocatable {
+			if (that.Allocations == null) {
+				that.Allocations = new(0);
+			} else {
+				that.Allocations.Clear();
+			}
+			return that;
+		}
 	}
 }

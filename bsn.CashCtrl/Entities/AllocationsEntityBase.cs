@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace bsn.CashCtrl.Entities {
-	public abstract class AllocationsEntityBase: ExtensibleEntityBase {
+	public abstract class AllocationsEntityBase: ExtensibleEntityBase, ICostCenterAllocatable {
 		private int allocationCount;
 
 		public int AllocationCount {

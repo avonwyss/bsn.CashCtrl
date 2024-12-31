@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 namespace bsn.CashCtrl.Entities {
-	public class InventoryArticle: AllocationsEntityBase {
+	public class InventoryArticle: ExtensibleEntityBase {
 		public int? ThumbnailFileId {
 			get;
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]

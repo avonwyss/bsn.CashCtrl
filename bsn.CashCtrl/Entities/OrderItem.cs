@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Microsoft.SqlServer.Server;
 
 namespace bsn.CashCtrl.Entities {
-	public class OrderItem: EntityBase, IApiSerializable {
+	public class OrderItem: EntityBase, IApiSerializable, ICostCenterAllocatable {
 		private static readonly char ApiMarker = '\u200C'; // Zero-Width Non-Joiner
 		private string name;
 

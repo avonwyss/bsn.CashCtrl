@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 namespace bsn.CashCtrl.Entities {
-	public class Order: AllocationsEntityBase {
+	public class Order: ExtensibleEntityBase {
 		private int? sequenceNumberId;
 
 		public int AssociateId {

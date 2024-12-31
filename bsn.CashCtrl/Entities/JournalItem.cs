@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 namespace bsn.CashCtrl.Entities {
-	public class JournalItem: EntityBase, IApiSerializable {
+	public class JournalItem: EntityBase, IApiSerializable, ICostCenterAllocatable {
 		public int JournalId {
 			get;
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]

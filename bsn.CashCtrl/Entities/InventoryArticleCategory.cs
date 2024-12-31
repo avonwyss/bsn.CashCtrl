@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 namespace bsn.CashCtrl.Entities {
-	public class InventoryArticleCategory: EntityBase, IApiSerializable {
+	public class InventoryArticleCategory: AllocationsEntityBase, IApiSerializable {
 		private int? sequenceNrId;
 
 		public LocalizedString Name {
@@ -20,11 +20,6 @@ namespace bsn.CashCtrl.Entities {
 			get;
 			set;
 		}
-
-		public List<AccountCostCenterAllocation> Allocations {
-			get;
-			set;
-		} = new(0);
 
 		public int? PurchaseAccountId {
 			get;
@@ -48,13 +43,9 @@ namespace bsn.CashCtrl.Entities {
 			set;
 		}
 
-		public IEnumerable<KeyValuePair<string, object>> ToParameters() {
-			if (this.Id > 0) {
-				yield return new("id", this.Id);
-			}
+		protected override IEnumerable<KeyValuePair<string, object>> ToParametersInternal() {
 			yield return new("name", this.Name);
 			yield return new("parentId", this.ParentId);
-			yield return new("allocations", (IEnumerable<AccountCostCenterAllocation>)this.Allocations ?? Array.Empty<AccountCostCenterAllocation>());
 			yield return new("purchaseAccountId", this.PurchaseAccountId);
 			yield return new("salesAccountId", this.SalesAccountId);
 			yield return new("sequenceNrId", this.sequenceNrId);

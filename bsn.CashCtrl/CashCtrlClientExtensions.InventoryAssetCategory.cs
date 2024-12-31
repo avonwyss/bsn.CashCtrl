@@ -1,16 +1,19 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 
 using bsn.CashCtrl.Entities;
 using bsn.CashCtrl.Response;
 
 namespace bsn.CashCtrl {
 	public static partial class CashCtrlClientExtensions {
+		[Obsolete("As of 2024, this method returns the article category instead of the asset category.", false)]
 		public static InventoryAssetCategory InventoryAssetCategoryRead(this CashCtrlClient that, int id) {
 			return that.Get<ReadResponse<InventoryAssetCategory>>("inventory/asset/category/read.json", new[] {
 					new KeyValuePair<string, object>(nameof(id), id)
 			}).GetDataOrThrow();
 		}
 
+		[Obsolete("As of 2024, this method returns the article categories instead of the asset categories.", false)]
 		public static InventoryAssetCategory[] InventoryAssetCategoryList(this CashCtrlClient that) {
 			return that.Get<ListResponse<InventoryAssetCategory>>("inventory/asset/category/list.json", null).Data;
 		}
