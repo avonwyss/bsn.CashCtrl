@@ -4,7 +4,7 @@
 
 Inofficial .NET API client for CashCtrl.
 
-Note: Calls in current version are not async since the library was created for use in a non-async scenario. However, adding async method signatures analoguous to the sync methods is just routine work, there is nothing preventing that.
+Note: When using the sync extension methods, you should also use a sync HttpClient.
 
 <!-- badges -->
 
@@ -69,4 +69,4 @@ journalId = cashctrl.UpdateOrCreate(journal, CashCtrlClientExtensions.JournalUpd
 ## License
 
 - **[MIT license](LICENSE.txt)**
-- Copyright 2022 © Arsène von Wyss.
+- Copyright 2022-2025 © Arsène von Wyss.
