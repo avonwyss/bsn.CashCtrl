@@ -51,6 +51,10 @@ dotnet_naming_rule.members_should_be_pascal_case.style = pascal_case_style
 dotnet_naming_symbols.all_members.applicable_kinds = *
 dotnet_naming_style.pascal_case_style.capitalization = pascal_case
 
+# ReSharper properties
+resharper_max_initializer_elements_on_line = 1
+resharper_place_simple_initializer_on_single_line = false
+
 [*.{cs,vb}]
 csharp_new_line_before_open_brace = none
 csharp_new_line_before_else = false
