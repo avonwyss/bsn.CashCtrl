@@ -65,8 +65,8 @@ namespace bsn.CashCtrl {
 
 		public JsonSerializer JsonSerializer => this.jsonSerializer;
 
-		private T ConvertResult<T>(JObject result) {
-			if (typeof(T).IsAssignableFrom(typeof(JObject))) {
+		private T ConvertResult<T>(JToken result) {
+			if (typeof(T).IsAssignableFrom(typeof(JToken))) {
 				return (T)(object)result;
 			}
 			using var reader = new JTokenReader(result);
@@ -144,7 +144,7 @@ namespace bsn.CashCtrl {
 		}
 
 		public async ValueTask<T> InvokeJsonAsync<T>(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken = default) {
-			return this.ConvertResult<T>(await this.InvokeJsonAsync(method, endpoint, parameters).ConfigureAwait(false));
+			return this.ConvertResult<T>(await this.InvokeJsonAsync(method, endpoint, parameters, cancellationToken).ConfigureAwait(false));
 		}
 
 		private HttpRequestMessage PrepareRequest(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters) {
@@ -197,12 +197,14 @@ namespace bsn.CashCtrl {
 					IApiSerializable serializable => this.SerializeToJObject(serializable),
 					string str => new JValue(str),
 					IEnumerable enumerable => new JArray(enumerable.Cast<object>().Select(this.SerializeToJToken)),
-					_ => this.SerializeToString(obj)
+					_ => new JValue(this.SerializeToString(obj))
 			};
 		}
 
 		private JObject SerializeToJObject(IApiSerializable serializable) {
-			return new JObject(serializable.ToParameters().Select(p => new JProperty(p.Key, this.SerializeToJToken(p.Value))));
+			return new (serializable
+					.ToParameters()
+					.Select(p => new JProperty(p.Key, this.SerializeToJToken(p.Value))));
 		}
 	}
 }
