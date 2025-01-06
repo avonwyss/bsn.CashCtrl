@@ -9,7 +9,7 @@ using OneOf;
 
 namespace bsn.CashCtrl {
 	[JsonConverter(typeof(LocalizedStringConverter))]
-	public readonly struct LocalizedString: IFormattable {
+	public readonly struct LocalizedString: IFormattable, ICloneable {
 		internal static readonly XName ValuesName = "values";
 
 		public static implicit operator LocalizedString(string value) {
@@ -67,6 +67,13 @@ namespace bsn.CashCtrl {
 
 		public override int GetHashCode() {
 			return StringComparer.InvariantCulture.GetHashCode((string)this);
+		}
+
+		public object Clone() {
+			return new LocalizedString(this.UnderlyingValue
+					.Match<OneOf<string, XElement>>(
+							s => s,
+							x => new XElement(x)));
 		}
 
 		string IFormattable.ToString(string format, IFormatProvider formatProvider) {

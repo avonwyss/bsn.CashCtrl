@@ -23,12 +23,12 @@ namespace bsn.CashCtrl.Entities {
 			set;
 		}
 
-		public List<PersonContact> Contacts {
+		public CloneableList<PersonContact> Contacts {
 			get;
 			set;
 		} = new(0);
 
-		public List<PersonAddress> Addresses {
+		public CloneableList<PersonAddress> Addresses {
 			get;
 			set;
 		} = new(0);

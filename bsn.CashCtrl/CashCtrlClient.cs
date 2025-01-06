@@ -25,14 +25,20 @@ namespace bsn.CashCtrl {
 		internal const string EntityFieldMissing = "The field of the entity is not returned by the server.";
 		internal const string EntityFieldAlwaysNull = "The field is always null.";
 
-		private static readonly Regex rxMethodWithoutBody = new("^(HEAD|GET|DELETE|OPTIONS|TRACE)$", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
+		private static readonly Regex RxMethodWithoutBody = new("^(HEAD|GET|DELETE|OPTIONS|TRACE)$", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
 
 		private static string Encode(string data) {
 			return string.IsNullOrEmpty(data) ? string.Empty : Uri.EscapeDataString(data).Replace("%20", "+");
 		}
 
-		private static HttpClient CreateHttpClient() {
-			return new(new RetryHandler(10, new HttpClientSyncHandler() { AllowAutoRedirect = true }));
+		private static HttpClient CreateHttpClient(bool async) {
+			return new(new RetryHandler(10, async
+					? new HttpClientHandler() {
+							AllowAutoRedirect = true
+					}
+					: new HttpClientSyncHandler() {
+							AllowAutoRedirect = true
+					}));
 		}
 
 		private readonly Uri baseUri;
@@ -49,7 +55,9 @@ namespace bsn.CashCtrl {
 
 		private readonly AuthenticationHeaderValue authorization;
 
-		public CashCtrlClient(string domain, string apiKey): this(new(FormattableString.Invariant($"https://{Uri.EscapeDataString(domain.ToLowerInvariant())}.cashctrl.com/api/v1/")), apiKey, CreateHttpClient()) { }
+		public CashCtrlClient(string domain, string apiKey): this(domain, apiKey, false) { }
+
+		public CashCtrlClient(string domain, string apiKey, bool async): this(new(FormattableString.Invariant($"https://{Uri.EscapeDataString(domain.ToLowerInvariant())}.cashctrl.com/api/v1/")), apiKey, CreateHttpClient(async)) { }
 
 		internal CashCtrlClient(Uri baseUri, string apiKey, HttpClient httpClient) {
 			this.baseUri = baseUri;
@@ -151,10 +159,10 @@ namespace bsn.CashCtrl {
 			var payloadStrings = parameters?
 					.Where(p => p.Value != null)
 					.Select(p => new KeyValuePair<string, string>(p.Key, this.SerializeToString(p.Value)));
-			var payloadAsQuery = rxMethodWithoutBody.IsMatch(method.Method);
+			var payloadAsQuery = RxMethodWithoutBody.IsMatch(method.Method);
 			if (payloadStrings != null && payloadAsQuery) {
 				// ReSharper disable once PossibleMultipleEnumeration
-				endpoint = endpoint + (endpoint.IndexOf('?') < 0 ? '?' : '&') + string.Join("&", payloadStrings.Select(p => Encode(p.Key) + "=" + Encode(p.Value)));
+				endpoint += (endpoint.IndexOf('?') < 0 ? '?' : '&') + string.Join("&", payloadStrings.Select(p => Encode(p.Key) + "=" + Encode(p.Value)));
 			}
 			var request = new HttpRequestMessage(method, new Uri(this.baseUri, endpoint));
 			request.Headers.Authorization = this.authorization;

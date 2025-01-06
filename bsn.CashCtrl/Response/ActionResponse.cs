@@ -19,7 +19,7 @@ namespace bsn.CashCtrl.Response {
 
 		public virtual void EnsureSuccess() {
 			if (!this.Success) {
-				throw new InvalidOperationException(this.ErrorMessage);
+				throw new CashCtrlApiException(this.ErrorMessage);
 			}
 		}
 	}

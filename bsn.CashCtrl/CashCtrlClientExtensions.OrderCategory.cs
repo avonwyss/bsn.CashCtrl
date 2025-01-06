@@ -28,15 +28,17 @@ namespace bsn.CashCtrl {
 			response.EnsureSuccess();
 		}
 
-		public static OrderCategory[] OrderCategoryList(this CashCtrlClient that, int? fiscalPeriodId, OrderType? type) {
+		public static OrderCategory[] OrderCategoryList(this CashCtrlClient that, int? fiscalPeriodId = default, OrderType? type = default) {
 			return that.Get<ListResponse<OrderCategory>>("order/category/list.json", new KeyValuePair<string, object>[] {
-					new(nameof(fiscalPeriodId), fiscalPeriodId), new(nameof(type), type)
+					new(nameof(fiscalPeriodId), fiscalPeriodId),
+					new(nameof(type), type)
 			}).Data;
 		}
 
-		public static async ValueTask<OrderCategory[]> OrderCategoryListAsync(this CashCtrlClient that, int? fiscalPeriodId, OrderType? type) {
+		public static async ValueTask<OrderCategory[]> OrderCategoryListAsync(this CashCtrlClient that, int? fiscalPeriodId = default, OrderType? type = default) {
 			var response = await that.GetAsync<ListResponse<OrderCategory>>("order/category/list.json", new KeyValuePair<string, object>[] {
-					new(nameof(fiscalPeriodId), fiscalPeriodId), new(nameof(type), type)
+					new(nameof(fiscalPeriodId), fiscalPeriodId),
+					new(nameof(type), type)
 			}).ConfigureAwait(false);
 			return response.Data;
 		}
@@ -56,13 +58,19 @@ namespace bsn.CashCtrl {
 
 		public static void OrderCategoryReorder(this CashCtrlClient that, int[] ids, int target, bool? before, OrderType? type) {
 			that.Post<ActionResponse>("order/category/reorder.json", new KeyValuePair<string, object>[] {
-					new(nameof(ids), ids), new(nameof(target), target), new(nameof(before), before), new(nameof(type), type)
+					new(nameof(ids), ids),
+					new(nameof(target), target),
+					new(nameof(before), before),
+					new(nameof(type), type)
 			}).EnsureSuccess();
 		}
 
 		public static async ValueTask OrderCategoryReorderAsync(this CashCtrlClient that, int[] ids, int target, bool? before, OrderType? type) {
 			var response = await that.PostAsync<ActionResponse>("order/category/reorder.json", new KeyValuePair<string, object>[] {
-					new(nameof(ids), ids), new(nameof(target), target), new(nameof(before), before), new(nameof(type), type)
+					new(nameof(ids), ids),
+					new(nameof(target), target),
+					new(nameof(before), before),
+					new(nameof(type), type)
 			}).ConfigureAwait(false);
 			response.EnsureSuccess();
 		}

@@ -69,7 +69,7 @@ namespace bsn.CashCtrl.Entities {
 			}
 		}
 
-		public List<AccountCostCenterAllocation> Allocations {
+		public CloneableList<AccountCostCenterAllocation> Allocations {
 			get;
 			set;
 		} = new(0);

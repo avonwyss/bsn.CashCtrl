@@ -14,12 +14,12 @@ namespace bsn.CashCtrl.Entities {
 			set;
 		}
 
-		public List<OrderCategoryStatus> Status {
+		public CloneableList<OrderCategoryStatus> Status {
 			get;
 			set;
 		} = new(0);
 
-		public List<OrderCategoryBookTemplate> BookTemplates {
+		public CloneableList<OrderCategoryBookTemplate> BookTemplates {
 			get;
 			set;
 		} = new(0);

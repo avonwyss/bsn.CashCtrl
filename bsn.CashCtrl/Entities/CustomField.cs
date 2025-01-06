@@ -44,7 +44,7 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		[JsonConverter(typeof(JsonStringConverter))]
-		public List<string> Values {
+		public CloneableList<string> Values {
 			get;
 			set;
 		} = new(0);

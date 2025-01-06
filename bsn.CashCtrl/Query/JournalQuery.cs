@@ -2,6 +2,16 @@ using System.Collections.Generic;
 
 namespace bsn.CashCtrl.Query {
 	public class JournalQuery: QueryBase {
+		public int? AccountId {
+			get;
+			set;
+		}
+
+		public int? FiscalperiodId {
+			get;
+			set;
+		}
+
 		public bool? OnlyCollective {
 			get;
 			set;
@@ -28,6 +38,8 @@ namespace bsn.CashCtrl.Query {
 		}
 
 		protected override IEnumerable<KeyValuePair<string, object>> ToParametersInternal() {
+			yield return new("accountId", this.AccountId);
+			yield return new("fiscalPeriodId", this.FiscalperiodId);
 			yield return new("onlyCollective", this.OnlyCollective);
 			yield return new("onlyCostCenters", this.OnlyCostCenters);
 			yield return new("onlyImported", this.OnlyImported);

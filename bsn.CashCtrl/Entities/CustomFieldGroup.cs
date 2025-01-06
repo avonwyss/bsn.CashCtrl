@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace bsn.CashCtrl.Entities {
 	public class CustomFieldGroup: EntityBase, IApiSerializable {
-		public List<CustomField> CustomFields {
+		public CloneableList<CustomField> CustomFields {
 			get;
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
 			set;

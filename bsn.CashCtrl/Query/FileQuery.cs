@@ -18,7 +18,7 @@ namespace bsn.CashCtrl.Query {
 			}
 		}
 
-		public List<string> MimeTypes {
+		public CloneableList<string> MimeTypes {
 			get;
 		} = new(0);
 

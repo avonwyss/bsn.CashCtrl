@@ -231,7 +231,7 @@ namespace bsn.CashCtrl.Entities {
 			set;
 		}
 
-		public List<JournalItem> Items {
+		public CloneableList<JournalItem> Items {
 			get;
 			set;
 		}

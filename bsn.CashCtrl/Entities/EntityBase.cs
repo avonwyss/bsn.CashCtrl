@@ -1,7 +1,8 @@
 using System;
+using System.Runtime.Serialization;
 
 namespace bsn.CashCtrl.Entities {
-	public abstract class EntityBase {
+	public abstract class EntityBase: ICloneable {
 		public static implicit operator int(EntityBase entity) {
 			return entity.Id;
 		}
@@ -40,5 +41,9 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		public virtual bool OwnedByApi => this.CreatedBy.StartsWith("API:", StringComparison.Ordinal) || this.LastUpdatedBy.StartsWith("API:", StringComparison.Ordinal);
+
+		public object Clone() {
+			return this.MemberwiseClone();
+		}
 	}
 }

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 namespace bsn.CashCtrl.Query {
-	public abstract class QueryBase: IApiSerializable {
+	public abstract class QueryBase: IApiSerializable, ICloneable {
 		public int? CategoryId {
 			get;
 			set;
@@ -13,7 +13,7 @@ namespace bsn.CashCtrl.Query {
 			set;
 		}
 
-		public List<CashCtrlFilter> Filter {
+		public CloneableList<CashCtrlFilter> Filter {
 			get;
 			set;
 		} = new();
@@ -38,7 +38,7 @@ namespace bsn.CashCtrl.Query {
 			set;
 		}
 
-		public bool? Sort {
+		public string Sort {
 			get;
 			set;
 		}
@@ -77,5 +77,9 @@ namespace bsn.CashCtrl.Query {
 		}
 
 		protected abstract IEnumerable<KeyValuePair<string, object>> ToParametersInternal();
+
+		public object Clone() {
+			return this.MemberwiseClone();
+		}
 	}
 }

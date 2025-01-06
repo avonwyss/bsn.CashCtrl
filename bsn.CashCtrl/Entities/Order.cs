@@ -334,7 +334,7 @@ namespace bsn.CashCtrl.Entities {
 			set;
 		}
 
-		public List<OrderItem> Items {
+		public CloneableList<OrderItem> Items {
 			get;
 			set;
 		} = new(0);

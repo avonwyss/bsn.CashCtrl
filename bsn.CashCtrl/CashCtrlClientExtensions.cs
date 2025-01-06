@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using bsn.CashCtrl.Entities;
+using bsn.CashCtrl.Query;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -16,7 +17,7 @@ namespace bsn.CashCtrl {
 		public const string CashCtrlDateTimeFormat = "yyyy'-'MM'-'dd HH':'mm':'ss'.'f";
 		public const string CashCtrlDateFormat = "yyyy'-'MM'-'dd";
 
-		private static readonly Dictionary<string, string> countryIsoMap = new(StringComparer.OrdinalIgnoreCase) {
+		private static readonly Dictionary<string, string> CountryIsoMap = new(StringComparer.OrdinalIgnoreCase) {
 				{
 						"AF", "AFG"
 				}, {
@@ -584,7 +585,7 @@ namespace bsn.CashCtrl {
 		}
 
 		public static string MapCountryToAlpha3(string alpha2) {
-			return !string.IsNullOrEmpty(alpha2) && countryIsoMap.TryGetValue(alpha2, out var alpha3)
+			return !string.IsNullOrEmpty(alpha2) && CountryIsoMap.TryGetValue(alpha2, out var alpha3)
 					? alpha3
 					: alpha2;
 		}
@@ -693,6 +694,31 @@ namespace bsn.CashCtrl {
 				await update(that, entity).ConfigureAwait(false);
 			}
 			return await read(that, entityId).ConfigureAwait(false);
+		}
+
+		public static IEnumerable<TEntity> ListPaged<TEntity, TQuery>(this CashCtrlClient that, Func<CashCtrlClient, TQuery, TEntity[]> list, TQuery query = default, int pageSize = 100)
+				where TEntity: EntityBase
+				where TQuery: QueryBase, ICloneable, new() {
+			var pageQuery = query == null ? new() : (TQuery)query.Clone();
+			if (string.IsNullOrEmpty(pageQuery.Sort)) {
+				pageQuery.Sort = "id";
+			}
+			if (!pageQuery.Start.HasValue) {
+				pageQuery.Start = 0;
+			}
+			var limit = pageQuery.Limit.GetValueOrDefault(int.MaxValue);
+			while (limit > 0) {
+				pageQuery.Limit = Math.Min(pageSize, limit);
+				var entities = list(that, pageQuery);
+				foreach (var entity in entities) {
+					yield return entity;
+				}
+				limit -= entities.Length;
+				if (entities.Length < pageQuery.Limit) {
+					yield break;
+				}
+				pageQuery.Start += entities.Length;
+			}
 		}
 	}
 }

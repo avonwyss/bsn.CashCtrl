@@ -116,6 +116,7 @@
     <Compile Include="CashCtrlClientExtensions.Text.cs" />
     <Compile Include="CashCtrlDocumentFormat.cs" />
     <Compile Include="CashCtrlDownloadFormat.cs" />
+    <Compile Include="CloneExtensions.cs" />
     <Compile Include="CustomFieldValuesConverter.cs" />
     <Compile Include="Entities\Account.cs" />
     <Compile Include="Entities\AccountCategory.cs" />
@@ -129,6 +130,7 @@
     <Compile Include="Entities\AllocationsEntityBase.cs" />
     <Compile Include="Entities\Attachment.cs" />
     <Compile Include="Entities\BookType.cs" />
+    <Compile Include="Entities\CloneableList.cs" />
     <Compile Include="Entities\Currency.cs" />
     <Compile Include="Entities\CustomField.cs" />
     <Compile Include="Entities\CustomFieldDataType.cs" />
@@ -194,6 +196,7 @@
     <Compile Include="Entities\PersonTitle.cs" />
     <Compile Include="Entities\PreparedFile.cs" />
     <Compile Include="Entities\PurchaseType.cs" />
+    <Compile Include="Entities\ReferenceEqualityComparer.cs" />
     <Compile Include="Entities\ReportElement.cs" />
     <Compile Include="Entities\ReportMeta.cs" />
     <Compile Include="Entities\ReportNode.cs" />

@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CC96ADDE-5230-4842-A0B1-4099CFE541D3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CashCtrl</RootNamespace>
+    <AssemblyName>CashCtrl</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\CashCtrl.xml</DocumentationFile>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\CashCtrl.xml</DocumentationFile>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="OneOf, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OneOf.3.0.271\lib\net45\OneOf.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.PowerShell.5.1.ReferenceAssemblies.1.0.0\lib\net461\System.Management.Automation.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\bsn.CashCtrl\bsn.CashCtrl.csproj">
+      <Project>{0a6043d8-bb7a-40fc-b0cc-830393748732}</Project>
+      <Name>bsn.CashCtrl</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CashCtrlProvider.cs" />
+    <Compile Include="CashCtrlPSDriveInfo.cs" />
+    <Compile Include="PathHandlers\CashCtrlAccountCategoriesHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlAccountCategoryHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlAccountCostCenterCategoriesHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlAccountCostCenterCategoryHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlAccountCostCenterHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlAccountCostCentersHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlAccountHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlAccountsHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlCollectionHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlContainerHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlCurrenciesHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlCurrencyHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlCustomFieldGroupHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlCustomFieldGroupsHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlCustomFieldHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlCustomFieldsHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlCustomFieldTypesHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlDomainCurrentHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlDomainHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlEntityHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlFileCategoriesHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlFileCategoryHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlFileHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlFilesHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlFiscalperiodHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlFiscalperiodsHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlFiscalperiodTasksHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlInventoryArticleCategoriesHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlInventoryArticleCategoryHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlInventoryArticleHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlInventoryArticleImportHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlInventoryArticlesHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlInventoryAssetCategoriesHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlInventoryAssetCategoryHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlInventoryAssetHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlInventoryAssetsHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlInventoryHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlInventoryUnitHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlInventoryUnitsHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlJournalHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlJournalImportHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlJournalsHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlLocationHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlLocationsHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlOrderBookEntriesHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlOrderBookEntryHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlOrderCategoriesHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlOrderCategoryHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlOrderHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlOrdersHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlOrderTemplateHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlOrderTemplatesHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlPath.cs" />
+    <Compile Include="PathHandlers\CashCtrlPathHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlPersonHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlPersonsHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlReportElementHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlReportElementsHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlReportHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlRootHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlRoundingHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlRoundingsHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlSequenceNumberHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlSequenceNumbersHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlSettingsHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlTaxesHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlTaxHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlTextHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlTextsHandler.cs" />
+    <Compile Include="PathHandlers\CashCtrlTextTypesHandler.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\MatejKafka.XmlDoc2CmdletDoc.0.6.0\build\MatejKafka.XmlDoc2CmdletDoc.targets" Condition="Exists('..\packages\MatejKafka.XmlDoc2CmdletDoc.0.6.0\build\MatejKafka.XmlDoc2CmdletDoc.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\MatejKafka.XmlDoc2CmdletDoc.0.6.0\build\MatejKafka.XmlDoc2CmdletDoc.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MatejKafka.XmlDoc2CmdletDoc.0.6.0\build\MatejKafka.XmlDoc2CmdletDoc.targets'))" />
+  </Target>
+</Project>
