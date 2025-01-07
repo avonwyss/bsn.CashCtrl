@@ -7,7 +7,7 @@ using bsn.CashCtrl.Query;
 using OneOf;
 
 namespace CashCtrl.PathHandlers {
-	internal class CashCtrlInventoryArticlesHandler: CashCtrlCollectionHandler<InventoryArticle> {
+	internal class CashCtrlInventoryArticlesHandler: CashCtrlCollectionHandler<InventoryArticle, InventoryArticleQuery> {
 		public CashCtrlInventoryArticlesHandler(): base("article",
 				new CashCtrlInventoryArticleCategoriesHandler(),
 				new CashCtrlInventoryArticleImportHandler()) { }
@@ -16,8 +16,8 @@ namespace CashCtrl.PathHandlers {
 			return new CashCtrlInventoryArticleHandler(idOrEntity);
 		}
 
-		protected override IEnumerable<InventoryArticle> ListEntities(CashCtrlClient client) {
-			return client.ListPaged<InventoryArticle, InventoryArticleQuery>(CashCtrlClientExtensions.InventoryArticleList);
+		protected override IEnumerable<InventoryArticle> ListEntities(CashCtrlClient client, InventoryArticleQuery query) {
+			return client.ListPaged(CashCtrlClientExtensions.InventoryArticleList, query);
 		}
 	}
 }

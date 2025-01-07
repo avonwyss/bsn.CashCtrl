@@ -4,6 +4,10 @@ using System.Collections.Generic;
 namespace bsn.CashCtrl.Entities {
 	public class Order: ExtensibleEntityBase {
 		private int? sequenceNumberId;
+		// ReSharper disable once FieldCanBeMadeReadOnly.Local - Must be read-write for cloning
+		private VirtualList<OrderItem> items = new();
+
+		public override bool Partial => base.Partial || this.items.HasVirtualValues;
 
 		public int AssociateId {
 			get;
@@ -334,10 +338,10 @@ namespace bsn.CashCtrl.Entities {
 			set;
 		}
 
-		public CloneableList<OrderItem> Items {
-			get;
-			set;
-		} = new(0);
+		public IList<OrderItem> Items {
+			get => this.items;
+			set => this.items.MakeSameAs(value);
+		}
 
 		public int? FileId {
 			get;
@@ -412,7 +416,10 @@ namespace bsn.CashCtrl.Entities {
 			set => this.sequenceNumberId = value;
 		}
 
-		protected override IEnumerable<KeyValuePair<string, object>> ToParametersInternal() {
+		public override IEnumerable<KeyValuePair<string, object>> ToParameters() {
+			foreach (var pair in base.ToParameters()) {
+				yield return pair;
+			}
 			yield return new("associateId", this.AssociateId);
 			yield return new("categoryId", this.CategoryId);
 			yield return new("date", this.Date);

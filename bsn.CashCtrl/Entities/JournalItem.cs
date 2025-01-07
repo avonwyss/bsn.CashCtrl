@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace bsn.CashCtrl.Entities {
 	public class JournalItem: EntityBase, IApiSerializable, ICostCenterAllocatable {
+		// ReSharper disable once FieldCanBeMadeReadOnly.Local - Must be read-write for cloning
+		private VirtualList<AccountCostCenterAllocation> allocations = new();
+
 		public int JournalId {
 			get;
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
@@ -45,23 +48,7 @@ namespace bsn.CashCtrl.Entities {
 			set;
 		}
 
-		private int allocationCount;
-
-		public int AllocationCount {
-			get => this.Allocations?.Count ?? this.allocationCount;
-			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
-			set {
-				this.Allocations = null;
-				this.allocationCount = value;
-			}
-		}
-
-		public CloneableList<AccountCostCenterAllocation> Allocations {
-			get;
-			set;
-		} = new(0);
-
-		public double Amount {
+		public double? Amount {
 			get;
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
 			set;
@@ -98,10 +85,18 @@ namespace bsn.CashCtrl.Entities {
 			yield return new("debit", this.Debit);
 			yield return new("description", this.Description);
 			yield return new("taxId", this.TaxId);
-			if (this.Allocations == null && this.allocationCount > 0) {
-				throw new InvalidOperationException("The entity should have allocations, but these are not included in the entity.");
-			}
 			yield return new("allocations", this.Allocations);
+		}
+
+		public int AllocationCount {
+			get => this.allocations.Count;
+			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
+			set => this.allocations.Count = value;
+		}
+
+		public IList<AccountCostCenterAllocation> Allocations {
+			get => this.allocations;
+			set => this.allocations.MakeSameAs(value);
 		}
 	}
 }

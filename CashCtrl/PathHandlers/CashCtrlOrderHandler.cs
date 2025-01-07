@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using bsn.CashCtrl;
 using bsn.CashCtrl.Entities;
 
+using OneOf;
+
 namespace CashCtrl.PathHandlers {
 	internal class CashCtrlOrderHandler: CashCtrlEntityHandler<Order> {
 		private readonly IReadOnlyDictionary<string, CashCtrlPathHandler> childHandlers;
 
-		public CashCtrlOrderHandler(OneOf.OneOf<int, Order> idOrEntity) : base(idOrEntity) {
+		public CashCtrlOrderHandler(OneOf<int, Order> idOrEntity): base(idOrEntity) {
 			this.childHandlers = CashCtrlRootHandler.CreateHandlerDictionary(
 					new CashCtrlOrderBookEntriesHandler(this.Id)
 			);
@@ -15,7 +17,11 @@ namespace CashCtrl.PathHandlers {
 
 		public override bool IsContainer => true;
 
-		public override IEnumerable<CashCtrlPathHandler> GetAllChildHandlers(CashCtrlClient client) {
+		protected override void CreateEntity(CashCtrlClient client, Order entity) {
+			client.OrderCreate(entity);
+		}
+
+		public override IEnumerable<CashCtrlPathHandler> GetChildHandlers(CashCtrlClient client, object parameters) {
 			return this.childHandlers.Values;
 		}
 
@@ -23,8 +29,16 @@ namespace CashCtrl.PathHandlers {
 			return client.OrderRead(this.Id);
 		}
 
+		protected override void RemoveEntity(CashCtrlClient client) {
+			client.OrderDelete(this.Id);
+		}
+
 		public override bool TryGetChildHandler(string name, out CashCtrlPathHandler handler) {
 			return this.childHandlers.TryGetValue(name, out handler);
+		}
+
+		protected override void UpdateEntity(CashCtrlClient client, Order entity) {
+			client.OrderUpdate(entity);
 		}
 	}
 }

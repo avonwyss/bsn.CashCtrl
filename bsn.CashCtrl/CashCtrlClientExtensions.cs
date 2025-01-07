@@ -538,11 +538,7 @@ namespace bsn.CashCtrl {
 		}
 
 		public static T ClearCostCenterAllocations<T>(this T that) where T: ICostCenterAllocatable {
-			if (that.Allocations == null) {
-				that.Allocations = new(0);
-			} else {
-				that.Allocations.Clear();
-			}
+			that.Allocations.Clear();
 			return that;
 		}
 
@@ -612,21 +608,18 @@ namespace bsn.CashCtrl {
 			if (costCenterId is null or 0) {
 				return that;
 			}
-			if (that.Allocations == null) {
-				if (that.AllocationCount > 0) {
-					throw new InvalidOperationException("The entity should have allocations, but these are not included in the entity.");
+			if (share == 0) {
+				for (var i = that.Allocations.Count - 1; i >= 0; i--) {
+					if (that.Allocations[i].ToCostCenterId == costCenterId.Value) {
+						that.Allocations.RemoveAt(i);
+					}
 				}
-				that.Allocations = new();
-			} else {
-				if (share == 0) {
-					that.Allocations.RemoveAll(a => a.ToCostCenterId == costCenterId.Value);
-					return that;
-				}
-				var allocation = that.Allocations.SingleOrDefault(a => a.ToCostCenterId == costCenterId.Value);
-				if (allocation != null) {
-					allocation.Share = share;
-					return that;
-				}
+				return that;
+			}
+			var allocation = that.Allocations.SingleOrDefault(a => a.ToCostCenterId == costCenterId.Value);
+			if (allocation != null) {
+				allocation.Share = share;
+				return that;
 			}
 			if (share > 0) {
 				that.Allocations.Add(new() {
@@ -698,7 +691,7 @@ namespace bsn.CashCtrl {
 
 		public static IEnumerable<TEntity> ListPaged<TEntity, TQuery>(this CashCtrlClient that, Func<CashCtrlClient, TQuery, TEntity[]> list, TQuery query = default, int pageSize = 100)
 				where TEntity: EntityBase
-				where TQuery: QueryBase, ICloneable, new() {
+				where TQuery: PagedQuery, ICloneable, new() {
 			var pageQuery = query == null ? new() : (TQuery)query.Clone();
 			if (string.IsNullOrEmpty(pageQuery.Sort)) {
 				pageQuery.Sort = "id";

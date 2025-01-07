@@ -11,7 +11,13 @@ namespace bsn.CashCtrl.Entities {
 			set;
 		}
 
-		public int FromInventoryCategoryId {
+		public int? FromJournalId {
+			get;
+			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
+			set;
+		}
+
+		public int? FromInventoryCategoryId {
 			get;
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
 			set;

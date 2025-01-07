@@ -2,6 +2,7 @@ using System.Collections.Generic;
 
 using bsn.CashCtrl;
 using bsn.CashCtrl.Entities;
+using bsn.CashCtrl.Query;
 
 using OneOf;
 
@@ -19,7 +20,7 @@ namespace CashCtrl.PathHandlers {
 			return new CashCtrlOrderBookEntryHandler(idOrEntity);
 		}
 
-		protected override IEnumerable<OrderBookEntry> ListEntities(CashCtrlClient client) {
+		protected override IEnumerable<OrderBookEntry> ListEntities(CashCtrlClient client, QueryBase query) {
 			return client.OrderBookEntryList(this.OrderId);
 		}
 	}

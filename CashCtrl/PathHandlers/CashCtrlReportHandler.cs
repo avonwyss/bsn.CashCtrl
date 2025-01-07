@@ -8,7 +8,7 @@ namespace CashCtrl.PathHandlers {
 	internal class CashCtrlReportHandler: CashCtrlContainerHandler {
 		public CashCtrlReportHandler(): base("report") { }
 
-		public override IEnumerable<CashCtrlPathHandler> GetAllChildHandlers(CashCtrlClient client) {
+		public override IEnumerable<CashCtrlPathHandler> GetChildHandlers(CashCtrlClient client, object parameters) {
 			throw new NotImplementedException();
 		}
 

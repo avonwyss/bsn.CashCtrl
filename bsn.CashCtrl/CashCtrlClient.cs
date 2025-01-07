@@ -50,7 +50,7 @@ namespace bsn.CashCtrl {
 				CheckAdditionalContent = false,
 				Formatting = Formatting.None,
 				ContractResolver = new CamelCasePropertyNamesContractResolver(),
-				Converters = new List<JsonConverter> { new UppercaseStringEnumConverter(), new LocalizedStringConverter() }
+				Converters = new List<JsonConverter> { new UppercaseStringEnumConverter(), new LocalizedStringConverter(), new VirtualListConverter() }
 		});
 
 		private readonly AuthenticationHeaderValue authorization;
@@ -157,7 +157,7 @@ namespace bsn.CashCtrl {
 
 		private HttpRequestMessage PrepareRequest(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters) {
 			var payloadStrings = parameters?
-					.Where(p => p.Value != null)
+					.Where(p => p.Value is IVirtual v ? !v.IsVirtual : p.Value != null)
 					.Select(p => new KeyValuePair<string, string>(p.Key, this.SerializeToString(p.Value)));
 			var payloadAsQuery = RxMethodWithoutBody.IsMatch(method.Method);
 			if (payloadStrings != null && payloadAsQuery) {

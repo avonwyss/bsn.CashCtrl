@@ -35,7 +35,7 @@ namespace CashCtrl.PathHandlers {
 		}
 
 		public CashCtrlPath Parent() {
-			return new(this.segments.Take(this.Count-1).ToArray());
+			return new(this.segments.Take(this.Count - 1).ToArray());
 		}
 
 		public override string ToString() {

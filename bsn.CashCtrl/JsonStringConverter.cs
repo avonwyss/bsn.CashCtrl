@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 
 using Newtonsoft.Json;
@@ -22,7 +22,7 @@ namespace bsn.CashCtrl {
 		}
 
 		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) {
-			if (value == null) {
+			if (value == null || value is IVirtual { IsVirtual: true }) {
 				writer.WriteNull();
 			} else {
 				using (var textWriter = new StringWriter()) {

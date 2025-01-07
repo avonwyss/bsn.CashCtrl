@@ -7,25 +7,27 @@ using bsn.CashCtrl.Query;
 using OneOf;
 
 namespace CashCtrl.PathHandlers {
-	internal class CashCtrlJournalsHandler: CashCtrlCollectionHandler<Journal> {
-		public int? AccountId {
-			get;
-		}
-
+	internal class CashCtrlJournalsHandler: CashCtrlCollectionHandler<Journal, JournalQuery> {
 		public CashCtrlJournalsHandler(int? accountId = default): base("journal",
 				new CashCtrlJournalImportHandler()
 		) {
 			this.AccountId = accountId;
 		}
 
+		public int? AccountId {
+			get;
+		}
+
 		protected override CashCtrlEntityHandler<Journal> GetEntityHandler(OneOf<int, Journal> idOrEntity) {
 			return new CashCtrlJournalHandler(idOrEntity);
 		}
 
-		protected override IEnumerable<Journal> ListEntities(CashCtrlClient client) {
-			return client.ListPaged<Journal, JournalQuery>(CashCtrlClientExtensions.JournalList, new() {
-					AccountId = this.AccountId
-			});
+		protected override IEnumerable<Journal> ListEntities(CashCtrlClient client, JournalQuery query) {
+			if (this.AccountId.HasValue) {
+				query ??= new();
+				query.AccountId = this.AccountId;
+			}
+			return client.ListPaged(CashCtrlClientExtensions.JournalList, query);
 		}
 	}
 }

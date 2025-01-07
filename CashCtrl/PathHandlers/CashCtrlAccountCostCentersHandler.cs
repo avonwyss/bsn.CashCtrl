@@ -2,11 +2,12 @@ using System.Collections.Generic;
 
 using bsn.CashCtrl;
 using bsn.CashCtrl.Entities;
+using bsn.CashCtrl.Query;
 
 using OneOf;
 
 namespace CashCtrl.PathHandlers {
-	internal class CashCtrlAccountCostCentersHandler: CashCtrlCollectionHandler<AccountCostCenter> {
+	internal class CashCtrlAccountCostCentersHandler: CashCtrlCollectionHandler<AccountCostCenter, AccountCostCenterQuery> {
 		public CashCtrlAccountCostCentersHandler(): base("costcenter",
 				new CashCtrlAccountCostCenterCategoriesHandler()) { }
 
@@ -14,8 +15,8 @@ namespace CashCtrl.PathHandlers {
 			return new CashCtrlAccountCostCenterHandler(idOrEntity);
 		}
 
-		protected override IEnumerable<AccountCostCenter> ListEntities(CashCtrlClient client) {
-			return client.AccountCostCenterList();
+		protected override IEnumerable<AccountCostCenter> ListEntities(CashCtrlClient client, AccountCostCenterQuery query) {
+			return client.AccountCostCenterList(query);
 		}
 	}
 }

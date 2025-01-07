@@ -1,6 +1,8 @@
 using System;
 using System.Runtime.Serialization;
 
+using Newtonsoft.Json;
+
 namespace bsn.CashCtrl.Entities {
 	public abstract class EntityBase: ICloneable {
 		public static implicit operator int(EntityBase entity) {
@@ -10,6 +12,9 @@ namespace bsn.CashCtrl.Entities {
 		public static implicit operator int?(EntityBase entity) {
 			return entity?.Id;
 		}
+
+		[JsonIgnore]
+		public virtual bool Partial => false;
 
 		public int Id {
 			get;

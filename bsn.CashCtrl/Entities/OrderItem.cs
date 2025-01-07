@@ -58,21 +58,19 @@ namespace bsn.CashCtrl.Entities {
 			set;
 		}
 
-		private int allocationCount;
+		// ReSharper disable once FieldCanBeMadeReadOnly.Local - Must be read-write for cloning
+		private VirtualList<AccountCostCenterAllocation> allocations = new();
 
 		public int AllocationCount {
-			get => this.Allocations?.Count ?? this.allocationCount;
+			get => this.allocations.Count;
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
-			set {
-				this.Allocations = null;
-				this.allocationCount = value;
-			}
+			set => this.allocations.Count = value;
 		}
 
-		public CloneableList<AccountCostCenterAllocation> Allocations {
-			get;
-			set;
-		} = new(0);
+		public IList<AccountCostCenterAllocation> Allocations {
+			get => this.allocations;
+			set => this.allocations.MakeSameAs(value);
+		}
 
 		public OrderItemType Type {
 			get;
@@ -220,9 +218,6 @@ namespace bsn.CashCtrl.Entities {
 				yield return new("quantity", this.Quantity);
 				yield return new("taxId", this.TaxId);
 				yield return new("unitId", this.UnitId);
-				if (this.Allocations == null && this.allocationCount > 0) {
-					throw new InvalidOperationException("The entity should have allocations, but these are not included in the entity.");
-				}
 				yield return new("allocations", this.Allocations);
 			}
 		}

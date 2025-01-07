@@ -6,9 +6,12 @@ using Newtonsoft.Json.Linq;
 
 namespace bsn.CashCtrl.Entities {
 	public class Journal: AllocationsEntityBase {
-		private int itemsCount;
 		private JournalType type;
 		private int? sequenceNumberId;
+		// ReSharper disable once FieldCanBeMadeReadOnly.Local - Must be read-write for cloning
+		private VirtualList<JournalItem> items = new ();
+
+		public override bool Partial => base.Partial || this.items.HasVirtualValues;
 
 		public int DebitId {
 			get;
@@ -77,7 +80,7 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		public JournalType Type {
-			get => this.Items != null ? JournalType.Collective : this.type;
+			get => this.type == JournalType.Manual && this.Items.Count > 0 ? JournalType.Collective : this.type;
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
 			set => this.type = value;
 		}
@@ -155,9 +158,9 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		public int ItemsCount {
-			get => this.Items?.Count ?? this.itemsCount;
+			get => this.items.Count;
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
-			set => this.itemsCount = value;
+			set => this.items.Count = value;
 		}
 
 		public JournalRecurrence? Recurrence {
@@ -231,9 +234,9 @@ namespace bsn.CashCtrl.Entities {
 			set;
 		}
 
-		public CloneableList<JournalItem> Items {
-			get;
-			set;
+		public IList<JournalItem> Items {
+			get => this.items;
+			set => this.items.MakeSameAs(value);
 		}
 
 		[JsonConverter(typeof(JsonStringConverter))]
@@ -321,8 +324,11 @@ namespace bsn.CashCtrl.Entities {
 			set => this.sequenceNumberId = value;
 		}
 
-		protected override IEnumerable<KeyValuePair<string, object>> ToParametersInternal() {
-			if (this.Items?.Count > 0) {
+		public override IEnumerable<KeyValuePair<string, object>> ToParameters() {
+			foreach (var pair in base.ToParameters()) {
+				yield return pair;
+			}
+			if (this.Items.Count > 0) {
 				yield return new("items", this.Items);
 			} else {
 				yield return new("amount", this.Amount);

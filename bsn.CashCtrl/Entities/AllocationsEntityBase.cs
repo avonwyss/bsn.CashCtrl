@@ -4,28 +4,27 @@ using System.Linq;
 
 namespace bsn.CashCtrl.Entities {
 	public abstract class AllocationsEntityBase: ExtensibleEntityBase, ICostCenterAllocatable {
-		private int allocationCount;
+		// ReSharper disable once FieldCanBeMadeReadOnly.Local - Must be read-write for cloning
+		private VirtualList<AccountCostCenterAllocation> allocations = new();
+
+		public override bool Partial => base.Partial || this.allocations.HasVirtualValues;
 
 		public int AllocationCount {
-			get => this.Allocations?.Count ?? this.allocationCount;
+			get => this.allocations.Count;
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
-			set {
-				this.Allocations = null;
-				this.allocationCount = value;
-			}
+			set => this.allocations.Count = value;
 		}
 
-		public CloneableList<AccountCostCenterAllocation> Allocations {
-			get;
-			set;
-		} = new(0);
+		public IList<AccountCostCenterAllocation> Allocations {
+			get => this.allocations;
+			set => this.allocations.MakeSameAs(value);
+		}
 
 		public override IEnumerable<KeyValuePair<string, object>> ToParameters() {
-			if (this.Allocations == null && this.allocationCount > 0) {
-				throw new InvalidOperationException("The entity should have allocations, but these are not included in the entity.");
+			foreach (var pair in base.ToParameters()) {
+				yield return pair;
 			}
-			return base.ToParameters()
-					.Append(new("allocations", this.Allocations));
+			yield return new("allocations", this.Allocations);
 		}
 	}
 }

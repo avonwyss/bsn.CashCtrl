@@ -51,7 +51,10 @@ namespace bsn.CashCtrl.Entities {
 			this.replaceWith = preparedFileId;
 		}
 
-		protected override IEnumerable<KeyValuePair<string, object>> ToParametersInternal() {
+		public override IEnumerable<KeyValuePair<string, object>> ToParameters() {
+			foreach (var pair in base.ToParameters()) {
+				yield return pair;
+			}
 			yield return new("name", this.Name);
 			yield return new("categoryId", this.CategoryId);
 			yield return new("description", this.Description);
@@ -62,7 +65,7 @@ namespace bsn.CashCtrl.Entities {
 
 #pragma warning disable 612,618
 		[JsonProperty("attachedTo")]
-		public override Attachment[] Attachments {
+		public override IReadOnlyList<Attachment> Attachments {
 			get => base.Attachments;
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
 			set => base.Attachments = value;

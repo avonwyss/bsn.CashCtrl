@@ -1,82 +1,33 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 
 namespace bsn.CashCtrl.Query {
-	public abstract class QueryBase: IApiSerializable, ICloneable {
-		public int? CategoryId {
-			get;
-			set;
-		}
-
+	public class QueryBase: IApiSerializable, ICloneable {
+		[Description("The direction of the sort order (ascending or descending). Defaults to 'DESC'.")]
 		public CashCtrlDirection? Dir {
 			get;
 			set;
 		}
 
-		public CloneableList<CashCtrlFilter> Filter {
-			get;
-			set;
-		} = new();
-
-		public bool? OnlyNotes {
-			get;
-			set;
-		}
-
-		public int? Limit {
-			get;
-			set;
-		}
-
-		public int? Start {
-			get;
-			set;
-		}
-
+		[Description("Fulltext search query.")]
 		public string Query {
 			get;
 			set;
 		}
 
+		[Description("The column to sort the list by.")]
 		public string Sort {
 			get;
 			set;
 		}
 
-		public object this[string field] {
-			get => this.Filter?.Find(f => string.Equals(f.Field, field, StringComparison.OrdinalIgnoreCase))?.Value;
-			set {
-				this.Filter ??= new();
-				var index = this.Filter.FindIndex(f => string.Equals(f.Field, field, StringComparison.OrdinalIgnoreCase));
-				if (index >= 0) {
-					if (value == null) {
-						this.Filter.RemoveAt(index);
-					} else {
-						this.Filter[index] = new() { Field = field, Value = value };
-					}
-				} else if (value != null) {
-					this.Filter.Add(new() { Field = field, Value = value });
-				}
-			}
-		}
-
-		public IEnumerable<KeyValuePair<string, object>> ToParameters() {
-			yield return new("categoryId", this.CategoryId);
+		public virtual IEnumerable<KeyValuePair<string, object>> ToParameters() {
 			yield return new("dir", this.Dir);
-			if (this.Filter?.Count > 0) {
-				yield return new("filter", this.Filter);
-			}
-			yield return new("start", this.Start);
-			yield return new("limit", this.Limit);
 			yield return new("query", this.Query);
 			yield return new("sort", this.Sort);
-			yield return new("onlyNotes", this.OnlyNotes);
-			foreach (var pair in this.ToParametersInternal()) {
-				yield return pair;
-			}
 		}
-
-		protected abstract IEnumerable<KeyValuePair<string, object>> ToParametersInternal();
 
 		public object Clone() {
 			return this.MemberwiseClone();

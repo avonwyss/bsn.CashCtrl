@@ -6,6 +6,9 @@ using Newtonsoft.Json.Linq;
 
 namespace bsn.CashCtrl.Entities {
 	public class CustomField: EntityBase, IApiSerializable {
+		// ReSharper disable once FieldCanBeMadeReadOnly.Local - Must be read-write for cloning
+		private VirtualList<string> values = new();
+
 		public int? CategoryId {
 			get;
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
@@ -44,10 +47,10 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		[JsonConverter(typeof(JsonStringConverter))]
-		public CloneableList<string> Values {
-			get;
-			set;
-		} = new(0);
+		public IList<string> Values {
+			get => this.values;
+			set => this.values.MakeSameAs(value);
+		}
 
 		public int Pos {
 			get;

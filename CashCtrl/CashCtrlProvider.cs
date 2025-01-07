@@ -1,25 +1,68 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Provider;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 using bsn.CashCtrl;
 
 using CashCtrl.PathHandlers;
 
 namespace CashCtrl {
-	[CmdletProvider("CashCtrl", ProviderCapabilities.Credentials)]
+	[CmdletProvider("CashCtrl", ProviderCapabilities.Credentials | ProviderCapabilities.ShouldProcess)]
 	public class CashCtrlProvider: NavigationCmdletProvider {
-		protected override ProviderInfo Start(ProviderInfo providerInfo) {
-			#warning Implement initialisation, such as registering FormatViewDefinitions
-			return base.Start(providerInfo);
+		private CashCtrlClient Client => (this.PSDriveInfo as CashCtrlPSDriveInfo)?.Client ?? throw new InvalidOperationException("No CashCtrl client associated to drive");
+
+		protected override void GetChildItems(string pathString, bool recurse) {
+			var path = this.ParsePath(pathString);
+			var queue = new Queue<(CashCtrlPath Path, CashCtrlPathHandler Handler)>(path.Handler.GetChildHandlers(this.Client, this.DynamicParameters).Select(h => (path, h)));
+			while (queue.Count > 0) {
+				var child = queue.Dequeue();
+				this.WriteItemObject(child.Handler.GetItemValue(this.Client), child.Path.ToString(), child.Handler.IsContainer);
+				if (recurse) {
+					foreach (var childHandler in child.Handler.GetChildHandlers(this.Client, null)) {
+						queue.Enqueue((child.Path.Append(child.Handler), childHandler));
+					}
+				}
+			}
+		}
+
+		protected override object GetChildItemsDynamicParameters(string pathString, bool recurse) {
+			return this.TryParsePath(pathString, out var path) ? path.Handler.GetChildHandlersDynamicParameters() : null;
+		}
+
+		protected override void GetChildNames(string pathString, ReturnContainers returnContainers) {
+			var path = this.ParsePath(pathString);
+			foreach (var childHandler in path.Handler.GetChildHandlers(this.Client, this.DynamicParameters)) {
+				this.WriteItemObject(childHandler.Name, path.ToString(), childHandler.IsContainer);
+			}
+		}
+
+		protected override object GetChildNamesDynamicParameters(string pathString) {
+			return this.TryParsePath(pathString, out var path) ? path.Handler.GetChildHandlersDynamicParameters() : null;
+		}
+
+		protected override void GetItem(string pathString) {
+			var path = this.ParsePath(pathString);
+			this.WriteItemObject(path.Handler.GetItemValue(this.Client), path.ToString(), path.Handler.IsContainer);
+		}
+
+		protected override bool HasChildItems(string pathString) {
+			return this.ParsePath(pathString).Handler.GetChildHandlers(this.Client, null).Any();
+		}
+
+		protected override bool IsItemContainer(string pathString) {
+			var path = this.ParsePath(pathString);
+			return path.Handler.IsContainer;
+		}
+
+		protected override bool IsValidPath(string path) {
+			return this.TryParsePath(path, out _);
+		}
+
+		protected override bool ItemExists(string pathString) {
+			return this.TryParsePath(pathString, out var path) && path.Handler.Exists(this.Client);
 		}
 
 		protected override PSDriveInfo NewDrive(PSDriveInfo drive) {
@@ -54,6 +97,25 @@ namespace CashCtrl {
 			return new CashCtrlPSDriveInfo(drive, cashCtrlClient);
 		}
 
+		protected override void NewItem(string pathString, string itemTypeName, object newItemValue) {
+			var path = this.ParsePath(pathString);
+			var creator = path.Handler.GetChildItemCreator(this.Client, newItemValue, this.DynamicParameters);
+			if (this.ShouldProcess(path.ToString(), nameof(this.NewItem))) {
+				creator();
+			}
+		}
+
+		protected override object NewItemDynamicParameters(string pathString, string itemTypeName, object newItemValue) {
+			return this.TryParsePath(pathString, out var path) ? path.Handler.GetItemCreateDynamicParameters() : null;
+		}
+
+		private CashCtrlPath ParsePath(string pathString) {
+			if (this.TryParsePath(pathString, out var path)) {
+				return path;
+			}
+			throw new ArgumentException("The path is not valid for CashCtrl: " + pathString, nameof(pathString));
+		}
+
 		protected override PSDriveInfo RemoveDrive(PSDriveInfo drive) {
 			if (drive == null) {
 				this.WriteError(new(
@@ -71,120 +133,40 @@ namespace CashCtrl {
 			return cashCtrlDrive;
 		}
 
-		protected override bool IsValidPath(string path) {
-			return this.TryParsePath(path, out _);
-		}
-
-		private bool TryParsePath(string pathString, out CashCtrlPath path) {
-			return new CashCtrlRootHandler(this.PSDriveInfo.Root).TryParsePath(pathString, out path);
-		}
-
-		private CashCtrlPath ParsePath(string pathString) {
-			if (this.TryParsePath(pathString, out var path)) {
-				return path;
-			}
-			throw new ArgumentException("The path is not valid for CashCtrl: " + pathString, nameof(pathString));
-		}
-
-		private CashCtrlClient Client => (this.PSDriveInfo as CashCtrlPSDriveInfo)?.Client ?? throw new InvalidOperationException("No CashCtrl client associated to drive");
-
-		protected override void GetItem(string pathString) {
-			var path = this.ParsePath(pathString);
-			this.WriteItemObject(path.Handler.GetItemValue(this.Client), path.ToString(), path.Handler.IsContainer);
-		}
-
-		protected override void SetItem(string pathString, object value) {
-			var path = this.ParsePath(pathString);
-			var setter = path.Handler.GetItemSetter(this.Client, value);
-			if (this.ShouldProcess(pathString, nameof(this.SetItem))) {
-				setter();
-			}
-		}
-
-		protected override bool ItemExists(string pathString) {
-			return this.TryParsePath(pathString, out var path) && path.Handler.Exists(this.Client);
-		}
-
-		protected override void GetChildItems(string pathString, bool recurse) {
-			var path = this.ParsePath(pathString);
-			var queue = new Queue<(CashCtrlPath Path, CashCtrlPathHandler Handler)>(path.Handler.GetAllChildHandlers(this.Client).Select(h => (path, h)));
-			while (queue.Count > 0) {
-				var child = queue.Dequeue();
-				this.WriteItemObject(child.Handler.GetItemValue(this.Client), child.Path.ToString(), child.Handler.IsContainer);
-				if (recurse) {
-					foreach (var childHandler in child.Handler.GetAllChildHandlers(this.Client)) {
-						queue.Enqueue((child.Path.Append(child.Handler), childHandler));
-					}
-				}
-			}
-		}
-
-		protected override void GetChildNames(string pathString, ReturnContainers returnContainers) {
-			var path = this.ParsePath(pathString);
-			foreach (var childHandler in path.Handler.GetAllChildHandlers(this.Client)) {
-				this.WriteItemObject(childHandler.Name, path.ToString(), childHandler.IsContainer);
-			}
-		}
-
-		protected override bool HasChildItems(string pathString) {
-			return this.ParsePath(pathString).Handler.GetAllChildHandlers(this.Client).Any();
-		}
-
-		protected override void NewItem(string pathString, string itemTypeName, object newItemValue) {
-			var path = this.ParsePath(pathString);
-			var creator = path.Handler.GetChildItemCreator(this.Client, newItemValue);
-			if (this.ShouldProcess(path.ToString(), nameof(this.NewItem))) {
-				creator();
-			}
-		}
-
 		protected override void RemoveItem(string pathString, bool recurse) {
 			if (recurse) {
 				throw new NotSupportedException();
 			}
 			var path = this.ParsePath(pathString);
-			var remover = path.Handler.GetItemRemover(this.Client);
+			var remover = path.Handler.GetItemRemover(this.Client, this.DynamicParameters);
 			if (this.ShouldProcess(path.ToString(), nameof(this.RemoveItem))) {
 				remover();
 			}
 		}
 
-		protected override bool IsItemContainer(string pathString) {
+		protected override object RemoveItemDynamicParameters(string pathString, bool recurse) {
+			return this.TryParsePath(pathString, out var path) ? path.Handler.GetItemRemoveDynamicParameters() : null;
+		}
+
+		protected override void SetItem(string pathString, object value) {
 			var path = this.ParsePath(pathString);
-			return path.Handler.IsContainer;
-		}
-/*
-		protected override string GetChildName(string pathString) {
-			if (pathString.StartsWith(this.PSDriveInfo.Root, StringComparison.OrdinalIgnoreCase)) {
-				pathString = pathString.Substring(this.PSDriveInfo.Root.Length);
+			var setter = path.Handler.GetItemSetter(this.Client, value, this.DynamicParameters);
+			if (this.ShouldProcess(pathString, nameof(this.SetItem))) {
+				setter();
 			}
-			return pathString.Split(CashCtrlPathHandler.PathSeparators, StringSplitOptions.RemoveEmptyEntries).LastOrDefault();
 		}
 
-		protected override string GetParentPath(string pathString, string root) {
-			var path = this.ParsePath(pathString);
-			if (!string.IsNullOrEmpty(root)) {
-				var rootPath = this.ParsePath(root);
-				if (rootPath.Count > path.Count) {
-					return null;
-				}
-				if (!rootPath.Names.SequenceEqual(path.Names.Take(rootPath.Count), StringComparer.OrdinalIgnoreCase)) {
-					return null;
-				}
-			}
-			return path.Parent().ToString();
+		protected override object SetItemDynamicParameters(string pathString, object value) {
+			return this.TryParsePath(pathString, out var path) ? path.Handler.GetItemSetDynamicParameters() : null;
 		}
 
-		protected override string MakePath(string parent, string child) {
-			if (string.IsNullOrEmpty(parent)) {
-				return string.Empty;
-			}
-			return string.IsNullOrEmpty(child) ? parent : parent + CashCtrlPathHandler.PathSeparator + child;
+		protected override ProviderInfo Start(ProviderInfo providerInfo) {
+#warning Implement initialisation, such as registering FormatViewDefinitions
+			return base.Start(providerInfo);
 		}
 
-		protected override string NormalizeRelativePath(string path, string basePath) {
-			return this.ParsePath(string.IsNullOrEmpty(basePath) ? path : this.MakePath(basePath, path)).ToString();
+		private bool TryParsePath(string pathString, out CashCtrlPath path) {
+			return new CashCtrlRootHandler(this.PSDriveInfo.Root).TryParsePath(pathString, out path);
 		}
-*/
 	}
 }

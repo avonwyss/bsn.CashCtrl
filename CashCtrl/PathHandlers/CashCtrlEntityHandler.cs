@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Management.Automation;
 
 using bsn.CashCtrl;
 using bsn.CashCtrl.Entities;
@@ -34,10 +35,6 @@ namespace CashCtrl.PathHandlers {
 			throw new NotSupportedException();
 		}
 
-		protected virtual void RemoveEntity(CashCtrlClient client) {
-			throw new NotSupportedException();
-		}
-
 		public sealed override bool Exists(CashCtrlClient client) {
 			try {
 				return this.Entity != null || this.ReadEntity(client) != null;
@@ -46,22 +43,23 @@ namespace CashCtrl.PathHandlers {
 			}
 		}
 
-		public override IEnumerable<CashCtrlPathHandler> GetAllChildHandlers(CashCtrlClient client) {
+		public override IEnumerable<CashCtrlPathHandler> GetChildHandlers(CashCtrlClient client, object parameters) {
 			return Enumerable.Empty<CashCtrlPathHandler>();
 		}
 
-		public sealed override object GetItemValue(CashCtrlClient client) {
-			if (this.Entity == null) {
-				this.Entity = this.ReadEntity(client);
-			}
-			return this.Entity;
+		public override Action GetChildItemCreator(CashCtrlClient client, object value, object parameters) {
+			throw new NotSupportedException("The object cannot be written to");
 		}
 
-		public override Action GetItemSetter(CashCtrlClient client, object value) {
-			if (value == null) {
+		public override Action GetItemRemover(CashCtrlClient client, object parameters) {
+			return () => this.RemoveEntity(client);
+		}
+
+		public override Action GetItemSetter(CashCtrlClient client, object value, object parameters) {
+			if (value is not PSObject psobj) {
 				throw new ArgumentNullException(nameof(value));
 			}
-			if (!(value is T entity)) {
+			if (!(psobj.BaseObject is T entity)) {
 				throw new ArgumentException($"Expected a {typeof(T)}, but got a {value.GetType()}.", nameof(value));
 			}
 			if (entity.Id != this.Id) {
@@ -78,15 +76,18 @@ namespace CashCtrl.PathHandlers {
 			};
 		}
 
-		public override Action GetItemRemover(CashCtrlClient client) {
-			return () => this.RemoveEntity(client);
-		}
-
-		public override Action GetChildItemCreator(CashCtrlClient client, object value) {
-			throw new NotSupportedException("The object cannot be written to");
+		public sealed override object GetItemValue(CashCtrlClient client) {
+			if (this.Entity == null) {
+				this.Entity = this.ReadEntity(client);
+			}
+			return new PSObject(this.Entity);
 		}
 
 		protected abstract T ReadEntity(CashCtrlClient client);
+
+		protected virtual void RemoveEntity(CashCtrlClient client) {
+			throw new NotSupportedException();
+		}
 
 		protected virtual void UpdateEntity(CashCtrlClient client, T entity) {
 			throw new NotSupportedException();

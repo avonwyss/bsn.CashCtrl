@@ -5,6 +5,10 @@ using System.Linq;
 namespace bsn.CashCtrl.Entities {
 	public class Person: ExtensibleEntityBase {
 		private int? sequenceNumberId;
+		// ReSharper disable once FieldCanBeMadeReadOnly.Local - Must be read-write for cloning
+		private VirtualList<PersonContact> contacts = new();
+		// ReSharper disable once FieldCanBeMadeReadOnly.Local - Must be read-write for cloning
+		private VirtualList<PersonAddress> addresses = new();
 
 		public int? CategoryId {
 			get;
@@ -23,15 +27,15 @@ namespace bsn.CashCtrl.Entities {
 			set;
 		}
 
-		public CloneableList<PersonContact> Contacts {
-			get;
-			set;
-		} = new(0);
+		public IList<PersonContact> Contacts {
+			get => this.contacts;
+			set => this.contacts.MakeSameAs(value);
+		}
 
-		public CloneableList<PersonAddress> Addresses {
-			get;
-			set;
-		} = new(0);
+		public IList<PersonAddress> Addresses {
+			get => this.addresses;
+			set => this.addresses.MakeSameAs(value);
+		}
 
 		public LocalizedString TitleName {
 			get;
@@ -267,7 +271,10 @@ namespace bsn.CashCtrl.Entities {
 			set => this.sequenceNumberId = value;
 		}
 
-		protected override IEnumerable<KeyValuePair<string, object>> ToParametersInternal() {
+		public override IEnumerable<KeyValuePair<string, object>> ToParameters() {
+			foreach (var pair in base.ToParameters()) {
+				yield return pair;
+			}
 			yield return new("company", this.Company);
 			yield return new("firstName", this.FirstName);
 			yield return new("lastName", this.LastName);

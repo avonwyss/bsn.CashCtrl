@@ -3,10 +3,13 @@ using System.Collections.Generic;
 
 namespace bsn.CashCtrl.Entities {
 	public class CustomFieldGroup: EntityBase, IApiSerializable {
-		public CloneableList<CustomField> CustomFields {
-			get;
+		// ReSharper disable once FieldCanBeMadeReadOnly.Local - Must be read-write for cloning
+		private VirtualList<CustomField> customFields = new();
+
+		public IReadOnlyList<CustomField> CustomFields {
+			get => this.customFields;
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
-			set;
+			set => this.customFields.MakeSameAs(value);
 		}
 
 		public LocalizedString Name {

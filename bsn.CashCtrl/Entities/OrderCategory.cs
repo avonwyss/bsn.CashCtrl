@@ -4,6 +4,11 @@ using System.Linq;
 
 namespace bsn.CashCtrl.Entities {
 	public class OrderCategory: EntityBase, IApiSerializable {
+		// ReSharper disable once FieldCanBeMadeReadOnly.Local - Must be read-write for cloning
+		private VirtualList<OrderCategoryStatus> status = new();
+		// ReSharper disable once FieldCanBeMadeReadOnly.Local - Must be read-write for cloning
+		private VirtualList<OrderCategoryBookTemplate> bookTemplates = new();
+
 		public int AccountId {
 			get;
 			set;
@@ -14,15 +19,15 @@ namespace bsn.CashCtrl.Entities {
 			set;
 		}
 
-		public CloneableList<OrderCategoryStatus> Status {
-			get;
-			set;
-		} = new(0);
+		public IList<OrderCategoryStatus> Status {
+			get => this.status;
+			set => this.status.MakeSameAs(value);
+		}
 
-		public CloneableList<OrderCategoryBookTemplate> BookTemplates {
-			get;
-			set;
-		} = new(0);
+		public IList<OrderCategoryBookTemplate> BookTemplates {
+			get => this.bookTemplates;
+			set => this.bookTemplates.MakeSameAs(value);
+		}
 
 		public int? SequenceNrId {
 			get;

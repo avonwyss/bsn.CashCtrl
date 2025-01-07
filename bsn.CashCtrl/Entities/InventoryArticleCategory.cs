@@ -43,7 +43,10 @@ namespace bsn.CashCtrl.Entities {
 			set;
 		}
 
-		protected override IEnumerable<KeyValuePair<string, object>> ToParametersInternal() {
+		public override IEnumerable<KeyValuePair<string, object>> ToParameters() {
+			foreach (var pair in base.ToParameters()) {
+				yield return pair;
+			}
 			yield return new("name", this.Name);
 			yield return new("parentId", this.ParentId);
 			yield return new("purchaseAccountId", this.PurchaseAccountId);

@@ -7,7 +7,7 @@ using bsn.CashCtrl.Query;
 using OneOf;
 
 namespace CashCtrl.PathHandlers {
-	internal class CashCtrlFilesHandler: CashCtrlCollectionHandler<File> {
+	internal class CashCtrlFilesHandler: CashCtrlCollectionHandler<File, FileQuery> {
 		public CashCtrlFilesHandler(): base("file",
 				new CashCtrlFileCategoriesHandler()) { }
 
@@ -15,8 +15,8 @@ namespace CashCtrl.PathHandlers {
 			return new CashCtrlFileHandler(idOrEntity);
 		}
 
-		protected override IEnumerable<File> ListEntities(CashCtrlClient client) {
-			return client.ListPaged<File, FileQuery>(CashCtrlClientExtensions.FileList);
+		protected override IEnumerable<File> ListEntities(CashCtrlClient client, FileQuery query) {
+			return client.ListPaged(CashCtrlClientExtensions.FileList, query);
 		}
 	}
 }

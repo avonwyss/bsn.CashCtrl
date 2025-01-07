@@ -5,18 +5,21 @@ using Newtonsoft.Json;
 
 namespace bsn.CashCtrl.Entities {
 	public abstract class ExtensibleEntityBase: EntityBase, IApiSerializable {
-		private int attachmentCount;
+		// ReSharper disable once FieldCanBeMadeReadOnly.Local - Must be read-write for cloning
+		private VirtualList<Attachment> attachments = new VirtualList<Attachment>();
+
+		public override bool Partial => base.Partial || this.attachments.HasVirtualValues;
 
 		public virtual int AttachmentCount {
-			get => this.Attachments?.Length ?? this.attachmentCount;
-			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, false)]
-			set => this.attachmentCount = value;
+			get => this.attachments.Count;
+			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
+			set => this.attachments.Count = value;
 		}
 
-		public virtual Attachment[] Attachments {
-			get;
+		public virtual IReadOnlyList<Attachment> Attachments {
+			get => this.attachments;
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, false)]
-			set;
+			set => this.attachments.MakeSameAs(value);
 		}
 
 		public string Notes {
@@ -36,11 +39,6 @@ namespace bsn.CashCtrl.Entities {
 			}
 			yield return new("custom", CustomFieldValuesConverter.ToXml(this.Custom));
 			yield return new("notes", this.Notes);
-			foreach (var pair in this.ToParametersInternal()) {
-				yield return pair;
-			}
 		}
-
-		protected abstract IEnumerable<KeyValuePair<string, object>> ToParametersInternal();
 	}
 }

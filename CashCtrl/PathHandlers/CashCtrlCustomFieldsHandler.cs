@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 using bsn.CashCtrl;
 using bsn.CashCtrl.Entities;
+using bsn.CashCtrl.Query;
 
 using OneOf;
 
@@ -21,7 +22,7 @@ namespace CashCtrl.PathHandlers {
 			return new CashCtrlCustomFieldHandler(idOrEntity);
 		}
 
-		protected override IEnumerable<CustomField> ListEntities(CashCtrlClient client) {
+		protected override IEnumerable<CustomField> ListEntities(CashCtrlClient client, QueryBase query) {
 			return client.CustomFieldList(this.Type);
 		}
 	}

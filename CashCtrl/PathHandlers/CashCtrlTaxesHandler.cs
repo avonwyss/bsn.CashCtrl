@@ -2,6 +2,7 @@ using System.Collections.Generic;
 
 using bsn.CashCtrl;
 using bsn.CashCtrl.Entities;
+using bsn.CashCtrl.Query;
 
 using OneOf;
 
@@ -13,7 +14,7 @@ namespace CashCtrl.PathHandlers {
 			return new CashCtrlTaxHandler(idOrEntity);
 		}
 
-		protected override IEnumerable<Tax> ListEntities(CashCtrlClient client) {
+		protected override IEnumerable<Tax> ListEntities(CashCtrlClient client, QueryBase query) {
 			return client.TaxList();
 		}
 	}

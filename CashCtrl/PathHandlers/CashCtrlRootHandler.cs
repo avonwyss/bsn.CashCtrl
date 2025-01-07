@@ -44,28 +44,28 @@ namespace CashCtrl.PathHandlers {
 			return true;
 		}
 
-		public override IEnumerable<CashCtrlPathHandler> GetAllChildHandlers(CashCtrlClient client) {
+		public override IEnumerable<CashCtrlPathHandler> GetChildHandlers(CashCtrlClient client, object parameters) {
 			return Handlers.Values;
+		}
+
+		public override Action GetChildItemCreator(CashCtrlClient client, object value, object parameters) {
+			throw new NotSupportedException("The root object cannot be written to");
+		}
+
+		public override Action GetItemRemover(CashCtrlClient client, object parameters) {
+			throw new NotSupportedException("The root object cannot be removed");
+		}
+
+		public override Action GetItemSetter(CashCtrlClient client, object value, object parameters) {
+			throw new NotSupportedException("The root object cannot be written to");
 		}
 
 		public override object GetItemValue(CashCtrlClient client) {
 			return new PSObject();
 		}
 
-		public override Action GetItemSetter(CashCtrlClient client, object value) {
-			throw new NotSupportedException("The root object cannot be written to");
-		}
-
-		public override Action GetItemRemover(CashCtrlClient client) {
-			throw new NotSupportedException("The root object cannot be removed");
-		}
-
 		public override bool TryGetChildHandler(string name, out CashCtrlPathHandler handler) {
 			return Handlers.TryGetValue(name, out handler);
-		}
-
-		public override Action GetChildItemCreator(CashCtrlClient client, object value) {
-			throw new NotSupportedException("The root object cannot be written to");
 		}
 
 		public bool TryParsePath(string pathString, out CashCtrlPath path) {
