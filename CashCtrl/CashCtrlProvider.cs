@@ -94,6 +94,7 @@ namespace CashCtrl {
 				return null;
 			}
 			var cashCtrlClient = new CashCtrlClient(drive.Root, drive.Credential.UserName);
+			cashCtrlClient.Cache = new GetRequestCircularCache();
 			return new CashCtrlPSDriveInfo(drive, cashCtrlClient);
 		}
 
@@ -166,6 +167,10 @@ namespace CashCtrl {
 		}
 
 		private bool TryParsePath(string pathString, out CashCtrlPath path) {
+			if (this.PSDriveInfo is not CashCtrlPSDriveInfo) {
+				path = null;
+				return false;
+			}
 			return new CashCtrlRootHandler(this.PSDriveInfo.Root).TryParsePath(pathString, out path);
 		}
 	}

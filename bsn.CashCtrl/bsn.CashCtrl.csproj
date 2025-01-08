@@ -210,7 +210,9 @@
     <Compile Include="Entities\TaxType.cs" />
     <Compile Include="Entities\Text.cs" />
     <Compile Include="Entities\TextType.cs" />
+    <Compile Include="GetRequestCircularCache.cs" />
     <Compile Include="IApiSerializable.cs" />
+    <Compile Include="ICashCtrlClientCache.cs" />
     <Compile Include="IVirtual.cs" />
     <Compile Include="JsonStringConverter.cs" />
     <Compile Include="LocalizedString.cs" />

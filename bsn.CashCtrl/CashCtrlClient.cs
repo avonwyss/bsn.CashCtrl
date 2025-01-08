@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -50,10 +51,19 @@ namespace bsn.CashCtrl {
 				CheckAdditionalContent = false,
 				Formatting = Formatting.None,
 				ContractResolver = new CamelCasePropertyNamesContractResolver(),
-				Converters = new List<JsonConverter> { new UppercaseStringEnumConverter(), new LocalizedStringConverter(), new VirtualListConverter() }
+				Converters = new List<JsonConverter> {
+						new UppercaseStringEnumConverter(),
+						new LocalizedStringConverter(),
+						new VirtualListConverter()
+				}
 		});
 
 		private readonly AuthenticationHeaderValue authorization;
+
+		public ICashCtrlClientCache Cache {
+			get;
+			set;
+		}
 
 		public CashCtrlClient(string domain, string apiKey): this(domain, apiKey, false) { }
 
@@ -82,7 +92,11 @@ namespace bsn.CashCtrl {
 		}
 
 		public HttpContent Invoke(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters) {
-			var request = this.PrepareRequest(method, endpoint, parameters);
+			return this.InvokeInternal(method, endpoint, this.PrepareParameters(parameters));
+		}
+
+		private HttpContent InvokeInternal(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, string>> payloadStrings) {
+			var request = this.PrepareRequest(method, endpoint, payloadStrings);
 			string content = null;
 			try {
 				var response = this.httpClient.Send(request);
@@ -107,19 +121,29 @@ namespace bsn.CashCtrl {
 			return jsonContent;
 		}
 
-		public StreamReader InvokeTextReader(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters) {
-			var content = this.Invoke(method, endpoint, parameters);
-			var charSet = content.Headers.ContentType?.CharSet;
-			var stream = content.ReadAsStream();
-			return new(stream, string.IsNullOrEmpty(charSet) ? Encoding.UTF8 : Encoding.GetEncoding(charSet));
+		public TextReader InvokeTextReader(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters) {
+			var payloadStrings = this.PrepareParameters(parameters);
+			var reader = new StrongBox<TextReader>();
+			if (this.Cache == null || !this.Cache.TryGetCachedAsync(method, endpoint, payloadStrings, reader, true).GetAwaiter().GetResult()) {
+				var content = this.InvokeInternal(method, endpoint, payloadStrings);
+				var charSet = content.Headers.ContentType?.CharSet;
+				var stream = content.ReadAsStream();
+				reader.Value = new StreamReader(stream, string.IsNullOrEmpty(charSet) ? Encoding.UTF8 : Encoding.GetEncoding(charSet));
+				this.Cache?.UpdateCacheAsync(method, endpoint, payloadStrings, reader, true).GetAwaiter().GetResult();
+			}
+			return reader.Value;
 		}
 
 		public T InvokeJson<T>(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters) {
 			return this.ConvertResult<T>(this.InvokeJson(method, endpoint, parameters));
 		}
 
-		public async ValueTask<HttpContent> InvokeAsync(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken = default) {
-			var request = this.PrepareRequest(method, endpoint, parameters);
+		public ValueTask<HttpContent> InvokeAsync(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken = default) {
+			return this.InvokeInternalAsync(method, endpoint, this.PrepareParameters(parameters), cancellationToken);
+		}
+
+		private async ValueTask<HttpContent> InvokeInternalAsync(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, string>> payloadStrings, CancellationToken cancellationToken = default) {
+			var request = this.PrepareRequest(method, endpoint, payloadStrings);
 			string content = null;
 			try {
 				var response = await this.httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
@@ -144,21 +168,26 @@ namespace bsn.CashCtrl {
 			return jsonContent;
 		}
 
-		public async ValueTask<StreamReader> InvokeTextReaderAsync(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken = default) {
-			var content = await this.InvokeAsync(method, endpoint, parameters, cancellationToken).ConfigureAwait(false);
-			var charSet = content.Headers.ContentType?.CharSet;
-			var stream = await content.ReadAsStreamAsync().ConfigureAwait(false);
-			return new(stream, string.IsNullOrEmpty(charSet) ? Encoding.UTF8 : Encoding.GetEncoding(charSet));
+		public async ValueTask<TextReader> InvokeTextReaderAsync(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken = default) {
+			var payloadStrings = this.PrepareParameters(parameters);
+			var reader = new StrongBox<TextReader>();
+			if (this.Cache == null || !await this.Cache.TryGetCachedAsync(method, endpoint, payloadStrings, reader, false).ConfigureAwait(false)) {
+				var content = await this.InvokeInternalAsync(method, endpoint, payloadStrings, cancellationToken).ConfigureAwait(false);
+				var charSet = content.Headers.ContentType?.CharSet;
+				var stream = await content.ReadAsStreamAsync().ConfigureAwait(false);
+				reader.Value = new StreamReader(stream, string.IsNullOrEmpty(charSet) ? Encoding.UTF8 : Encoding.GetEncoding(charSet));
+				if (this.Cache != null) {
+					await this.Cache.UpdateCacheAsync(method, endpoint, payloadStrings, reader, false).ConfigureAwait(false);
+				}
+			}
+			return reader.Value;
 		}
 
 		public async ValueTask<T> InvokeJsonAsync<T>(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters, CancellationToken cancellationToken = default) {
 			return this.ConvertResult<T>(await this.InvokeJsonAsync(method, endpoint, parameters, cancellationToken).ConfigureAwait(false));
 		}
 
-		private HttpRequestMessage PrepareRequest(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, object>> parameters) {
-			var payloadStrings = parameters?
-					.Where(p => p.Value is IVirtual v ? !v.IsVirtual : p.Value != null)
-					.Select(p => new KeyValuePair<string, string>(p.Key, this.SerializeToString(p.Value)));
+		private HttpRequestMessage PrepareRequest(HttpMethod method, string endpoint, IEnumerable<KeyValuePair<string, string>> payloadStrings) {
 			var payloadAsQuery = RxMethodWithoutBody.IsMatch(method.Method);
 			if (payloadStrings != null && payloadAsQuery) {
 				// ReSharper disable once PossibleMultipleEnumeration
@@ -171,6 +200,14 @@ namespace bsn.CashCtrl {
 				request.Content = new FormUrlEncodedContent(payloadStrings);
 			}
 			return request;
+		}
+
+		private IReadOnlyCollection<KeyValuePair<string, string>> PrepareParameters(IEnumerable<KeyValuePair<string, object>> parameters) {
+			return parameters == null
+					? Array.Empty<KeyValuePair<string, string>>()
+					: parameters.Where(p => p.Value is IVirtual v ? !v.IsVirtual : p.Value != null)
+							.Select(p => new KeyValuePair<string, string>(p.Key, this.SerializeToString(p.Value)))
+							.ToArray();
 		}
 
 		private string JsonToString(object value) {
@@ -210,7 +247,7 @@ namespace bsn.CashCtrl {
 		}
 
 		private JObject SerializeToJObject(IApiSerializable serializable) {
-			return new (serializable
+			return new(serializable
 					.ToParameters()
 					.Select(p => new JProperty(p.Key, this.SerializeToJToken(p.Value))));
 		}
