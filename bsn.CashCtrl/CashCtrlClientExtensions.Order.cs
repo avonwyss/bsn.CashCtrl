@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 using bsn.CashCtrl.Entities;
@@ -11,25 +10,6 @@ using bsn.CashCtrl.Response;
 using bsn.HttpClientSync;
 
 namespace bsn.CashCtrl {
-	internal struct CashCtrlAttachment {
-		public static IEnumerable<CashCtrlAttachment> Create(IEnumerable<int> fileIds) {
-			return fileIds.Select((id, ix) => new CashCtrlAttachment(id, ix));
-		}
-
-		public CashCtrlAttachment(int fileId, int pos) {
-			this.FileId = fileId;
-			this.Pos = pos;
-		}
-
-		public int FileId {
-			get;
-		}
-
-		public int Pos {
-			get;
-		}
-	}
-
 	public static partial class CashCtrlClientExtensions {
 		public static void OrderAttachmentsUpdate(this CashCtrlClient that, int id, params int[] fileIds) {
 			that.Post<ActionResponse>("order/update_attachments.json", new KeyValuePair<string, object>[] {

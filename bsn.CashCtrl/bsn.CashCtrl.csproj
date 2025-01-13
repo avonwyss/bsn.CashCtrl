@@ -75,6 +75,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CashCtrlAttachment.cs" />
     <Compile Include="CashCtrlClient.cs" />
     <Compile Include="CashCtrlClientExtensions.Account.cs" />
     <Compile Include="CashCtrlClientExtensions.AccountCategory.cs" />

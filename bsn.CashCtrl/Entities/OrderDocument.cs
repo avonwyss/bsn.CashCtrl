@@ -128,11 +128,13 @@ namespace bsn.CashCtrl.Entities {
 
 		public int SentStatusId {
 			get;
+			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
 			set;
 		}
 
 		public LocalizedString NameSingular {
 			get;
+			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
 			set;
 		}
 
