@@ -3,8 +3,10 @@ using System.Linq;
 
 namespace bsn.CashCtrl {
 	internal struct CashCtrlAttachment: IApiSerializable {
-		public static IEnumerable<CashCtrlAttachment> Create(IEnumerable<int> fileIds) {
-			return fileIds.Select((id, ix) => new CashCtrlAttachment(id, ix));
+		public static CashCtrlAttachment[] Create(IEnumerable<int> fileIds) {
+			return fileIds
+					.Select((id, ix) => new CashCtrlAttachment(id, ix))
+					.ToArray();
 		}
 
 		public CashCtrlAttachment(int fileId, int pos) {
