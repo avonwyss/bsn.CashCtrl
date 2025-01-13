@@ -122,7 +122,6 @@ namespace bsn.CashCtrl.Entities {
 
 		public int? FileId {
 			get;
-			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
 			set;
 		}
 
