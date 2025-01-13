@@ -13,13 +13,13 @@ namespace bsn.CashCtrl {
 	public static partial class CashCtrlClientExtensions {
 		public static void AccountAttachmentsUpdate(this CashCtrlClient that, int id, params int[] fileIds) {
 			that.Post<ActionResponse>("account/update_attachments.json", new KeyValuePair<string, object>[] {
-					new(nameof(id), id), new(nameof(fileIds), fileIds)
+					new(nameof(id), id), new("attachments", CashCtrlAttachment.Create(fileIds))
 			}).EnsureSuccess();
 		}
 
 		public static async ValueTask AccountAttachmentsUpdateAsync(this CashCtrlClient that, int id, params int[] fileIds) {
 			var response = await that.PostAsync<ActionResponse>("account/update_attachments.json", new KeyValuePair<string, object>[] {
-					new(nameof(id), id), new(nameof(fileIds), fileIds)
+					new(nameof(id), id), new("attachments", CashCtrlAttachment.Create(fileIds))
 			}).ConfigureAwait(false);
 			response.EnsureSuccess();
 		}
