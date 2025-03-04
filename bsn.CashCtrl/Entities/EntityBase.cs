@@ -45,7 +45,7 @@ namespace bsn.CashCtrl.Entities {
 			set;
 		}
 
-		public virtual bool OwnedByApi => this.CreatedBy.StartsWith("API:", StringComparison.Ordinal) || this.LastUpdatedBy.StartsWith("API:", StringComparison.Ordinal);
+		public virtual bool OwnedByApi => this.CreatedBy?.StartsWith("API:", StringComparison.Ordinal) == true || this.LastUpdatedBy?.StartsWith("API:", StringComparison.Ordinal) == true;
 
 		public object Clone() {
 			return this.MemberwiseClone();
