@@ -21,7 +21,7 @@ namespace bsn.CashCtrl.Entities {
 			set;
 		}
 
-		public string CategoryDisplay {
+		public LocalizedString CategoryDisplay {
 			get;
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
 			set;

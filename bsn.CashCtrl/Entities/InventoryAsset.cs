@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 namespace bsn.CashCtrl.Entities {
 	public class InventoryAsset: ExtensibleEntityBase {
+		private LocalizedString categoryName;
+
 		public int? CategoryId {
 			get;
 			set;
@@ -26,9 +28,15 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		public LocalizedString CategoryDisplay {
-			get;
+			get => this.categoryName;
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
-			set;
+			set => this.categoryName = value;
+		}
+
+		public LocalizedString CategoryName {
+			get => this.categoryName;
+			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
+			set => this.categoryName = value;
 		}
 
 		public int? PurchaseCreditId {
