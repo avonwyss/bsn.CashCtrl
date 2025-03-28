@@ -45,7 +45,19 @@ namespace bsn.CashCtrl.Entities {
 			set;
 		}
 
+		public int? SalesAccountIdInherited {
+			get;
+			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
+			set;
+		}
+
 		public int? PurchaseAccountId {
+			get;
+			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
+			set;
+		}
+
+		public int? PurchaseAccountIdInherited {
 			get;
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
 			set;
