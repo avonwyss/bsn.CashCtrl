@@ -226,7 +226,7 @@ namespace bsn.CashCtrl {
 					JContainer jContainer => this.JsonToString(jContainer),
 					XNode xNode => xNode.ToString(SaveOptions.DisableFormatting | SaveOptions.OmitDuplicateNamespaces),
 					string str => str,
-					bool b => b ? "1" : "0",
+					bool b => b ? "true" : "false",
 					DateTime dt => dt.ToCashCtrlString(),
 					IFormattable formattable => formattable.ToString(null, CultureInfo.InvariantCulture),
 					IEnumerable<IApiSerializable> enumerable => '[' + string.Join(",", enumerable.Select(this.SerializeToString)) + ']',
@@ -241,6 +241,9 @@ namespace bsn.CashCtrl {
 					JToken token => token,
 					IApiSerializable serializable => this.SerializeToJObject(serializable),
 					string str => new JValue(str),
+					bool b => new JValue(b),
+					int i => new JValue(i),
+					double d => new JValue(d),
 					IEnumerable enumerable => new JArray(enumerable.Cast<object>().Select(this.SerializeToJToken)),
 					_ => new JValue(this.SerializeToString(obj))
 			};

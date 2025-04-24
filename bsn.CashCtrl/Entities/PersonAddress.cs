@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 
 namespace bsn.CashCtrl.Entities {
 	public class PersonAddress: EntityBase, IApiSerializable {
@@ -9,9 +8,9 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		private string address;
-		private string zip;
 		private string city;
 		private string country;
+		private string zip;
 
 		public int PersonId {
 			get;
@@ -139,9 +138,7 @@ namespace bsn.CashCtrl.Entities {
 			if (this.Id > 0) {
 				yield return new("id", this.Id);
 			}
-			if (this.TitleId.HasValue) {
-				yield return new("titleId", this.TitleId);
-			}
+			yield return new("titleId", this.TitleId);
 			yield return new("type", this.Type);
 			yield return new("company", this.Company);
 			yield return new("firstName", this.FirstName);
