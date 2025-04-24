@@ -4,6 +4,7 @@ namespace bsn.CashCtrl.Entities {
 		Collective,
 		Order,
 		Salary,
-		Depreciation
+		Depreciation,
+		Asset
 	}
 }

@@ -49,7 +49,7 @@ namespace bsn.CashCtrl.Entities {
 			set;
 		}
 
-		public OrderBookEntryType Type {
+		public BookEntryType Type {
 			get;
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
 			set;

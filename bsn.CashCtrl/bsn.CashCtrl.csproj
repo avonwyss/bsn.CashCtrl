@@ -130,6 +130,7 @@
     <Compile Include="Entities\AccountDefaults.cs" />
     <Compile Include="Entities\AllocationsEntityBase.cs" />
     <Compile Include="Entities\Attachment.cs" />
+    <Compile Include="Entities\BookEntryType.cs" />
     <Compile Include="Entities\BookType.cs" />
     <Compile Include="Entities\Currency.cs" />
     <Compile Include="Entities\CustomField.cs" />
@@ -170,7 +171,6 @@
     <Compile Include="Entities\NotifyType.cs" />
     <Compile Include="Entities\Order.cs" />
     <Compile Include="Entities\OrderBookEntry.cs" />
-    <Compile Include="Entities\OrderBookEntryType.cs" />
     <Compile Include="Entities\OrderCategory.cs" />
     <Compile Include="Entities\OrderCategoryBookTemplate.cs" />
     <Compile Include="Entities\OrderCategoryStatus.cs" />
