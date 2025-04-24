@@ -7,8 +7,8 @@ namespace CashCtrl.PathHandlers {
 	internal class CashCtrlFiscalperiodHandler: CashCtrlEntityHandler<Fiscalperiod> {
 		public CashCtrlFiscalperiodHandler(OneOf<int, Fiscalperiod> idOrEntity): base(idOrEntity) { }
 
-		protected override void CreateEntity(CashCtrlClient client, Fiscalperiod entity) {
-			client.FiscalperiodCreate(entity);
+		protected override int CreateEntity(CashCtrlClient client, Fiscalperiod entity) {
+			return client.FiscalperiodCreate(entity);
 		}
 
 		protected override Fiscalperiod ReadEntity(CashCtrlClient client) {

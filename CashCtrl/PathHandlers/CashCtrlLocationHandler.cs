@@ -7,8 +7,8 @@ namespace CashCtrl.PathHandlers {
 	internal class CashCtrlLocationHandler: CashCtrlEntityHandler<Location> {
 		public CashCtrlLocationHandler(OneOf<int, Location> idOrEntity): base(idOrEntity) { }
 
-		protected override void CreateEntity(CashCtrlClient client, Location entity) {
-			client.LocationCreate(entity);
+		protected override int CreateEntity(CashCtrlClient client, Location entity) {
+			return client.LocationCreate(entity);
 		}
 
 		protected override Location ReadEntity(CashCtrlClient client) {

@@ -27,7 +27,7 @@ namespace CashCtrl.PathHandlers {
 			return null;
 		}
 
-		public abstract Action GetChildItemCreator(CashCtrlClient client, object value, object parameters);
+		public abstract Func<string> GetChildItemCreator(CashCtrlClient client, object value, object parameters);
 
 		public virtual object GetItemCreateDynamicParameters() {
 			return null;

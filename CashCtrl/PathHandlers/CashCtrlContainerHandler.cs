@@ -27,7 +27,7 @@ namespace CashCtrl.PathHandlers {
 			return this.nestedHandlers.Values;
 		}
 
-		public override Action GetChildItemCreator(CashCtrlClient client, object value, object parameters) {
+		public override Func<string> GetChildItemCreator(CashCtrlClient client, object value, object parameters) {
 			throw new NotSupportedException("The object cannot be written to");
 		}
 

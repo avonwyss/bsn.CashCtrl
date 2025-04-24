@@ -7,8 +7,8 @@ namespace CashCtrl.PathHandlers {
 	internal class CashCtrlOrderTemplateHandler: CashCtrlEntityHandler<OrderTemplate> {
 		public CashCtrlOrderTemplateHandler(OneOf<int, OrderTemplate> idOrEntity): base(idOrEntity) { }
 
-		protected override void CreateEntity(CashCtrlClient client, OrderTemplate entity) {
-			client.OrderTemplateCreate(entity);
+		protected override int CreateEntity(CashCtrlClient client, OrderTemplate entity) {
+			return client.OrderTemplateCreate(entity);
 		}
 
 		protected override OrderTemplate ReadEntity(CashCtrlClient client) {

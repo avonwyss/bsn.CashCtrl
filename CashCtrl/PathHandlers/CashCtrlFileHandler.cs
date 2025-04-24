@@ -9,7 +9,7 @@ namespace CashCtrl.PathHandlers {
 	internal class CashCtrlFileHandler: CashCtrlEntityHandler<File> {
 		public CashCtrlFileHandler(OneOf<int, File> idOrEntity): base(idOrEntity) { }
 
-		protected override void CreateEntity(CashCtrlClient client, File entity) {
+		protected override int CreateEntity(CashCtrlClient client, File entity) {
 			throw new NotImplementedException();
 #warning client.FileCreate(entity);
 		}

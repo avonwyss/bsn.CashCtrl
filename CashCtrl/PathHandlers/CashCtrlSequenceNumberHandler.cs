@@ -7,8 +7,8 @@ namespace CashCtrl.PathHandlers {
 	internal class CashCtrlSequenceNumberHandler: CashCtrlEntityHandler<SequenceNumber> {
 		public CashCtrlSequenceNumberHandler(OneOf<int, SequenceNumber> idOrEntity): base(idOrEntity) { }
 
-		protected override void CreateEntity(CashCtrlClient client, SequenceNumber entity) {
-			client.SequenceNumberCreate(entity);
+		protected override int CreateEntity(CashCtrlClient client, SequenceNumber entity) {
+			return client.SequenceNumberCreate(entity);
 		}
 
 		protected override SequenceNumber ReadEntity(CashCtrlClient client) {

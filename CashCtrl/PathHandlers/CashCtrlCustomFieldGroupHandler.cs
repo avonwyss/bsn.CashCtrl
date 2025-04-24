@@ -7,8 +7,8 @@ namespace CashCtrl.PathHandlers {
 	internal class CashCtrlCustomFieldGroupHandler: CashCtrlEntityHandler<CustomFieldGroup> {
 		public CashCtrlCustomFieldGroupHandler(OneOf<int, CustomFieldGroup> idOrEntity): base(idOrEntity) { }
 
-		protected override void CreateEntity(CashCtrlClient client, CustomFieldGroup entity) {
-			client.CustomFieldGroupCreate(entity);
+		protected override int CreateEntity(CashCtrlClient client, CustomFieldGroup entity) {
+			return client.CustomFieldGroupCreate(entity);
 		}
 
 		protected override CustomFieldGroup ReadEntity(CashCtrlClient client) {

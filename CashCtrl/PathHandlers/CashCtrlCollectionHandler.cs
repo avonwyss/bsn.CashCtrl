@@ -72,8 +72,13 @@ namespace CashCtrl.PathHandlers {
 			return runtimeDefinedParametersDictionary;
 		}
 
-		public override Action GetChildItemCreator(CashCtrlClient client, object value, object parameters) {
-			return this.GetEntityHandler(0).GetItemSetter(client, value, parameters);
+		public override Func<string> GetChildItemCreator(CashCtrlClient client, object value, object parameters) {
+			var handler = this.GetEntityHandler(0);
+			var setter = handler.GetItemSetter(client, value, parameters);
+			return () => {
+				setter();
+				return handler.Name;
+			};
 		}
 
 		protected abstract CashCtrlEntityHandler<TEntity> GetEntityHandler(OneOf<int, TEntity> idOrEntity);

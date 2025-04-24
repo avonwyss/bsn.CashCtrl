@@ -25,13 +25,14 @@ namespace CashCtrl.PathHandlers {
 
 		public int Id {
 			get;
+			private set;
 		}
 
 		public override string Name => this.Id.ToString(CultureInfo.InvariantCulture);
 
 		public override bool IsContainer => false;
 
-		protected virtual void CreateEntity(CashCtrlClient client, T entity) {
+		protected virtual int CreateEntity(CashCtrlClient client, T entity) {
 			throw new NotSupportedException();
 		}
 
@@ -47,7 +48,7 @@ namespace CashCtrl.PathHandlers {
 			return Enumerable.Empty<CashCtrlPathHandler>();
 		}
 
-		public override Action GetChildItemCreator(CashCtrlClient client, object value, object parameters) {
+		public override Func<string> GetChildItemCreator(CashCtrlClient client, object value, object parameters) {
 			throw new NotSupportedException("The object cannot be written to");
 		}
 
@@ -56,11 +57,14 @@ namespace CashCtrl.PathHandlers {
 		}
 
 		public override Action GetItemSetter(CashCtrlClient client, object value, object parameters) {
-			if (value is not PSObject psobj) {
-				throw new ArgumentNullException(nameof(value));
-			}
-			if (!(psobj.BaseObject is T entity)) {
-				throw new ArgumentException($"Expected a {typeof(T)}, but got a {value.GetType()}.", nameof(value));
+			if (value is not T entity) {
+				if (value is not PSObject psobj) {
+					throw new ArgumentNullException(nameof(value));
+				}
+				entity = psobj.BaseObject as T;
+				if (entity == null) {
+					throw new ArgumentException($"Expected a {typeof(T)}, but got a {psobj.BaseObject?.GetType() ?? typeof(void)}.", nameof(value));
+				}
 			}
 			if (entity.Id != this.Id) {
 				entity = (T)entity.Clone();
@@ -71,7 +75,7 @@ namespace CashCtrl.PathHandlers {
 				if (entity.Id > 0) {
 					this.UpdateEntity(client, entity);
 				} else {
-					this.CreateEntity(client, entity);
+					this.Id = this.CreateEntity(client, entity);
 				}
 			};
 		}

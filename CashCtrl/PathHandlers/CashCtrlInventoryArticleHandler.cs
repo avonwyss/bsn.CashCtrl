@@ -7,8 +7,8 @@ namespace CashCtrl.PathHandlers {
 	internal class CashCtrlInventoryArticleHandler: CashCtrlEntityHandler<InventoryArticle> {
 		public CashCtrlInventoryArticleHandler(OneOf<int, InventoryArticle> idOrEntity): base(idOrEntity) { }
 
-		protected override void CreateEntity(CashCtrlClient client, InventoryArticle entity) {
-			client.InventoryArticleCreate(entity);
+		protected override int CreateEntity(CashCtrlClient client, InventoryArticle entity) {
+			return client.InventoryArticleCreate(entity);
 		}
 
 		protected override InventoryArticle ReadEntity(CashCtrlClient client) {

@@ -7,8 +7,8 @@ namespace CashCtrl.PathHandlers {
 	internal class CashCtrlJournalHandler: CashCtrlEntityHandler<Journal> {
 		public CashCtrlJournalHandler(OneOf<int, Journal> idOrEntity): base(idOrEntity) { }
 
-		protected override void CreateEntity(CashCtrlClient client, Journal entity) {
-			client.JournalCreate(entity);
+		protected override int CreateEntity(CashCtrlClient client, Journal entity) {
+			return client.JournalCreate(entity);
 		}
 
 		protected override Journal ReadEntity(CashCtrlClient client) {

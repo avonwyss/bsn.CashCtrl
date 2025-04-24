@@ -102,7 +102,12 @@ namespace CashCtrl {
 			var path = this.ParsePath(pathString);
 			var creator = path.Handler.GetChildItemCreator(this.Client, newItemValue, this.DynamicParameters);
 			if (this.ShouldProcess(path.ToString(), nameof(this.NewItem))) {
-				creator();
+				var id = creator();
+				if (!path.Handler.TryGetChildHandler(id, out var childHandler)) {
+					this.WriteWarning("Could not retrieve new item "+id);
+				} else {
+					this.WriteItemObject(childHandler.GetItemValue(this.Client), path.Append(childHandler).ToString(), childHandler.IsContainer);
+				}
 			}
 		}
 
@@ -135,10 +140,10 @@ namespace CashCtrl {
 		}
 
 		protected override void RemoveItem(string pathString, bool recurse) {
-			if (recurse) {
+			var path = this.ParsePath(pathString);
+			if (path.Handler.IsContainer && recurse) {
 				throw new NotSupportedException();
 			}
-			var path = this.ParsePath(pathString);
 			var remover = path.Handler.GetItemRemover(this.Client, this.DynamicParameters);
 			if (this.ShouldProcess(path.ToString(), nameof(this.RemoveItem))) {
 				remover();
@@ -154,6 +159,7 @@ namespace CashCtrl {
 			var setter = path.Handler.GetItemSetter(this.Client, value, this.DynamicParameters);
 			if (this.ShouldProcess(pathString, nameof(this.SetItem))) {
 				setter();
+				this.WriteItemObject(path.Handler.GetItemValue(this.Client), path.ToString(), path.Handler.IsContainer);
 			}
 		}
 

@@ -7,8 +7,8 @@ namespace CashCtrl.PathHandlers {
 	internal class CashCtrlTaxHandler: CashCtrlEntityHandler<Tax> {
 		public CashCtrlTaxHandler(OneOf<int, Tax> idOrEntity): base(idOrEntity) { }
 
-		protected override void CreateEntity(CashCtrlClient client, Tax entity) {
-			client.TaxCreate(entity);
+		protected override int CreateEntity(CashCtrlClient client, Tax entity) {
+			return client.TaxCreate(entity);
 		}
 
 		protected override Tax ReadEntity(CashCtrlClient client) {

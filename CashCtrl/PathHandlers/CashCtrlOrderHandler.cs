@@ -17,8 +17,8 @@ namespace CashCtrl.PathHandlers {
 
 		public override bool IsContainer => true;
 
-		protected override void CreateEntity(CashCtrlClient client, Order entity) {
-			client.OrderCreate(entity);
+		protected override int CreateEntity(CashCtrlClient client, Order entity) {
+			return client.OrderCreate(entity);
 		}
 
 		public override IEnumerable<CashCtrlPathHandler> GetChildHandlers(CashCtrlClient client, object parameters) {

@@ -48,7 +48,7 @@ namespace CashCtrl.PathHandlers {
 			return Handlers.Values;
 		}
 
-		public override Action GetChildItemCreator(CashCtrlClient client, object value, object parameters) {
+		public override Func<string> GetChildItemCreator(CashCtrlClient client, object value, object parameters) {
 			throw new NotSupportedException("The root object cannot be written to");
 		}
 

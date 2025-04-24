@@ -7,8 +7,8 @@ namespace CashCtrl.PathHandlers {
 	internal class CashCtrlFileCategoryHandler: CashCtrlEntityHandler<FileCategory> {
 		public CashCtrlFileCategoryHandler(OneOf<int, FileCategory> idOrEntity): base(idOrEntity) { }
 
-		protected override void CreateEntity(CashCtrlClient client, FileCategory entity) {
-			client.FileCategoryCreate(entity);
+		protected override int CreateEntity(CashCtrlClient client, FileCategory entity) {
+			return client.FileCategoryCreate(entity);
 		}
 
 		protected override FileCategory ReadEntity(CashCtrlClient client) {

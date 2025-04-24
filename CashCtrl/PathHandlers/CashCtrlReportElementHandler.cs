@@ -7,8 +7,8 @@ namespace CashCtrl.PathHandlers {
 	internal class CashCtrlReportElementHandler: CashCtrlEntityHandler<ReportElement> {
 		public CashCtrlReportElementHandler(OneOf<int, ReportElement> idOrEntity): base(idOrEntity) { }
 
-		protected override void CreateEntity(CashCtrlClient client, ReportElement entity) {
-			client.ReportElementCreate(entity);
+		protected override int CreateEntity(CashCtrlClient client, ReportElement entity) {
+			return client.ReportElementCreate(entity);
 		}
 
 		protected override ReportElement ReadEntity(CashCtrlClient client) {
