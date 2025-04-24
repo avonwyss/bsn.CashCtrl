@@ -11,7 +11,7 @@ using bsn.CashCtrl.Response;
 using OneOf;
 
 namespace CashCtrl.PathHandlers {
-	internal abstract class CashCtrlEntityHandler<T>: CashCtrlPathHandler where T: EntityBase {
+	internal abstract class CashCtrlEntityHandler<T>: CashCtrlPathHandler where T: FullEntityBase {
 		public CashCtrlEntityHandler(OneOf<int, T> idOrEntity): base() {
 			this.Id = idOrEntity.Match(
 					id => id,

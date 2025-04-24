@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace bsn.CashCtrl.Entities {
-	public abstract class ExtensibleEntityBase: EntityBase, IApiSerializable {
+	public abstract class ExtensibleEntityBase: FullEntityBase, IApiSerializable {
 		// ReSharper disable once FieldCanBeMadeReadOnly.Local - Must be read-write for cloning
 		private VirtualList<Attachment> attachments = new VirtualList<Attachment>();
 

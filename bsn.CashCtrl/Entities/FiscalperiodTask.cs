@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 namespace bsn.CashCtrl.Entities {
-	public class FiscalperiodTask: EntityBase, IApiSerializable {
+	public class FiscalperiodTask: FullEntityBase, IApiSerializable {
 		public string Name {
 			get;
 			set;

@@ -659,7 +659,7 @@ namespace bsn.CashCtrl {
 			return that?.ToString(omitTime ? CashCtrlDateFormat : CashCtrlDateTimeFormat, CultureInfo.InvariantCulture);
 		}
 
-		public static int UpdateOrCreate<T>(this CashCtrlClient that, T entity, Action<CashCtrlClient, T> update, Func<CashCtrlClient, T, int> create) where T: EntityBase {
+		public static int UpdateOrCreate<T>(this CashCtrlClient that, T entity, Action<CashCtrlClient, T> update, Func<CashCtrlClient, T, int> create) where T: FullEntityBase {
 			if (entity.Id <= 0) {
 				return create(that, entity);
 			}
@@ -667,11 +667,11 @@ namespace bsn.CashCtrl {
 			return entity.Id;
 		}
 
-		public static T UpdateOrCreate<T>(this CashCtrlClient that, T entity, Action<CashCtrlClient, T> update, Func<CashCtrlClient, T, int> create, Func<CashCtrlClient, int, T> read) where T: EntityBase {
+		public static T UpdateOrCreate<T>(this CashCtrlClient that, T entity, Action<CashCtrlClient, T> update, Func<CashCtrlClient, T, int> create, Func<CashCtrlClient, int, T> read) where T: FullEntityBase {
 			return read(that, UpdateOrCreate(that, entity, update, create));
 		}
 
-		public static async ValueTask<int> UpdateOrCreateAsync<T>(this CashCtrlClient that, T entity, Func<CashCtrlClient, T, ValueTask> update, Func<CashCtrlClient, T, ValueTask<int>> create) where T: EntityBase {
+		public static async ValueTask<int> UpdateOrCreateAsync<T>(this CashCtrlClient that, T entity, Func<CashCtrlClient, T, ValueTask> update, Func<CashCtrlClient, T, ValueTask<int>> create) where T: FullEntityBase {
 			if (entity.Id <= 0) {
 				return await create(that, entity).ConfigureAwait(false);
 			}
@@ -679,7 +679,7 @@ namespace bsn.CashCtrl {
 			return entity.Id;
 		}
 
-		public static async ValueTask<T> UpdateOrCreateAsync<T>(this CashCtrlClient that, T entity, Func<CashCtrlClient, T, ValueTask> update, Func<CashCtrlClient, T, ValueTask<int>> create, Func<CashCtrlClient, int, ValueTask<T>> read) where T: EntityBase {
+		public static async ValueTask<T> UpdateOrCreateAsync<T>(this CashCtrlClient that, T entity, Func<CashCtrlClient, T, ValueTask> update, Func<CashCtrlClient, T, ValueTask<int>> create, Func<CashCtrlClient, int, ValueTask<T>> read) where T: FullEntityBase {
 			var entityId = entity.Id;
 			if (entityId <= 0) {
 				entityId = await create(that, entity).ConfigureAwait(false);
@@ -690,7 +690,7 @@ namespace bsn.CashCtrl {
 		}
 
 		public static IEnumerable<TEntity> ListPaged<TEntity, TQuery>(this CashCtrlClient that, Func<CashCtrlClient, TQuery, TEntity[]> list, TQuery query = default, int pageSize = 100)
-				where TEntity: EntityBase
+				where TEntity: FullEntityBase
 				where TQuery: PagedQuery, ICloneable, new() {
 			var pageQuery = query == null ? new() : (TQuery)query.Clone();
 			if (string.IsNullOrEmpty(pageQuery.Sort)) {

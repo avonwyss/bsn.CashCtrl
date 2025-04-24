@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 namespace bsn.CashCtrl.Entities {
-	public class Tax: EntityBase, IApiSerializable {
+	public class Tax: FullEntityBase, IApiSerializable {
 		public int AccountId {
 			get;
 			set;

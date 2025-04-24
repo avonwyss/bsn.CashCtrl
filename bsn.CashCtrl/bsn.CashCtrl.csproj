@@ -130,7 +130,6 @@
     <Compile Include="Entities\AccountDefaults.cs" />
     <Compile Include="Entities\AllocationsEntityBase.cs" />
     <Compile Include="Entities\Attachment.cs" />
-    <Compile Include="Entities\BookEntryType.cs" />
     <Compile Include="Entities\BookType.cs" />
     <Compile Include="Entities\Currency.cs" />
     <Compile Include="Entities\CustomField.cs" />
@@ -150,6 +149,7 @@
     <Compile Include="Entities\FiscalperiodDepreciation.cs" />
     <Compile Include="Entities\FiscalperiodExchangeDiff.cs" />
     <Compile Include="Entities\FiscalperiodTask.cs" />
+    <Compile Include="Entities\FullEntityBase.cs" />
     <Compile Include="Entities\ICostCenterAllocatable.cs" />
     <Compile Include="Entities\ImportSource.cs" />
     <Compile Include="Entities\InventoryArticle.cs" />
@@ -171,6 +171,7 @@
     <Compile Include="Entities\NotifyType.cs" />
     <Compile Include="Entities\Order.cs" />
     <Compile Include="Entities\OrderBookEntry.cs" />
+    <Compile Include="Entities\BookEntryType.cs" />
     <Compile Include="Entities\OrderCategory.cs" />
     <Compile Include="Entities\OrderCategoryBookTemplate.cs" />
     <Compile Include="Entities\OrderCategoryStatus.cs" />
@@ -187,12 +188,17 @@
     <Compile Include="Entities\Person.cs" />
     <Compile Include="Entities\PersonAddress.cs" />
     <Compile Include="Entities\PersonAddressType.cs" />
+    <Compile Include="Entities\PersonBankAccount.cs" />
+    <Compile Include="Entities\PersonBankAccountType.cs" />
     <Compile Include="Entities\PersonCategory.cs" />
     <Compile Include="Entities\PersonCategoryNode.cs" />
+    <Compile Include="Entities\PersonChild.cs" />
     <Compile Include="Entities\PersonColor.cs" />
     <Compile Include="Entities\PersonContact.cs" />
     <Compile Include="Entities\PersonContactType.cs" />
     <Compile Include="Entities\PersonGender.cs" />
+    <Compile Include="Entities\PersonInsuranceContract.cs" />
+    <Compile Include="Entities\PersonServicePeriod.cs" />
     <Compile Include="Entities\PersonTitle.cs" />
     <Compile Include="Entities\PreparedFile.cs" />
     <Compile Include="Entities\PurchaseType.cs" />

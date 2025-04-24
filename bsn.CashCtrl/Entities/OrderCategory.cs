@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace bsn.CashCtrl.Entities {
-	public class OrderCategory: EntityBase, IApiSerializable {
+	public class OrderCategory: FullEntityBase, IApiSerializable {
 		// ReSharper disable once FieldCanBeMadeReadOnly.Local - Must be read-write for cloning
 		private VirtualList<OrderCategoryStatus> status = new();
 		// ReSharper disable once FieldCanBeMadeReadOnly.Local - Must be read-write for cloning

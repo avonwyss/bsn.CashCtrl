@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace bsn.CashCtrl.Entities {
-	public class OrderTemplate: EntityBase, IApiSerializable {
+	public class OrderTemplate: FullEntityBase, IApiSerializable {
 		private bool makeDefault;
 		private bool? isDisplayLogo;
 		private bool? isDisplayRecipientNr;

@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace bsn.CashCtrl.Entities {
-	public class CustomField: EntityBase, IApiSerializable {
+	public class CustomField: FullEntityBase, IApiSerializable {
 		// ReSharper disable once FieldCanBeMadeReadOnly.Local - Must be read-write for cloning
 		private VirtualList<string> values = new();
 

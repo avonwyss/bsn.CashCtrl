@@ -1,8 +1,7 @@
 namespace bsn.CashCtrl.Entities {
-	public enum PersonAddressType {
-		Main,
-		Invoice,
-		Delivery,
+	public enum PersonBankAccountType {
+		Default,
+		Order,
 		Salary,
 		Historical,
 		Other

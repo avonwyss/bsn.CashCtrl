@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 namespace bsn.CashCtrl.Entities {
-	public class Fiscalperiod: EntityBase, IApiSerializable {
+	public class Fiscalperiod: FullEntityBase, IApiSerializable {
 		private DateTime? end;
 		private bool isCustom;
 		private bool isEarliest;

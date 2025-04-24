@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 namespace bsn.CashCtrl.Entities {
-	public class JournalImport: EntityBase, IApiSerializable {
+	public class JournalImport: FullEntityBase, IApiSerializable {
 		public int? FileId {
 			get;
 			set;

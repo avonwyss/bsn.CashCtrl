@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 namespace bsn.CashCtrl.Entities {
-	public class PersonCategory: EntityBase, IApiSerializable {
+	public class PersonCategory: FullEntityBase, IApiSerializable {
 		public int? ParentId {
 			get;
 			set;

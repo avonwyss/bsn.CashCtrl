@@ -203,7 +203,7 @@ namespace bsn.CashCtrl.Entities {
 			set;
 		}
 
-		public override bool OwnedByApi => base.OwnedByApi || HasApiMarker(this.name);
+		public bool OwnedByApi => HasApiMarker(this.name);
 
 		public IEnumerable<KeyValuePair<string, object>> ToParameters() {
 			yield return new("type", this.Type);

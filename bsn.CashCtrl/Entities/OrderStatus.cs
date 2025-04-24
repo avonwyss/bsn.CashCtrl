@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 
 namespace bsn.CashCtrl.Entities {
-	public class OrderStatus: EntityBase {
+	public class OrderStatus: FullEntityBase {
 		public int OrderId {
 			get;
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]

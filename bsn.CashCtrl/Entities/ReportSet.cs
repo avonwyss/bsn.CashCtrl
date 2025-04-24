@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace bsn.CashCtrl.Entities {
-	public class ReportSet: EntityBase, IApiSerializable {
+	public class ReportSet: FullEntityBase, IApiSerializable {
 		public struct ReportSetConfig {
 			public bool? IsDisplayFooter {
 				get;

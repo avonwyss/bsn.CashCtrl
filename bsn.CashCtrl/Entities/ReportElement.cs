@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace bsn.CashCtrl.Entities {
-	public class ReportElement: EntityBase, IApiSerializable {
+	public class ReportElement: FullEntityBase, IApiSerializable {
 		public int? SetId {
 			get;
 			set;

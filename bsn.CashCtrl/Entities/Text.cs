@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 namespace bsn.CashCtrl.Entities {
-	public class Text: EntityBase, IApiSerializable {
+	public class Text: FullEntityBase, IApiSerializable {
 		public string Name {
 			get;
 			set;

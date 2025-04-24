@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace bsn.CashCtrl.Entities {
-	public class AccountCategory: EntityBase, IApiSerializable {
+	public class AccountCategory: FullEntityBase, IApiSerializable {
 		public int? ParentId {
 			get;
 			set;

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 namespace bsn.CashCtrl.Entities {
-	public class JournalItem: EntityBase, IApiSerializable, ICostCenterAllocatable {
+	public class JournalItem: FullEntityBase, IApiSerializable, ICostCenterAllocatable {
 		// ReSharper disable once FieldCanBeMadeReadOnly.Local - Must be read-write for cloning
 		private VirtualList<AccountCostCenterAllocation> allocations = new();
 

@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 
 namespace bsn.CashCtrl.Entities {
-	public class Attachment: EntityBase {
+	public class Attachment: FullEntityBase {
 		public int FileId {
 			get;
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace bsn.CashCtrl.Entities {
-	public class RoundingItem: EntityBase, IApiSerializable {
+	public class RoundingItem: FullEntityBase, IApiSerializable {
 		public int AccountId {
 			get;
 			set;

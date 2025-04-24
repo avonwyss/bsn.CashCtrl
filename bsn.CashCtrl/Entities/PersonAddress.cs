@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace bsn.CashCtrl.Entities {
 	public class PersonAddress: EntityBase, IApiSerializable {
@@ -7,7 +8,6 @@ namespace bsn.CashCtrl.Entities {
 			return !(string.IsNullOrEmpty(address.Address) && string.IsNullOrEmpty(address.Zip) && string.IsNullOrEmpty(address.City) && string.IsNullOrEmpty(address.Country));
 		}
 
-		private bool? empty;
 		private string address;
 		private string zip;
 		private string city;
@@ -19,7 +19,27 @@ namespace bsn.CashCtrl.Entities {
 			set;
 		}
 
+		public int? TitleId {
+			get;
+			set;
+		}
+
 		public PersonAddressType Type {
+			get;
+			set;
+		}
+
+		public string Company {
+			get;
+			set;
+		}
+
+		public string FirstName {
+			get;
+			set;
+		}
+
+		public string LastName {
 			get;
 			set;
 		}
@@ -39,6 +59,11 @@ namespace bsn.CashCtrl.Entities {
 			set => this.city = value;
 		}
 
+		public string Canton {
+			get;
+			set;
+		}
+
 		public string Country {
 			get => this.country;
 			set => this.country = CashCtrlClientExtensions.MapCountryToAlpha3(value);
@@ -50,18 +75,84 @@ namespace bsn.CashCtrl.Entities {
 			set;
 		}
 
-		public bool Empty {
-			get => this.empty.GetValueOrDefault(!IsNotEmpty(this));
+		public string CantonCode {
+			get;
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
-			set => this.empty = value;
+			set;
 		}
 
+		public string CountryCode2 {
+			get;
+			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
+			set;
+		}
+
+		public string CountryCode3 {
+			get;
+			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
+			set;
+		}
+
+		public string CompanyForAddress {
+			get;
+			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
+			set;
+		}
+
+		public string FirstNameForAddress {
+			get;
+			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
+			set;
+		}
+
+		public string LastNameForAddress {
+			get;
+			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
+			set;
+		}
+
+		public string StreetName {
+			get;
+			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
+			set;
+		}
+
+		public string StreetNumber {
+			get;
+			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
+			set;
+		}
+
+		public bool IsHideCompany {
+			get;
+			set;
+		}
+
+		public bool IsHideName {
+			get;
+			set;
+		}
+
+		public bool Empty => !IsNotEmpty(this);
+
 		public IEnumerable<KeyValuePair<string, object>> ToParameters() {
+			if (this.Id > 0) {
+				yield return new("id", this.Id);
+			}
+			if (this.TitleId.HasValue) {
+				yield return new("titleId", this.TitleId);
+			}
 			yield return new("type", this.Type);
+			yield return new("company", this.Company);
+			yield return new("firstName", this.FirstName);
+			yield return new("lastName", this.LastName);
+			yield return new("isHideCompany", this.IsHideCompany);
+			yield return new("isHideName", this.IsHideName);
 			yield return new("address", this.Address);
-			yield return new("city", this.City);
-			yield return new("country", this.Country);
 			yield return new("zip", this.Zip);
+			yield return new("city", this.City);
+			yield return new("canton", this.Canton);
+			yield return new("country", this.Country);
 		}
 	}
 }

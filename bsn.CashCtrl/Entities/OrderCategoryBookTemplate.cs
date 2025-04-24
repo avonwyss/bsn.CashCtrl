@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 namespace bsn.CashCtrl.Entities {
-	public class OrderCategoryBookTemplate: EntityBase, IApiSerializable {
+	public class OrderCategoryBookTemplate: FullEntityBase, IApiSerializable {
 		public int CategoryId {
 			get;
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]

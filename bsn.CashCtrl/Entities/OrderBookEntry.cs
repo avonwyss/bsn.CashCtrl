@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 namespace bsn.CashCtrl.Entities {
-	public class OrderBookEntry: EntityBase, IApiSerializable {
+	public class OrderBookEntry: FullEntityBase, IApiSerializable {
 		private double? amount;
 
 		public int? TemplateId {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 
 namespace bsn.CashCtrl.Entities {
-	public class Location: EntityBase, IApiSerializable {
+	public class Location: FullEntityBase, IApiSerializable {
 		public string Name {
 			get;
 			set;

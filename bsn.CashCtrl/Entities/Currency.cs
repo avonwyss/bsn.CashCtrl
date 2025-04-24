@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 namespace bsn.CashCtrl.Entities {
-	public class Currency: EntityBase, IApiSerializable {
+	public class Currency: FullEntityBase, IApiSerializable {
 		private bool isDefault;
 		private bool makeDefault;
 		private bool saveRate;

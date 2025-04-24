@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 namespace bsn.CashCtrl.Entities {
-	public class CustomFieldGroup: EntityBase, IApiSerializable {
+	public class CustomFieldGroup: FullEntityBase, IApiSerializable {
 		// ReSharper disable once FieldCanBeMadeReadOnly.Local - Must be read-write for cloning
 		private VirtualList<CustomField> customFields = new();
 

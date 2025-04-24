@@ -29,6 +29,11 @@ namespace bsn.CashCtrl.Entities {
 			set;
 		}
 
+		public string Notes {
+			get;
+			set;
+		}
+
 		public int Pos {
 			get;
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
@@ -36,7 +41,11 @@ namespace bsn.CashCtrl.Entities {
 		}
 
 		public IEnumerable<KeyValuePair<string, object>> ToParameters() {
+			if (this.Id > 0) {
+				yield return new("id", this.Id);
+			}
 			yield return new("address", this.Address);
+			yield return new("notes", this.Notes);
 			yield return new("type", this.Type);
 		}
 	}

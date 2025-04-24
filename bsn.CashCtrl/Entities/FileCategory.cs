@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 namespace bsn.CashCtrl.Entities {
-	public class FileCategory: EntityBase, IApiSerializable {
+	public class FileCategory: FullEntityBase, IApiSerializable {
 		public LocalizedString Name {
 			get;
 			set;

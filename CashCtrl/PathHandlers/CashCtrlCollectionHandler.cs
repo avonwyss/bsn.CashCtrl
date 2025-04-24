@@ -14,11 +14,11 @@ using bsn.CashCtrl.Query;
 using OneOf;
 
 namespace CashCtrl.PathHandlers {
-	internal abstract class CashCtrlCollectionHandler<TEntity>: CashCtrlCollectionHandler<TEntity, QueryBase> where TEntity: EntityBase {
+	internal abstract class CashCtrlCollectionHandler<TEntity>: CashCtrlCollectionHandler<TEntity, QueryBase> where TEntity: FullEntityBase {
 		protected CashCtrlCollectionHandler(string name, params CashCtrlPathHandler[] nestedHandlers): base(name, nestedHandlers) { }
 	}
 
-	internal abstract class CashCtrlCollectionHandler<TEntity, TQuery>: CashCtrlContainerHandler where TEntity: EntityBase
+	internal abstract class CashCtrlCollectionHandler<TEntity, TQuery>: CashCtrlContainerHandler where TEntity: FullEntityBase
 	                                                                                             where TQuery: QueryBase, new() {
 		private const string FullParameterName = "Full";
 		private static readonly Regex RxQueryNonFiltering = new(@"^(start|limit|sort|dir)$", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
