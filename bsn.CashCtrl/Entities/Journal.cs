@@ -59,10 +59,11 @@ namespace bsn.CashCtrl.Entities {
 
 		public int? OrderId {
 			get;
+			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
 			set;
 		}
 
-		public string OrderBookEntryId {
+		public int? OrderBookEntryId {
 			get;
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
 			set;
@@ -70,10 +71,11 @@ namespace bsn.CashCtrl.Entities {
 
 		public int? InventoryId {
 			get;
+			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
 			set;
 		}
 
-		public string ImportEntryId {
+		public int? ImportEntryId {
 			get;
 			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
 			set;
@@ -112,7 +114,6 @@ namespace bsn.CashCtrl.Entities {
 
 		public double CurrencyRate {
 			get;
-			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
 			set;
 		}
 
@@ -175,7 +176,6 @@ namespace bsn.CashCtrl.Entities {
 
 		public DateTime EndDate {
 			get;
-			[Obsolete(CashCtrlClient.EntityFieldIsReadonly, true)]
 			set;
 		}
 

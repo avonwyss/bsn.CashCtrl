@@ -39,6 +39,24 @@ namespace bsn.CashCtrl.Query {
 			set;
 		}
 
+		[Description("Flag to only include purchase order book entries. Defaults to false.")]
+		public bool? OnlyPurchase {
+			get;
+			set;
+		}
+
+		[Description("Flag to only include salary book entries. Defaults to false.")]
+		public bool? OnlySalary {
+			get;
+			set;
+		}
+
+		[Description("Flag to only include purchase order book entries. Defaults to false.")]
+		public bool? OnlySales {
+			get;
+			set;
+		}
+
 		[Description("Flag to only include untaxed book entries. Defaults to false.")]
 		public bool? OnlyUntaxed {
 			get;
